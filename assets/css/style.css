@@ -53,10 +53,11 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 /* ---------- Кнопки ---------- */
 .btn { display: inline-flex; align-items: center; white-space: nowrap; text-decoration: none; font: 500 15px/1 var(--text); --bg: var(--ink); --fg: var(--linen); }
 .btn__tx { background: var(--bg); color: var(--fg); padding: 17px 22px; border-radius: 999px; transition: background-color .4s var(--ease), color .4s var(--ease); }
-.btn__ar { width: 50px; height: 50px; margin-left: -1px; border-radius: 50%; background: var(--bg); color: var(--fg); display: grid; place-items: center; transform: rotate(-21deg); transition: transform .55s var(--ease), background-color .4s var(--ease); }
-.btn__ar svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: transform .55s var(--ease); }
-.btn:hover .btn__ar, .btn:focus-visible .btn__ar { transform: rotate(0deg); }
-.btn:hover .btn__ar svg { transform: translateX(2px); }
+.btn__ar { width: 50px; height: 50px; margin-left: -1px; border-radius: 50%; background: var(--bg); color: var(--fg); display: grid; place-items: center; overflow: hidden; transition: background-color .4s var(--ease); }
+.btn__ar svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; grid-area: 1 / 1; transition: transform .6s var(--ease); }
+.btn__ar svg + svg { transform: translate(-150%, 150%); }
+.btn:hover .btn__ar svg:first-child, .btn:focus-visible .btn__ar svg:first-child { transform: translate(150%, -150%); }
+.btn:hover .btn__ar svg + svg, .btn:focus-visible .btn__ar svg + svg { transform: none; }
 .btn--dark { --bg: var(--ink); --fg: var(--linen); }
 .btn--dark:hover { --bg: #000; }
 .btn--green { --bg: var(--green); --fg: var(--chalk); }
@@ -68,11 +69,11 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 /* ---------- 1. Хедер ---------- */
 .hdr { position: fixed; inset: 0 0 auto; z-index: 50; padding: var(--frame) var(--frame) 0; transition: transform .6s var(--ease), padding .5s var(--ease); }
 .hdr__in { height: var(--hdr-h); display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 calc(var(--pad) - var(--frame)); border-radius: var(--r-lg); transition: background-color .5s var(--ease), box-shadow .5s var(--ease), height .5s var(--ease); }
-.hdr__logo img { width: auto; height: 40px; }
-@media (min-width: 1024px) { .hdr__logo img { height: 50px; } }
+.hdr__logo img { width: auto; height: 52px; }
+@media (min-width: 1024px) { .hdr__logo img { height: 72px; } }
 .hdr.is-stuck { padding-top: 8px; }
-.hdr.is-stuck .hdr__in { height: 64px; background: rgba(250, 248, 243, .86); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2); box-shadow: 0 0 0 1px var(--stone), 0 10px 30px -18px rgba(30, 36, 31, .35); }
-.hdr.is-stuck .hdr__logo img { height: 38px; }
+.hdr.is-stuck .hdr__in { height: 68px; background: rgba(250, 248, 243, .86); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2); box-shadow: 0 0 0 1px var(--stone), 0 10px 30px -18px rgba(30, 36, 31, .35); }
+.hdr.is-stuck .hdr__logo img { height: 46px; }
 .hdr.is-hidden { transform: translateY(-120%); }
 .menu-open .hdr { transform: none; }
 
@@ -125,7 +126,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 /* ---------- 2. Перший екран ---------- */
 .hero { padding: var(--frame); }
-.hero__frame { position: relative; border-radius: var(--r-lg); box-shadow: inset 0 0 0 1px var(--stone); padding: calc(var(--hdr-h) + 28px) calc(var(--pad) - var(--frame)) calc(var(--pad) - var(--frame)); }
+.hero__frame { position: relative; border-radius: var(--r-lg); background: #FFFDF9; box-shadow: 0 1px 0 rgba(30,36,31,.04), 0 30px 60px -40px rgba(30,36,31,.18); padding: calc(var(--hdr-h) + 28px) calc(var(--pad) - var(--frame)) calc(var(--pad) - var(--frame)); }
 @media (min-width: 1024px) { .hero__frame { border-radius: var(--r-xl); padding-top: calc(var(--hdr-h) + 40px); } }
 
 .hero__meta { display: flex; justify-content: space-between; gap: 16px; font: 500 11px/1.4 var(--text); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
