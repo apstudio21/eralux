@@ -1,5 +1,5 @@
-# Decap CMS — Eralux
-# Вхід через GitHub. base_url — адреса OAuth-обробника на Cloudflare (додамо перед запуском).
+# Decap CMS – Eralux
+# Вхід через GitHub. base_url – адреса OAuth-обробника на Cloudflare (додамо перед запуском).
 backend:
   name: github
   repo: apstudio21/eralux
@@ -8,7 +8,53 @@ backend:
 
 locale: uk
 media_folder: images/uploads
-public_folder: /images/uploads
+public_folder: images/uploads
 
-# Колекції додаються паралельно з версткою блоків.
-collections: []
+collections:
+  - name: "site"
+    label: "Сайт"
+    files:
+      - name: "header"
+        label: "1. Шапка"
+        file: "content/header.json"
+        fields:
+          - label: "Меню"
+            name: "nav"
+            widget: "list"
+            summary: "{{fields.label}} → {{fields.href}}"
+            fields:
+              - { label: "Назва", name: "label", widget: "string" }
+              - { label: "Посилання (#якір або сторінка.html)", name: "href", widget: "string", pattern: ['^(#[a-z0-9-]+|[a-z0-9-]+\.html(#[a-z0-9-]+)?)$', "Напр. #projects або dealers.html"] }
+          - { label: "Телефон (як показувати)", name: "phone_label", widget: "string" }
+          - { label: "Телефон (для дзвінка, +380...)", name: "phone_tel", widget: "string", pattern: ['^\+380\d{9}$', "Формат: +380XXXXXXXXX"] }
+          - { label: "Графік роботи", name: "schedule", widget: "string" }
+          - { label: "Текст кнопки", name: "cta", widget: "string" }
+
+      - name: "hero"
+        label: "2. Перший екран"
+        file: "content/hero.json"
+        fields:
+          - { label: "Мітка зліва", name: "label", widget: "string" }
+          - { label: "Мітка справа", name: "label_right", widget: "string" }
+          - { label: "Заголовок – рядок 1 (жирний)", name: "title_1", widget: "string", hint: "Залиште «Натяжні стелі» – це важливо для Google" }
+          - { label: "Заголовок – рядок 2", name: "title_2", widget: "string" }
+          - { label: "Заголовок – рядок 3 (зелений)", name: "title_3", widget: "string" }
+          - { label: "Текст під заголовком", name: "text", widget: "text" }
+          - { label: "Кнопка 1", name: "cta_primary", widget: "string" }
+          - { label: "Кнопка 2", name: "cta_secondary", widget: "string" }
+          - { label: "Рейтинг Google (напр. 5,0)", name: "rating_value", widget: "string" }
+          - { label: "Кількість відгуків (напр. 100+)", name: "rating_count", widget: "string" }
+          - { label: "Посилання на профіль Google", name: "rating_url", widget: "string", pattern: ['^https://(maps\.app\.goo\.gl/|(www\.)?google\.|g\.page/)', "Посилання з Google Карт"] }
+          - { label: "Ціна – підпис", name: "price_caption", widget: "string" }
+          - { label: "Ціна – сума (без «грн»)", name: "price_value", widget: "string" }
+          - label: "Фото (3 шт.)"
+            name: "photos"
+            widget: "list"
+            min: 3
+            max: 3
+            summary: "{{fields.tag}} – {{fields.caption}}"
+            fields:
+              - { label: "Фото", name: "image", widget: "image", hint: "Перше – горизонтальне від 1760 px; інші – від 900 px. WebP або JPG до 400 КБ." }
+              - { label: "Опис фото (alt)", name: "alt", widget: "string" }
+              - { label: "Мітка", name: "tag", widget: "string" }
+              - { label: "Підпис", name: "caption", widget: "string" }

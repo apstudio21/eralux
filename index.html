@@ -4,14 +4,175 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Eralux — сайт у розробці</title>
-<style>
-  html,body{height:100%;margin:0}
-  body{display:grid;place-items:center;background:#F3EFE8;color:#1E241F;font:400 16px/1.5 system-ui,sans-serif}
-  p{margin:0;letter-spacing:.02em}
-</style>
+<title>Натяжні стелі у Львові від виробника | Eralux</title>
+<meta name="description" content="Натяжні стелі у Львові, Стрию, Дрогобичі. Власне виробництво полотна з 2010 року, 5,0 у Google. Безкоштовний замір і калькулятор вартості.">
+<meta name="theme-color" content="#F1EEE7">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="uk_UA">
+<meta property="og:title" content="Натяжні стелі у Львові від виробника | Eralux">
+<meta property="og:description" content="Полотно з власного цеху, монтаж нашою бригадою. Безкоштовний замір, ціна з розкладкою.">
+<link rel="icon" href="images/brand/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/FixelDisplay-Light.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/FixelDisplay-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/FixelText-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/style.css">
+<noscript><link rel="stylesheet" href="assets/css/noscript.css"></noscript>
+<script src="assets/js/boot.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HomeAndConstructionBusiness",
+  "name": "Eralux",
+  "description": "Натяжні стелі від виробника у Львові та області",
+  "foundingDate": "2010",
+  "telephone": ["+380670063755", "+380634054755"],
+  "areaServed": ["Львів", "Стрий", "Дрогобич", "Самбір", "Долина"],
+  "address": [
+    {"@type": "PostalAddress", "streetAddress": "вул. Пулюя, 40", "addressLocality": "Львів", "addressCountry": "UA"},
+    {"@type": "PostalAddress", "streetAddress": "вул. Січових Стрільців, 5", "addressLocality": "Стрий", "addressCountry": "UA"}
+  ],
+  "openingHoursSpecification": [
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "18:00"},
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "10:00", "closes": "16:00"}
+  ],
+  "sameAs": ["https://www.facebook.com/eraluxstryi/"]
+}
+</script>
 </head>
 <body>
-  <p>Eralux — сайт у розробці</p>
+<a class="skip" href="#main">Перейти до змісту</a>
+
+<!-- 1. ХЕДЕР -->
+<header class="hdr" id="hdr">
+  <div class="hdr__in">
+    <a class="hdr__logo" href="#top" aria-label="Eralux – на початок">
+      <img src="images/brand/logo.svg" alt="Eralux" width="68" height="54">
+    </a>
+    <nav class="nav" aria-label="Основне меню">
+      <ul class="nav__list" id="nav-list">
+        <li><a href="#light">Світло</a></li>
+        <li><a href="#ceilings">Стелі</a></li>
+        <li><a href="#projects">Проєкти</a></li>
+        <li><a href="#calc">Калькулятор</a></li>
+        <li><a href="dealers.html">Дилерам</a></li>
+        <li><a href="vacancies.html">Вакансії</a></li>
+      </ul>
+      <span class="nav__pill" aria-hidden="true"></span>
+    </nav>
+    <div class="hdr__right">
+      <a class="hdr__phone" id="header-phone" href="tel:+380670063755">
+        <span data-bind="header.phone_label">+38 067 006 37 55</span>
+        <small data-bind="header.schedule">пн–пт 9–18, сб 10–16</small>
+      </a>
+      <a class="btn btn--dark hdr__cta" href="#measure">
+        <span class="btn__tx" data-bind="header.cta">Безкоштовний замір</span>
+        <span class="btn__ar" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+      </a>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu">
+        <span>Меню</span>
+        <span class="burger__ic" aria-hidden="true"><i></i><i></i></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Мобільне меню -->
+<div class="menu" id="menu" hidden>
+  <div class="menu__in">
+    <ul class="menu__list" id="menu-list">
+      <li><a href="#light">Світло</a></li>
+      <li><a href="#ceilings">Стелі</a></li>
+      <li><a href="#projects">Проєкти</a></li>
+      <li><a href="#calc">Калькулятор</a></li>
+      <li><a href="dealers.html">Дилерам</a></li>
+      <li><a href="vacancies.html">Вакансії</a></li>
+    </ul>
+    <div class="menu__foot">
+      <a class="menu__phone" id="menu-phone" href="tel:+380670063755" data-bind="header.phone_label">+38 067 006 37 55</a>
+      <a class="btn btn--glow" href="#measure">
+        <span class="btn__tx">Безкоштовний замір</span>
+        <span class="btn__ar" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- 2. ПЕРШИЙ ЕКРАН -->
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="hero__frame">
+    <div class="hero__meta" data-reveal>
+      <span data-bind="hero.label">Натяжні стелі · Львів, Стрий і область</span>
+      <span data-bind="hero.label_right">З 2010 року</span>
+    </div>
+
+    <h1 class="hero__title" id="hero-title">
+      <span class="ln"><span class="b" data-bind="hero.title_1">Натяжні стелі</span></span>
+      <span class="ln"><span data-bind="hero.title_2">у Львові.</span></span>
+      <span class="ln ln--accent"><span data-bind="hero.title_3">Від виробника</span></span>
+    </h1>
+
+    <div class="hero__row">
+      <div class="hero__left" data-reveal>
+        <p class="hero__text" data-bind="hero.text">Полотно з власного цеху, монтаж нашою бригадою. Замір безкоштовний.</p>
+        <div class="hero__ctas">
+          <a class="btn btn--green" href="#measure">
+            <span class="btn__tx" data-bind="hero.cta_primary">Безкоштовний замір</span>
+            <span class="btn__ar" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+          </a>
+          <a class="btn btn--line" href="#calc"><span class="btn__tx" data-bind="hero.cta_secondary">Порахувати вартість</span></a>
+        </div>
+      </div>
+      <div class="hero__right" data-reveal>
+        <a class="rate" id="hero-rate" href="https://maps.app.goo.gl/RYuzzSQdiH32nRLD8" target="_blank" rel="noopener">
+          <span class="rate__score"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.8l2.5 5.3 5.7.7-4.2 3.9 1.1 5.7L10 14.6 4.9 17.4 6 11.7 1.8 7.8l5.7-.7z"/></svg><span data-bind="hero.rating_value">5,0</span></span>
+          <span class="rate__tx"><b data-bind="hero.rating_count">100+</b> відгуків у Google</span>
+          <span class="rate__ar" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 11l6-6M6 5h5v5"/></svg></span>
+        </a>
+        <p class="price">
+          <small data-bind="hero.price_caption">Кімната 12 м² під ключ</small>
+          <span>від <b data-bind="hero.price_value">7 000</b> грн</span>
+        </p>
+      </div>
+    </div>
+
+    <ul class="strip" id="hero-strip">
+      <li class="strip__item strip__item--main" data-reveal="photo">
+        <img src="images/hero/h1-1280.webp" srcset="images/hero/h1-800.webp 800w, images/hero/h1-1280.webp 1280w, images/hero/h1-1760.webp 1760w" sizes="(min-width: 1024px) 56vw, 100vw" width="1760" height="989" alt="Вітальня з матовою стелею без лиштви і підвісними світильниками" fetchpriority="high">
+        <span class="tag">Тіньовий профіль</span>
+        <span class="strip__cap">Стеля без лиштви</span>
+      </li>
+      <li class="strip__item" data-reveal="photo">
+        <img src="images/hero/h2-900.webp" width="900" height="600" alt="Вечірня вітальня зі світловими лініями в стелі" loading="lazy">
+        <span class="tag">Світлові лінії</span>
+        <span class="strip__cap">Світло в стелі</span>
+      </li>
+      <li class="strip__item" data-reveal="photo">
+        <img src="images/hero/h3-800.webp" width="800" height="533" alt="Світла кімната з сатиновою натяжною стелею" loading="lazy">
+        <span class="tag">Сатин</span>
+        <span class="strip__cap">Мʼякий відблиск</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- Далі блоки 3–13 (у роботі) -->
+<div class="todo" id="measure">
+  <p>Блоки 3–13 – наступні ітерації</p>
+</div>
+
+</main>
+
+<!-- Мобільна планка -->
+<div class="mbar" id="mbar">
+  <a class="mbar__call" id="mbar-call" href="tel:+380670063755">
+    <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.6 2.5l2 4.2-1.8 1.4a10 10 0 004.9 4.9l1.4-1.8 4.2 2-1 3.3c-.2.6-.8 1-1.4 1A14.4 14.4 0 012.3 4.9c0-.6.4-1.2 1-1.4z"/></svg>
+    Подзвонити
+  </a>
+  <a class="mbar__go" href="#measure">Безкоштовний замір</a>
+</div>
+
+<script src="assets/js/main.js" defer></script>
 </body>
 </html>

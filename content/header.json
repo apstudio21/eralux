@@ -1,0 +1,14 @@
+{
+  "nav": [
+    { "label": "Світло", "href": "#light" },
+    { "label": "Стелі", "href": "#ceilings" },
+    { "label": "Проєкти", "href": "#projects" },
+    { "label": "Калькулятор", "href": "#calc" },
+    { "label": "Дилерам", "href": "dealers.html" },
+    { "label": "Вакансії", "href": "vacancies.html" }
+  ],
+  "phone_label": "+38 067 006 37 55",
+  "phone_tel": "+380670063755",
+  "schedule": "пн–пт 9–18, сб 10–16",
+  "cta": "Безкоштовний замір"
+}

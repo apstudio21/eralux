@@ -1,0 +1,3 @@
+/* Без JS: усе видно одразу */
+[data-reveal], [data-reveal="photo"], [data-reveal="photo"] img, .hero__title .ln > span { opacity: 1 !important; transform: none !important; clip-path: none !important; }
+.burger { display: none !important; }
