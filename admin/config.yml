@@ -1,0 +1,14 @@
+# Decap CMS — Eralux
+# Вхід через GitHub. base_url — адреса OAuth-обробника на Cloudflare (додамо перед запуском).
+backend:
+  name: github
+  repo: apstudio21/eralux
+  branch: main
+  # base_url: https://<oauth-worker>.workers.dev
+
+locale: uk
+media_folder: images/uploads
+public_folder: /images/uploads
+
+# Колекції додаються паралельно з версткою блоків.
+collections: []
