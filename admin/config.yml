@@ -220,6 +220,8 @@ collections:
                   - { label: "Брус", value: "beam" }
                   - { label: "Сепаратор", value: "separator" }
               - { label: "Опис", name: "text", widget: "text" }
+              - { label: "Фото (макро стику стелі й стіни)", name: "image", widget: "image", required: false, hint: "4:3, від 800 px, до 250 КБ" }
+              - { label: "Опис фото (alt)", name: "alt", widget: "string", required: false }
           - { label: "Смуга виробництва – мітка", name: "factory_label", widget: "string" }
           - { label: "Смуга виробництва – заголовок", name: "factory_title", widget: "string" }
           - { label: "Смуга виробництва – текст", name: "factory_text", widget: "text" }

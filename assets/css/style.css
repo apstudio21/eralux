@@ -355,20 +355,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .prof__n { font: 500 12px/1 var(--text); letter-spacing: .1em; color: var(--mute); }
 .prof__price { height: 32px; display: inline-flex; align-items: center; padding: 0 12px; border-radius: 999px; background: var(--linen); font: 500 13px/1 var(--text); white-space: nowrap; }
 .prof[data-profile="pvc"] .prof__price { background: var(--green); color: var(--chalk); }
-.prof__sc { width: 100%; height: auto; margin: 22px 0 20px; overflow: visible; }
-.prof__sc path, .prof__sc rect { fill: none; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
-.sc-wall { stroke: var(--mute); stroke-width: 1.2; stroke-dasharray: 2 4; }
-.sc-slab { stroke: var(--stone); stroke-width: 8; stroke-linecap: butt !important; }
-.sc-can { stroke: var(--ink); stroke-width: 3; }
-.sc-can--alt { stroke: var(--green); }
-.sc-pro { stroke: var(--green); stroke-width: 2; }
-.sc-acc { stroke: var(--green); stroke-width: 2; }
-.sc-gap { fill: var(--ink) !important; stroke: none; opacity: .85; }
-.sc-led { fill: var(--glow) !important; stroke: var(--brass); stroke-width: 1; }
-.sc-glow { stroke: var(--glow); stroke-width: 14; opacity: .6; filter: blur(6px); }
-.js .prof .sc-can, .js .prof .sc-pro, .js .prof .sc-acc { stroke-dasharray: 240; stroke-dashoffset: 240; transition: stroke-dashoffset 1.4s var(--ease) .2s; }
-.js .prof.is-in .sc-can, .js .prof.is-in .sc-pro, .js .prof.is-in .sc-acc { stroke-dashoffset: 0; }
-.prof:hover .sc-glow { opacity: .9; }
+.prof__ph { position: relative; margin: 18px 0 20px; aspect-ratio: 4 / 3; border-radius: 14px; overflow: hidden; background: var(--linen); }
+.prof__ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .prof__name { margin: auto 0 8px; font: 400 clamp(24px, .6vw + 20px, 30px)/1.1 var(--display); letter-spacing: -.015em; }
 .prof__text { font: 400 14px/1.55 var(--text); color: var(--mute); }
 

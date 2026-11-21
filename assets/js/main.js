@@ -241,15 +241,23 @@
     // профілі: ціни з prices.json, тексти з адмінки
     var profMap = {};
     if (P && Array.isArray(P.profiles)) P.profiles.forEach(function (x) { if (x && x.id) profMap[x.id] = x; });
-    var profText = {};
-    if (d && Array.isArray(d.profiles)) d.profiles.forEach(function (x) { if (x && x.id && typeof x.text === 'string') profText[x.id] = x.text; });
+    var profText = {}, profImg = {};
+    if (d && Array.isArray(d.profiles)) d.profiles.forEach(function (x) {
+      if (!x || !x.id) return;
+      if (typeof x.text === 'string') profText[x.id] = x;
+      if (RE_IMG.test(x.image || '')) profImg[x.id] = x;
+    });
     document.querySelectorAll('#profs .prof').forEach(function (card) {
       var id = card.dataset.profile, x = profMap[id];
       if (x) {
         card.querySelector('.prof__name').textContent = x.name;
         card.querySelector('.prof__price').textContent = x.price > 0 ? '+' + fmt(x.price) + ' грн/м.п.' : 'у ціні';
       }
-      if (profText[id] && profText[id].trim()) card.querySelector('.prof__text').textContent = profText[id].trim();
+      if (profText[id] && profText[id].text.trim()) card.querySelector('.prof__text').textContent = profText[id].text.trim();
+      var ph = card.querySelector('.prof__ph');
+      if (ph && profImg[id] && !ph.querySelector('img')) {
+        var im = document.createElement('img'); im.src = profImg[id].image; im.alt = profImg[id].alt || ''; im.loading = 'lazy'; im.width = 800; im.height = 600; ph.appendChild(im);
+      }
     });
   }
 
