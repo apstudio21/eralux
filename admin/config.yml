@@ -45,8 +45,9 @@ collections:
           - { label: "Рейтинг Google (напр. 5,0)", name: "rating_value", widget: "string" }
           - { label: "Кількість відгуків (напр. 100+)", name: "rating_count", widget: "string" }
           - { label: "Посилання на профіль Google", name: "rating_url", widget: "string", pattern: ['^https://(maps\.app\.goo\.gl/|(www\.)?google\.|g\.page/)', "Посилання з Google Карт"] }
-          - { label: "Ціна – підпис", name: "price_caption", widget: "string" }
-          - { label: "Ціна – сума (без «грн»)", name: "price_value", widget: "string" }
+          - { label: "Тег 1 (ціна)", name: "tag1", widget: "string" }
+          - { label: "Тег 2", name: "tag2", widget: "string" }
+          - { label: "Тег 3 (з блискавкою)", name: "tag3", widget: "string" }
           - label: "Фото (3 шт.)"
             name: "photos"
             widget: "list"
@@ -58,3 +59,121 @@ collections:
               - { label: "Опис фото (alt)", name: "alt", widget: "string" }
               - { label: "Мітка", name: "tag", widget: "string" }
               - { label: "Підпис", name: "caption", widget: "string" }
+              - { label: "Куди веде (#якір)", name: "link", widget: "string", pattern: ['^(#[a-z0-9-]+|[a-z0-9-]+\.html(#[a-z0-9-]+)?)$', "Напр. #ceilings"] }
+
+      - name: "stats"
+        label: "3. Про нас і цифри"
+        file: "content/stats.json"
+        fields:
+          - { label: "Мітка", name: "label", widget: "string" }
+          - { label: "Фраза – початок (сірий)", name: "lead_1", widget: "string" }
+          - { label: "Фраза – головне (жирний)", name: "lead_2", widget: "string" }
+          - { label: "Фраза – кінець (сірий)", name: "lead_3", widget: "string" }
+          - { label: "Комірка 1 – число", name: "n1", widget: "string", pattern: ['^\d{1,6}$', "Лише цифри"] }
+          - { label: "Комірка 1 – одиниця", name: "u1", widget: "string" }
+          - { label: "Комірка 1 – опис", name: "d1", widget: "string" }
+          - { label: "Комірка 2 – число", name: "n2", widget: "string", pattern: ['^\d{1,6}$', "Лише цифри"] }
+          - { label: "Комірка 2 – одиниця", name: "u2", widget: "string" }
+          - { label: "Комірка 2 – опис", name: "d2", widget: "string" }
+          - { label: "Комірка 3 – число", name: "n3", widget: "string", pattern: ['^\d{1,6}$', "Лише цифри"] }
+          - { label: "Комірка 3 – одиниця", name: "u3", widget: "string" }
+          - { label: "Комірка 3 – опис", name: "d3", widget: "string" }
+          - { label: "Темна комірка – заголовок", name: "own_title", widget: "string" }
+          - { label: "Темна комірка – текст", name: "own_text", widget: "text" }
+          - { label: "Темна комірка – посилання", name: "own_link", widget: "string" }
+          - { label: "Фото", name: "photo", widget: "image", hint: "Від 900 px, WebP або JPG до 300 КБ" }
+          - { label: "Опис фото (alt)", name: "photo_alt", widget: "string" }
+          - { label: "Мітка на фото", name: "photo_tag", widget: "string" }
+
+      - name: "light"
+        label: "4. Світло (день / вечір)"
+        file: "content/light.json"
+        fields:
+          - { label: "Мітка", name: "label", widget: "string" }
+          - { label: "Заголовок – слово 1", name: "title_1", widget: "string" }
+          - { label: "Заголовок – слово 2 (жирне)", name: "title_2", widget: "string" }
+          - { label: "Текст", name: "text", widget: "text" }
+          - { label: "Список – заголовок", name: "list_title", widget: "string" }
+          - { label: "Підсумок – підпис", name: "total_label", widget: "string" }
+          - { label: "Примітка під підсумком", name: "note", widget: "text" }
+          - { label: "Кнопка", name: "button", widget: "string" }
+          - { label: "«Також робимо» – заголовок", name: "also_title", widget: "string" }
+          - label: "«Також робимо» – рішення"
+            name: "also"
+            widget: "select"
+            multiple: true
+            options:
+              - { label: "Світлові лінії", value: "lines" }
+              - { label: "Вбудований трек", value: "track_built" }
+              - { label: "Трек з шиною", value: "track_bus" }
+              - { label: "LED-підсвітка", value: "led" }
+              - { label: "Точкові світильники", value: "spot" }
+              - { label: "Люстра чи підвіс", value: "chandelier" }
+          - label: "Кімнати (до 4)"
+            name: "rooms"
+            widget: "list"
+            max: 4
+            summary: "{{fields.name}} · {{fields.area}}"
+            fields:
+              - { label: "Назва", name: "name", widget: "string" }
+              - { label: "Площа (напр. 38 м²)", name: "area", widget: "string" }
+              - { label: "Фото вдень", name: "day", widget: "image", hint: "Горизонтальне 3:2, від 1600 px. Той самий ракурс, що й вечірнє." }
+              - { label: "Фото ввечері", name: "night", widget: "image", hint: "Той самий ракурс і розмір, що й денне." }
+              - { label: "Опис денного фото (alt)", name: "alt_day", widget: "string" }
+              - { label: "Опис вечірнього фото (alt)", name: "alt_night", widget: "string" }
+              - label: "Що світиться"
+                name: "items"
+                widget: "list"
+                summary: "{{fields.id}} × {{fields.qty}}"
+                fields:
+                  - label: "Рішення"
+                    name: "id"
+                    widget: "select"
+                    options:
+                      - { label: "Точкові світильники (шт)", value: "spot" }
+                      - { label: "Люстра чи підвіс (шт)", value: "chandelier" }
+                      - { label: "LED-підсвітка (м.п.)", value: "led" }
+                      - { label: "Світлові лінії (м.п.)", value: "lines" }
+                      - { label: "Вбудований трек (м.п.)", value: "track_built" }
+                      - { label: "Трек з шиною (м.п.)", value: "track_bus" }
+                  - { label: "Власна назва (необовʼязково)", name: "label", widget: "string", required: false }
+                  - { label: "Кількість", name: "qty", widget: "number", value_type: "int", min: 1 }
+
+      - name: "prices"
+        label: "Ціни (для світла, полотен і калькулятора)"
+        file: "content/prices.json"
+        fields:
+          - { label: "Полотно, грн/м² (база)", name: "canvas_m2", widget: "number", value_type: "int", min: 0 }
+          - { label: "Профіль по периметру + вставка, грн/м.п.", name: "perimeter_m", widget: "number", value_type: "int", min: 0 }
+          - { label: "Кутів у ціні", name: "corners_included", widget: "number", value_type: "int", min: 0 }
+          - { label: "Додатковий кут, грн", name: "extra_corner", widget: "number", value_type: "int", min: 0 }
+          - { label: "Кут на парящому / єврокрабі, грн", name: "extra_corner_premium", widget: "number", value_type: "int", min: 0 }
+          - label: "Полотна"
+            name: "canvases"
+            widget: "list"
+            summary: "{{fields.name}} – {{fields.price}} грн/м²"
+            fields:
+              - { label: "ID (не змінювати)", name: "id", widget: "string" }
+              - { label: "Назва", name: "name", widget: "string" }
+              - { label: "Ціна, грн/м²", name: "price", widget: "number", value_type: "int", min: 0 }
+          - label: "Профілі (доплата)"
+            name: "profiles"
+            widget: "list"
+            summary: "{{fields.name}} – +{{fields.price}} грн/м.п."
+            fields:
+              - { label: "ID (не змінювати)", name: "id", widget: "string" }
+              - { label: "Назва", name: "name", widget: "string" }
+              - { label: "Доплата, грн/м.п.", name: "price", widget: "number", value_type: "int", min: 0 }
+              - { label: "Кути за ціною парящого", name: "premium_corners", widget: "boolean", required: false }
+          - label: "Світло"
+            name: "light"
+            widget: "list"
+            summary: "{{fields.name}} – {{fields.price}} грн/{{fields.unit}}"
+            fields:
+              - { label: "ID (не змінювати)", name: "id", widget: "string" }
+              - { label: "Назва", name: "name", widget: "string" }
+              - { label: "Одиниця", name: "unit", widget: "select", options: ["шт", "м.п."] }
+              - { label: "Ціна, грн", name: "price", widget: "number", value_type: "int", min: 0 }
+          - { label: "Висота 3–3,5 м, +%", name: "height_3", widget: "number", value_type: "int", min: 0 }
+          - { label: "Висота понад 3,5 м, +%", name: "height_35", widget: "number", value_type: "int", min: 0 }
+          - { label: "Доїзд, грн/км", name: "fuel_km", widget: "number", value_type: "int", min: 0 }

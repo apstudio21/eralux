@@ -130,36 +130,135 @@
           <span class="rate__tx"><b data-bind="hero.rating_count">100+</b> відгуків у Google</span>
           <span class="rate__ar" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 11l6-6M6 5h5v5"/></svg></span>
         </a>
-        <p class="price">
-          <small data-bind="hero.price_caption">Кімната 12 м² під ключ</small>
-          <span>від <b data-bind="hero.price_value">7 000</b> грн</span>
-        </p>
+        <ul class="pills" aria-label="Коротко про умови">
+          <li class="pill pill--price"><span data-bind="hero.tag1">від 350 грн/м²</span></li>
+          <li class="pill"><span data-bind="hero.tag2">Замір – 0 грн</span></li>
+          <li class="pill pill--bolt"><span class="bolt" aria-hidden="true"><svg viewBox="0 0 12 16"><path d="M7 0 0 9h5l-1 7 7-9H6z"/></svg></span><span data-bind="hero.tag3">Працюємо навіть без світла</span></li>
+        </ul>
       </div>
     </div>
 
     <ul class="strip" id="hero-strip">
       <li class="strip__item strip__item--main" data-reveal="photo">
+        <a class="strip__link" href="#ceilings">
         <img src="images/hero/h1-1280.webp" srcset="images/hero/h1-800.webp 800w, images/hero/h1-1280.webp 1280w, images/hero/h1-1760.webp 1760w" sizes="(min-width: 1024px) 56vw, 100vw" width="1760" height="989" alt="Вітальня з матовою стелею без лиштви і підвісними світильниками" fetchpriority="high">
         <span class="tag">Тіньовий профіль</span>
         <span class="strip__cap">Стеля без лиштви</span>
+        <span class="strip__go" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></span>
+        </a>
       </li>
       <li class="strip__item" data-reveal="photo">
+        <a class="strip__link" href="#light">
         <img src="images/hero/h2-900.webp" width="900" height="600" alt="Вечірня вітальня зі світловими лініями в стелі" loading="lazy">
         <span class="tag">Світлові лінії</span>
         <span class="strip__cap">Світло в стелі</span>
+        <span class="strip__go" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></span>
+        </a>
       </li>
       <li class="strip__item" data-reveal="photo">
+        <a class="strip__link" href="#ceilings">
         <img src="images/hero/h3-800.webp" width="800" height="533" alt="Світла кімната з сатиновою натяжною стелею" loading="lazy">
         <span class="tag">Сатин</span>
         <span class="strip__cap">Мʼякий відблиск</span>
+        <span class="strip__go" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></span>
+        </a>
       </li>
     </ul>
   </div>
 </section>
 
-<!-- Далі блоки 3–13 (у роботі) -->
+<!-- 3. ЦИФРИ / ПРО НАС -->
+<section class="about" id="about" aria-labelledby="about-title">
+  <div class="wrap">
+    <p class="label" data-reveal><span data-bind="stats.label">Про нас</span></p>
+    <h2 class="about__lead" id="about-title" data-reveal>
+      <span data-bind="stats.lead_1">З 2010 року</span> <b data-bind="stats.lead_2">ріжемо й зварюємо полотно самі</b> <span data-bind="stats.lead_3">– тому відповідаємо за стелю від рулону до останнього світильника.</span>
+    </h2>
+
+    <ul class="facts">
+      <li class="fact fact--a" data-reveal>
+        <p class="fact__d" data-bind="stats.d1">Робимо натяжні стелі у Львові та області</p>
+        <p class="fact__n"><span class="count" data-bind="stats.n1">16</span><small data-bind="stats.u1">років</small></p>
+      </li>
+      <li class="fact fact--b" data-reveal>
+        <p class="fact__d" data-bind="stats.d2">Гарантія на полотно. На монтаж – 3 роки</p>
+        <p class="fact__n"><span class="count" data-bind="stats.n2">10</span><small data-bind="stats.u2">років</small></p>
+      </li>
+      <li class="fact fact--c" data-reveal>
+        <p class="fact__d" data-bind="stats.d3">Львів, Стрий, Дрогобич, Самбір, Долина</p>
+        <p class="fact__n"><span class="count" data-bind="stats.n3">5</span><small data-bind="stats.u3">міст</small></p>
+      </li>
+      <li class="fact fact--dark" data-reveal>
+        <p class="fact__t" data-bind="stats.own_title">Власний цех</p>
+        <p class="fact__d" data-bind="stats.own_text">Полотно виготовляємо самі – під розмір вашої кімнати, без посередників.</p>
+        <a class="fact__link" href="dealers.html"><span data-bind="stats.own_link">Працюєте зі стелями? Дилерам</span> <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></a>
+      </li>
+      <li class="fact fact--photo" data-reveal="photo">
+        <img id="about-photo" src="images/about/team.webp" width="960" height="720" alt="Бригада Eralux у квартирі клієнта після монтажу дворівневої стелі" loading="lazy">
+        <span class="tag" data-bind="stats.photo_tag">Наша бригада</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4. СВІТЛО (ДЕНЬ / ВЕЧІР) -->
+<section class="light" id="light" aria-labelledby="light-title">
+  <div class="wrap">
+    <div class="light__head">
+      <div>
+        <p class="label" data-reveal><span data-bind="light.label">Стеля і світло</span></p>
+        <h2 class="h2" id="light-title" data-reveal><span data-bind="light.title_1">Увімкніть</span> <b data-bind="light.title_2">вечір</b></h2>
+      </div>
+      <p class="light__text" data-reveal data-bind="light.text">Одна кімната, один ракурс. Перемкніть світло й подивіться, що воно змінює і скільки коштує.</p>
+    </div>
+
+    <div class="light__grid">
+      <div class="light__stage" data-reveal>
+        <div class="light__pics" id="light-pics">
+          <img class="light__day" id="light-day" src="images/light/kitchen-day-1600.webp" srcset="images/light/kitchen-day-900.webp 900w, images/light/kitchen-day-1600.webp 1600w" sizes="(min-width: 1024px) 64vw, 100vw" width="1600" height="1067" alt="Кухня-вітальня вдень: дворівнева натяжна стеля з нішею" loading="lazy">
+          <img class="light__night" id="light-night" src="images/light/kitchen-night-1600.webp" srcset="images/light/kitchen-night-900.webp 900w, images/light/kitchen-night-1600.webp 1600w" sizes="(min-width: 1024px) 64vw, 100vw" width="1600" height="1067" alt="Та сама кухня-вітальня ввечері: підсвітка в ніші й точкові світильники" loading="lazy">
+        </div>
+        <button class="switch" id="light-switch" type="button" role="switch" aria-checked="false" aria-label="Увімкнути вечірнє світло">
+          <span class="switch__l">День</span><span class="switch__r">Вечір</span><span class="switch__knob" aria-hidden="true"></span>
+        </button>
+        <span class="light__room" id="light-room-chip">Кухня-вітальня · 38 м²</span>
+      </div>
+
+      <div class="light__side">
+        <ul class="rooms" id="light-rooms" role="tablist" aria-label="Кімнати">
+          <li><button type="button" role="tab" aria-selected="true" data-room="0"><span class="rooms__n">01</span><span class="rooms__name">Кухня-вітальня</span><span class="rooms__m">38 м²</span></button></li>
+          <li><button type="button" role="tab" aria-selected="false" data-room="1"><span class="rooms__n">02</span><span class="rooms__name">Вітальня-лофт</span><span class="rooms__m">32 м²</span></button></li>
+          <li><button type="button" role="tab" aria-selected="false" data-room="2"><span class="rooms__n">03</span><span class="rooms__name">Вітальня з колонами</span><span class="rooms__m">45 м²</span></button></li>
+        </ul>
+        <div class="glow-list">
+          <p class="glow-list__t" data-bind="light.list_title">Що тут світиться</p>
+          <ul id="light-items">
+            <li><span>Підсвітка в ніші <small>14 м.п.</small></span><b>2 800 грн</b></li>
+            <li><span>Точкові світильники <small>16 шт</small></span><b>4 800 грн</b></li>
+          </ul>
+          <p class="glow-list__total"><span data-bind="light.total_label">Світло в цій кімнаті</span><b>≈ <span id="light-total">7 600</span> грн</b></p>
+          <p class="glow-list__note" data-bind="light.note">Ціна – монтаж і закладні. Світильники підберемо або встановимо ваші.</p>
+        </div>
+        <a class="btn btn--glow light__cta" href="#calc"><span class="btn__tx" data-bind="light.button">Порахувати зі світлом</span><span class="btn__ar" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></span></a>
+      </div>
+    </div>
+
+    <div class="also" data-reveal>
+      <p class="also__t" data-bind="light.also_title">Також робимо</p>
+      <ul class="also__list" id="light-also">
+        <li>Світлові лінії <b>від 1 700 грн/м.п.</b></li>
+        <li>Вбудований трек <b>від 2 000 грн/м.п.</b></li>
+        <li>Трек з шиною <b>від 3 000 грн/м.п.</b></li>
+        <li>LED-підсвітка <b>від 200 грн/м.п.</b></li>
+      </ul>
+    </div>
+  </div>
+  <script type="application/json" id="light-default">{"light":{"label":"Стеля і світло","title_1":"Увімкніть","title_2":"вечір","text":"Одна кімната, один ракурс. Перемкніть світло й подивіться, що воно змінює і скільки коштує.","list_title":"Що тут світиться","total_label":"Світло в цій кімнаті","note":"Ціна – монтаж і закладні. Світильники підберемо або встановимо ваші.","button":"Порахувати зі світлом","also_title":"Також робимо","also":["lines","track_built","track_bus","led"],"rooms":[{"name":"Кухня-вітальня","area":"38 м²","day":"images/light/kitchen-day-1600.webp","night":"images/light/kitchen-night-1600.webp","alt_day":"Кухня-вітальня вдень: дворівнева натяжна стеля з нішею","alt_night":"Та сама кухня-вітальня ввечері: підсвітка в ніші й точкові світильники","items":[{"id":"led","label":"Підсвітка в ніші","qty":14},{"id":"spot","qty":16}]},{"name":"Вітальня-лофт","area":"32 м²","day":"images/light/loft-day-1600.webp","night":"images/light/loft-night-1600.webp","alt_day":"Вітальня-лофт вдень: глянцева натяжна стеля","alt_night":"Та сама вітальня ввечері: підсвітка по периметру й люстри","items":[{"id":"led","label":"Підсвітка по периметру","qty":22},{"id":"chandelier","label":"Люстри","qty":2}]},{"name":"Вітальня з колонами","area":"45 м²","day":"images/light/columns-day-1600.webp","night":"images/light/columns-night-1600.webp","alt_day":"Простора вітальня з колонами вдень: глянцева натяжна стеля","alt_night":"Та сама вітальня ввечері: два контури підсвітки, люстра й підвіси","items":[{"id":"led","label":"Два контури підсвітки","qty":30},{"id":"chandelier","label":"Люстра й підвіси","qty":3}]}]},"prices":{"canvas_m2":350,"perimeter_m":200,"corners_included":4,"extra_corner":100,"extra_corner_premium":500,"canvases":[{"id":"matte","name":"Матове","price":350},{"id":"satin","name":"Сатин","price":350},{"id":"gloss","name":"Глянець","price":350},{"id":"fabric","name":"Тканинне","price":350}],"profiles":[{"id":"pvc","name":"ПВХ зі вставкою","price":0,"premium_corners":false},{"id":"shadow","name":"Тіньовий","price":250,"premium_corners":false},{"id":"shadow_max","name":"Тіньовий Max","price":350,"premium_corners":false},{"id":"floating","name":"Парящий","price":550,"premium_corners":true},{"id":"beam","name":"Брус","price":550,"premium_corners":false},{"id":"separator","name":"Сепаратор","price":550,"premium_corners":false}],"light":[{"id":"spot","name":"Точкові світильники","unit":"шт","price":300},{"id":"chandelier","name":"Люстра чи підвіс","unit":"шт","price":650},{"id":"led","name":"LED-підсвітка","unit":"м.п.","price":200},{"id":"lines","name":"Світлові лінії","unit":"м.п.","price":1700},{"id":"track_built","name":"Вбудований трек","unit":"м.п.","price":2000},{"id":"track_bus","name":"Трек з шиною","unit":"м.п.","price":3000}],"height_3":10,"height_35":15,"fuel_km":10}}</script>
+</section>
+
+<!-- Далі блоки 5–13 (у роботі) -->
 <div class="todo" id="measure">
-  <p>Блоки 3–13 – наступні ітерації</p>
+  <p>Блоки 5–13 – наступні ітерації</p>
 </div>
 
 </main>

@@ -65,7 +65,132 @@
         var t = li.querySelector('.tag'), c = li.querySelector('.strip__cap');
         if (typeof p.tag === 'string' && p.tag.trim()) t.textContent = p.tag.trim();
         if (typeof p.caption === 'string' && p.caption.trim()) c.textContent = p.caption.trim();
+        var a = li.querySelector('.strip__link');
+        if (a && RE_HREF.test(p.link || '')) a.href = p.link;
       });
+    }
+  }
+
+
+  /* ---------- 3. Про нас ---------- */
+  function applyStats(d) {
+    if (!d) return;
+    bindText('stats', d);
+    var img = $('about-photo');
+    if (img && typeof d.photo === 'string' && RE_IMG.test(d.photo) && d.photo !== img.getAttribute('src')) img.src = d.photo;
+    if (img && typeof d.photo_alt === 'string' && d.photo_alt.trim()) img.alt = d.photo_alt.trim();
+  }
+
+  function countUp(el) {
+    var raw = el.textContent.trim();
+    if (!/^\d{1,6}$/.test(raw) || reduce) return;
+    var end = parseInt(raw, 10), t0 = null, dur = 1500;
+    el.textContent = '0';
+    function step(t) {
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = String(Math.round(end * e));
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* ---------- 4. Світло: день / вечір ---------- */
+  function fmt(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+
+  function initLight(remote, remotePrices) {
+    var sec = $('light'); if (!sec) return;
+    var def = null;
+    try { def = JSON.parse($('light-default').textContent); } catch (e) { def = null; }
+    var L = (remote && Array.isArray(remote.rooms) && remote.rooms.length) ? remote : (def && def.light);
+    var P = (remotePrices && Array.isArray(remotePrices.light)) ? remotePrices : (def && def.prices);
+    if (!L || !P) return;
+    if (remote) bindText('light', remote);
+    var byId = {}; P.light.forEach(function (x) { if (x && x.id) byId[x.id] = x; });
+
+    var sw = $('light-switch'), day = $('light-day'), night = $('light-night'), pics = $('light-pics');
+    var tabs = $('light-rooms'), list = $('light-items'), total = $('light-total'), chip = $('light-room-chip');
+    var rooms = L.rooms.filter(function (r) { return r && RE_IMG.test(r.day || '') && RE_IMG.test(r.night || ''); }).slice(0, 4);
+    if (!rooms.length) return;
+
+    // вкладки кімнат з даних
+    tabs.textContent = '';
+    rooms.forEach(function (r, i) {
+      var li = document.createElement('li'), b = document.createElement('button');
+      b.type = 'button'; b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', i === 0 ? 'true' : 'false'); b.dataset.room = i;
+      [['rooms__n', '0' + (i + 1)], ['rooms__name', r.name || ''], ['rooms__m', r.area || '']].forEach(function (c) {
+        var s = document.createElement('span'); s.className = c[0]; s.textContent = c[1]; b.appendChild(s);
+      });
+      li.appendChild(b); tabs.appendChild(li);
+    });
+
+    // «Також робимо»
+    if (Array.isArray(L.also)) {
+      var also = $('light-also'), frag = document.createDocumentFragment();
+      L.also.forEach(function (id) {
+        var x = byId[id]; if (!x) return;
+        var li = document.createElement('li'), b = document.createElement('b');
+        li.appendChild(document.createTextNode(x.name));
+        b.textContent = 'від ' + fmt(x.price) + ' грн/' + x.unit; li.appendChild(b); frag.appendChild(li);
+      });
+      if (frag.childNodes.length) { also.textContent = ''; also.appendChild(frag); }
+    }
+
+    var current = 0, sum = 0;
+    function render(i, animate) {
+      var r = rooms[i]; sum = 0;
+      var frag = document.createDocumentFragment();
+      (r.items || []).forEach(function (it) {
+        var x = byId[it && it.id]; var q = Number(it && it.qty);
+        if (!x || !(q > 0)) return;
+        var cost = q * x.price; sum += cost;
+        var li = document.createElement('li'), sp = document.createElement('span'), sm = document.createElement('small'), b = document.createElement('b');
+        sp.textContent = (typeof it.label === 'string' && it.label.trim()) ? it.label.trim() : x.name;
+        sm.textContent = q + ' ' + x.unit; sp.appendChild(sm);
+        b.textContent = fmt(cost) + ' грн';
+        li.appendChild(sp); li.appendChild(b); frag.appendChild(li);
+      });
+      function swap() {
+        list.textContent = ''; list.appendChild(frag);
+        total.textContent = fmt(sum);
+        chip.textContent = (r.name || '') + (r.area ? ' · ' + r.area : '');
+        requestAnimationFrame(function () { list.classList.remove('is-out'); });
+      }
+      if (animate && !reduce) { list.classList.add('is-out'); setTimeout(swap, 280); } else swap();
+    }
+    function setPhotos(i) {
+      var r = rooms[i];
+      function apply() {
+        day.removeAttribute('srcset'); night.removeAttribute('srcset');
+        day.src = r.day; night.src = r.night;
+        day.alt = r.alt_day || r.name || ''; night.alt = r.alt_night || r.name || '';
+      }
+      if (reduce) { apply(); return; }
+      pics.style.transition = 'opacity .35s ease'; pics.style.opacity = '0';
+      setTimeout(function () { apply(); var im = new Image(); im.onload = im.onerror = function () { pics.style.opacity = '1'; }; im.src = sec.classList.contains('is-night') ? r.night : r.day; }, 350);
+    }
+    function setNight(on) {
+      sec.classList.toggle('is-night', on);
+      sw.setAttribute('aria-checked', on ? 'true' : 'false');
+      sw.setAttribute('aria-label', on ? 'Повернути денне світло' : 'Увімкнути вечірнє світло');
+      document.documentElement.classList.toggle('light-night', on);
+    }
+
+    tabs.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-room]'); if (!b) return;
+      var i = +b.dataset.room; if (i === current) return;
+      tabs.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-selected', x === b ? 'true' : 'false'); });
+      current = i; setPhotos(i); render(i, true);
+    });
+    sw.addEventListener('click', function () { setNight(sw.getAttribute('aria-checked') !== 'true'); });
+
+    render(0, false);
+    // при першій появі блоку світло вмикається само – один раз
+    if ('IntersectionObserver' in window && !reduce) {
+      var io = new IntersectionObserver(function (en) {
+        if (en[0].isIntersecting) { io.disconnect(); setTimeout(function () { if (sw.getAttribute('aria-checked') !== 'true') setNight(true); }, 900); }
+      }, { threshold: 0.45 });
+      io.observe($('light-pics').parentNode);
     }
   }
 
@@ -136,7 +261,7 @@
     // фото першого екрана – одразу після завантаження, не чекаючи скролу
     document.querySelectorAll('.hero [data-reveal]').forEach(function (el) { el.classList.add('is-in'); });
     var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } });
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-in'); en.target.querySelectorAll('.count').forEach(countUp); io.unobserve(en.target); } });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
     els.forEach(function (el) { if (!el.classList.contains('is-in')) io.observe(el); });
   }
@@ -147,8 +272,9 @@
   initNavPill();
   initMenu();
 
-  Promise.race([Promise.all([load('header'), load('hero')]), timeout(1200)]).then(function (res) {
-    if (res) { applyHeader(res[0]); applyHero(res[1]); }
+  Promise.race([Promise.all([load('header'), load('hero'), load('stats'), load('light'), load('prices')]), timeout(1200)]).then(function (res) {
+    if (res) { applyHeader(res[0]); applyHero(res[1]); applyStats(res[2]); }
+    initLight(res ? res[3] : null, res ? res[4] : null);
     reveals();
     var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
     Promise.race([fonts, timeout(900)]).then(start);
