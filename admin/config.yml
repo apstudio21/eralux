@@ -34,9 +34,9 @@ collections:
         label: "2. Перший екран"
         file: "content/hero.json"
         fields:
-          - { label: "Мітка зліва", name: "label", widget: "string" }
+          - { label: "Мітка зліва (з блискавкою)", name: "label", widget: "string" }
           - { label: "Мітка справа", name: "label_right", widget: "string" }
-          - { label: "Заголовок – рядок 1 (жирний)", name: "title_1", widget: "string", hint: "Залиште «Натяжні стелі» – це важливо для Google" }
+          - { label: "Заголовок – рядок 1", name: "title_1", widget: "string", hint: "Залиште «Натяжні стелі» – це важливо для Google" }
           - { label: "Заголовок – рядок 2", name: "title_2", widget: "string" }
           - { label: "Заголовок – рядок 3 (зелений)", name: "title_3", widget: "string" }
           - { label: "Текст під заголовком", name: "text", widget: "text" }
@@ -47,7 +47,6 @@ collections:
           - { label: "Посилання на профіль Google", name: "rating_url", widget: "string", pattern: ['^https://(maps\.app\.goo\.gl/|(www\.)?google\.|g\.page/)', "Посилання з Google Карт"] }
           - { label: "Тег 1 (ціна)", name: "tag1", widget: "string" }
           - { label: "Тег 2", name: "tag2", widget: "string" }
-          - { label: "Тег 3 (з блискавкою)", name: "tag3", widget: "string" }
           - label: "Фото (3 шт.)"
             name: "photos"
             widget: "list"
