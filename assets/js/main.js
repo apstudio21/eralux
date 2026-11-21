@@ -194,14 +194,71 @@
     }
   }
 
+
+  /* ---------- 5. Полотно і профіль ---------- */
+  function initCeilings(d, P) {
+    var list = $('canv-list'), pic = document.querySelector('.canv__pic'), img = $('canv-img'), tag = $('canv-tag');
+    if (!list || !img) return;
+    if (d) bindText('ceilings', d);
+    var priceById = {}, nameById = {};
+    if (P && Array.isArray(P.canvases)) P.canvases.forEach(function (c) { if (c && c.id) { priceById[c.id] = c.price; nameById[c.id] = c.name; } });
+    // дані з адмінки: тексти й фото полотен
+    var items = [];
+    if (d && Array.isArray(d.canvases)) {
+      d.canvases.forEach(function (c) { if (c && RE_IMG.test(c.image || '')) items.push(c); });
+    }
+    if (items.length) {
+      list.textContent = '';
+      items.forEach(function (c, i) {
+        var li = document.createElement('li'), b = document.createElement('button');
+        b.type = 'button'; b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', i === 0 ? 'true' : 'false'); b.dataset.canvas = i;
+        var n = document.createElement('span'); n.className = 'canv__name'; n.textContent = nameById[c.id] || c.name || '';
+        var pr = document.createElement('span'); pr.className = 'canv__price'; pr.textContent = priceById[c.id] != null ? fmt(priceById[c.id]) + ' грн/м²' : '';
+        var t = document.createElement('span'); t.className = 'canv__text'; t.textContent = c.text || '';
+        b.appendChild(n); b.appendChild(pr); b.appendChild(t); li.appendChild(b); list.appendChild(li);
+      });
+    } else if (Object.keys(priceById).length) {
+      list.querySelectorAll('.canv__price').forEach(function (el, i) { var id = ['matte', 'satin', 'gloss', 'fabric'][i]; if (priceById[id] != null) el.textContent = fmt(priceById[id]) + ' грн/м²'; });
+    }
+    var srcs = items.length ? items.map(function (c) { return { src: c.image, alt: c.alt || '', name: nameById[c.id] || '' }; }) : [
+      { src: 'images/ceilings/matte.webp', alt: 'Матова натяжна стеля з вбудованою світловою лінією', name: 'Матове' },
+      { src: 'images/ceilings/satin.webp', alt: 'Вітальня з сатиновою натяжною стелею і світловими лініями', name: 'Сатин' },
+      { src: 'images/ceilings/gloss.webp', alt: 'Глянцева натяжна стеля з підсвіткою, у якій віддзеркалюється кімната', name: 'Глянець' },
+      { src: 'images/ceilings/fabric.webp', alt: 'Фактура тканинної натяжної стелі зблизька', name: 'Тканинне' }
+    ];
+    // попереднє завантаження, щоб перемикання було без «білого кадру»
+    srcs.forEach(function (x) { var im = new Image(); im.src = x.src; });
+    var cur = 0;
+    list.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-canvas]'); if (!b) return;
+      var i = +b.dataset.canvas; if (i === cur || !srcs[i]) return; cur = i;
+      list.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-selected', x === b ? 'true' : 'false'); });
+      function apply() { img.src = srcs[i].src; img.alt = srcs[i].alt; tag.textContent = srcs[i].name; requestAnimationFrame(function () { pic.classList.remove('is-swap'); }); }
+      if (reduce) { apply(); return; }
+      pic.classList.add('is-swap'); setTimeout(apply, 300);
+    });
+
+    // профілі: ціни з prices.json, тексти з адмінки
+    var profMap = {};
+    if (P && Array.isArray(P.profiles)) P.profiles.forEach(function (x) { if (x && x.id) profMap[x.id] = x; });
+    var profText = {};
+    if (d && Array.isArray(d.profiles)) d.profiles.forEach(function (x) { if (x && x.id && typeof x.text === 'string') profText[x.id] = x.text; });
+    document.querySelectorAll('#profs .prof').forEach(function (card) {
+      var id = card.dataset.profile, x = profMap[id];
+      if (x) {
+        card.querySelector('.prof__name').textContent = x.name;
+        card.querySelector('.prof__price').textContent = x.price > 0 ? '+' + fmt(x.price) + ' грн/м.п.' : 'у ціні';
+      }
+      if (profText[id] && profText[id].trim()) card.querySelector('.prof__text').textContent = profText[id].trim();
+    });
+  }
+
   /* ---------- Хедер: прилипає, ховається при скролі вниз ---------- */
   function initHeader() {
     var hdr = $('hdr'), mbar = $('mbar'), lastY = window.scrollY, ticking = false;
     function update() {
       var y = window.scrollY;
       hdr.classList.toggle('is-stuck', y > 40);
-      if (!doc.classList.contains('menu-open')) hdr.classList.toggle('is-hidden', y > 320 && y > lastY + 2);
-      if (y < lastY - 2) hdr.classList.remove('is-hidden');
       if (mbar) mbar.classList.toggle('is-on', y > window.innerHeight * 0.55);
       lastY = y; ticking = false;
     }
@@ -272,9 +329,10 @@
   initNavPill();
   initMenu();
 
-  Promise.race([Promise.all([load('header'), load('hero'), load('stats'), load('light'), load('prices')]), timeout(1200)]).then(function (res) {
+  Promise.race([Promise.all([load('header'), load('hero'), load('stats'), load('light'), load('prices'), load('ceilings')]), timeout(1200)]).then(function (res) {
     if (res) { applyHeader(res[0]); applyHero(res[1]); applyStats(res[2]); }
     initLight(res ? res[3] : null, res ? res[4] : null);
+    initCeilings(res ? res[5] : null, res ? res[4] : null);
     reveals();
     var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
     Promise.race([fonts, timeout(900)]).then(start);

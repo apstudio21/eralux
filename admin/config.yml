@@ -176,3 +176,53 @@ collections:
           - { label: "Висота 3–3,5 м, +%", name: "height_3", widget: "number", value_type: "int", min: 0 }
           - { label: "Висота понад 3,5 м, +%", name: "height_35", widget: "number", value_type: "int", min: 0 }
           - { label: "Доїзд, грн/км", name: "fuel_km", widget: "number", value_type: "int", min: 0 }
+
+      - name: "ceilings"
+        label: "5. Полотно і профіль"
+        file: "content/ceilings.json"
+        fields:
+          - { label: "Мітка", name: "label", widget: "string" }
+          - { label: "Заголовок – частина 1", name: "title_1", widget: "string" }
+          - { label: "Заголовок – частина 2 (зелена)", name: "title_2", widget: "string" }
+          - { label: "Текст", name: "text", widget: "text" }
+          - { label: "Підзаголовок «Полотно»", name: "canvas_title", widget: "string" }
+          - { label: "Підзаголовок «Профіль»", name: "profile_title", widget: "string" }
+          - label: "Полотна (назви й ціни – у розділі «Ціни»)"
+            name: "canvases"
+            widget: "list"
+            max: 6
+            summary: "{{fields.id}}"
+            fields:
+              - label: "Полотно"
+                name: "id"
+                widget: "select"
+                options:
+                  - { label: "Матове", value: "matte" }
+                  - { label: "Сатин", value: "satin" }
+                  - { label: "Глянець", value: "gloss" }
+                  - { label: "Тканинне", value: "fabric" }
+              - { label: "Опис", name: "text", widget: "text" }
+              - { label: "Фото", name: "image", widget: "image", hint: "Від 1000 px, WebP або JPG до 300 КБ" }
+              - { label: "Опис фото (alt)", name: "alt", widget: "string" }
+          - label: "Профілі – описи (назви й ціни – у розділі «Ціни»)"
+            name: "profiles"
+            widget: "list"
+            summary: "{{fields.id}}"
+            fields:
+              - label: "Профіль"
+                name: "id"
+                widget: "select"
+                options:
+                  - { label: "ПВХ зі вставкою", value: "pvc" }
+                  - { label: "Тіньовий", value: "shadow" }
+                  - { label: "Тіньовий Max", value: "shadow_max" }
+                  - { label: "Парящий", value: "floating" }
+                  - { label: "Брус", value: "beam" }
+                  - { label: "Сепаратор", value: "separator" }
+              - { label: "Опис", name: "text", widget: "text" }
+          - { label: "Смуга виробництва – мітка", name: "factory_label", widget: "string" }
+          - { label: "Смуга виробництва – заголовок", name: "factory_title", widget: "string" }
+          - { label: "Смуга виробництва – текст", name: "factory_text", widget: "text" }
+          - { label: "Смуга виробництва – кнопка", name: "factory_link", widget: "string" }
+          - { label: "Підказка внизу", name: "hint", widget: "text" }
+          - { label: "Підказка – кнопка", name: "hint_button", widget: "string" }

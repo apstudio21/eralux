@@ -255,9 +255,91 @@
   <script type="application/json" id="light-default">{"light":{"label":"Стеля і світло","title_1":"Увімкніть","title_2":"вечір","text":"Одна кімната, один ракурс. Перемкніть світло й подивіться, що воно змінює і скільки коштує.","list_title":"Що тут світиться","total_label":"Світло в цій кімнаті","note":"Ціна – монтаж і закладні. Світильники підберемо або встановимо ваші.","button":"Порахувати зі світлом","also_title":"Також робимо","also":["lines","track_built","track_bus","led"],"rooms":[{"name":"Кухня-вітальня","area":"38 м²","day":"images/light/kitchen-day-1600.webp","night":"images/light/kitchen-night-1600.webp","alt_day":"Кухня-вітальня вдень: дворівнева натяжна стеля з нішею","alt_night":"Та сама кухня-вітальня ввечері: підсвітка в ніші й точкові світильники","items":[{"id":"led","label":"Підсвітка в ніші","qty":14},{"id":"spot","qty":16}]},{"name":"Вітальня-лофт","area":"32 м²","day":"images/light/loft-day-1600.webp","night":"images/light/loft-night-1600.webp","alt_day":"Вітальня-лофт вдень: глянцева натяжна стеля","alt_night":"Та сама вітальня ввечері: підсвітка по периметру й люстри","items":[{"id":"led","label":"Підсвітка по периметру","qty":22},{"id":"chandelier","label":"Люстри","qty":2}]},{"name":"Вітальня з колонами","area":"45 м²","day":"images/light/columns-day-1600.webp","night":"images/light/columns-night-1600.webp","alt_day":"Простора вітальня з колонами вдень: глянцева натяжна стеля","alt_night":"Та сама вітальня ввечері: два контури підсвітки, люстра й підвіси","items":[{"id":"led","label":"Два контури підсвітки","qty":30},{"id":"chandelier","label":"Люстра й підвіси","qty":3}]}]},"prices":{"canvas_m2":350,"perimeter_m":200,"corners_included":4,"extra_corner":100,"extra_corner_premium":500,"canvases":[{"id":"matte","name":"Матове","price":350},{"id":"satin","name":"Сатин","price":350},{"id":"gloss","name":"Глянець","price":350},{"id":"fabric","name":"Тканинне","price":350}],"profiles":[{"id":"pvc","name":"ПВХ зі вставкою","price":0,"premium_corners":false},{"id":"shadow","name":"Тіньовий","price":250,"premium_corners":false},{"id":"shadow_max","name":"Тіньовий Max","price":350,"premium_corners":false},{"id":"floating","name":"Парящий","price":550,"premium_corners":true},{"id":"beam","name":"Брус","price":550,"premium_corners":false},{"id":"separator","name":"Сепаратор","price":550,"premium_corners":false}],"light":[{"id":"spot","name":"Точкові світильники","unit":"шт","price":300},{"id":"chandelier","name":"Люстра чи підвіс","unit":"шт","price":650},{"id":"led","name":"LED-підсвітка","unit":"м.п.","price":200},{"id":"lines","name":"Світлові лінії","unit":"м.п.","price":1700},{"id":"track_built","name":"Вбудований трек","unit":"м.п.","price":2000},{"id":"track_bus","name":"Трек з шиною","unit":"м.п.","price":3000}],"height_3":10,"height_35":15,"fuel_km":10}}</script>
 </section>
 
-<!-- Далі блоки 5–13 (у роботі) -->
+<!-- 5. ПОЛОТНО І ПРОФІЛЬ -->
+<section class="ceil" id="ceilings" aria-labelledby="ceil-title">
+  <div class="wrap">
+    <div class="ceil__head">
+      <div>
+        <p class="label" data-reveal><span data-bind="ceilings.label">З чого складається стеля</span></p>
+        <h2 class="h2" id="ceil-title" data-reveal><span data-bind="ceilings.title_1">Полотно і профіль.</span> <b data-bind="ceilings.title_2">Решту беремо на себе</b></h2>
+      </div>
+      <p class="ceil__lead" data-reveal data-bind="ceilings.text">Два рішення, які ви приймаєте самі. Ціна полотна однакова для всіх фактур – з матеріалом і монтажем.</p>
+    </div>
+
+    <h3 class="sub" data-reveal><span>01</span> <span data-bind="ceilings.canvas_title">Полотно</span></h3>
+    <div class="canv">
+      <ul class="canv__list" id="canv-list" role="tablist" aria-label="Фактури полотна">
+          <li><button type="button" role="tab" aria-selected="true" data-canvas="0"><span class="canv__name">Матове</span><span class="canv__price">350 грн/м²</span><span class="canv__text">Як ідеально пофарбована стеля. Без відблисків, обирають найчастіше.</span></button></li>
+          <li><button type="button" role="tab" aria-selected="false" data-canvas="1"><span class="canv__name">Сатин</span><span class="canv__price">350 грн/м²</span><span class="canv__text">Мʼякий перламутровий відблиск. Тепло виглядає в спальні й вітальні.</span></button></li>
+          <li><button type="button" role="tab" aria-selected="false" data-canvas="2"><span class="canv__name">Глянець</span><span class="canv__price">350 грн/м²</span><span class="canv__text">Віддзеркалює кімнату й додає висоти. Для низьких стель і коридорів.</span></button></li>
+          <li><button type="button" role="tab" aria-selected="false" data-canvas="3"><span class="canv__name">Тканинне</span><span class="canv__price">350 грн/м²</span><span class="canv__text">Фактура тканини, без запаху. Для спалень і дитячих.</span></button></li>
+        </ul>
+      <figure class="canv__pic" data-reveal="photo">
+        <img id="canv-img" src="images/ceilings/matte.webp" width="1000" height="860" alt="Матова натяжна стеля з вбудованою світловою лінією" loading="lazy">
+        <figcaption class="tag" id="canv-tag">Матове</figcaption>
+      </figure>
+    </div>
+
+    <h3 class="sub" data-reveal><span>02</span> <span data-bind="ceilings.profile_title">Профіль – як стеля зустрічає стіну</span></h3>
+    <ul class="profs" id="profs">
+        <li class="prof" data-reveal data-profile="pvc">
+          <div class="prof__top"><span class="prof__n">01</span><span class="prof__price">у ціні</span></div>
+          <svg class="prof__sc" viewBox="0 0 200 116" aria-hidden="true"><path class="sc-wall" d="M24 6V112"/><path class="sc-slab" d="M24 14H196"/><path class="sc-can" d="M40 66H196"/><path class="sc-pro" d="M24 52h20v24H24"/><path class="sc-acc" d="M26 66q8-9 15 0"/></svg>
+          <h4 class="prof__name">ПВХ зі вставкою</h4>
+          <p class="prof__text">Класика: акуратний стик стелі й стіни, щілину закриває вставка.</p>
+        </li>
+        <li class="prof" data-reveal data-profile="shadow">
+          <div class="prof__top"><span class="prof__n">02</span><span class="prof__price">+250 грн/м.п.</span></div>
+          <svg class="prof__sc" viewBox="0 0 200 116" aria-hidden="true"><path class="sc-wall" d="M24 6V112"/><path class="sc-slab" d="M24 14H196"/><path class="sc-can" d="M56 66H196"/><path class="sc-pro" d="M24 48h36v28"/><rect class="sc-gap" x="25" y="66" width="30" height="10"/></svg>
+          <h4 class="prof__name">Тіньовий</h4>
+          <p class="prof__text">Тонка тіньова щілина замість вставки. Стеля ніби відходить від стін.</p>
+        </li>
+        <li class="prof" data-reveal data-profile="shadow_max">
+          <div class="prof__top"><span class="prof__n">03</span><span class="prof__price">+350 грн/м.п.</span></div>
+          <svg class="prof__sc" viewBox="0 0 200 116" aria-hidden="true"><path class="sc-wall" d="M24 6V112"/><path class="sc-slab" d="M24 14H196"/><path class="sc-can" d="M66 66H196"/><path class="sc-pro" d="M24 40h46v40"/><rect class="sc-gap" x="25" y="66" width="40" height="22"/></svg>
+          <h4 class="prof__name">Тіньовий Max</h4>
+          <p class="prof__text">Глибша тінь і чіткіша лінія. Для сучасних інтерʼєрів без декору.</p>
+        </li>
+        <li class="prof" data-reveal data-profile="floating">
+          <div class="prof__top"><span class="prof__n">04</span><span class="prof__price">+550 грн/м.п.</span></div>
+          <svg class="prof__sc" viewBox="0 0 200 116" aria-hidden="true"><path class="sc-wall" d="M24 6V112"/><path class="sc-slab" d="M24 14H196"/><path class="sc-can" d="M60 66H196"/><path class="sc-pro" d="M24 46h40v26"/><path class="sc-glow" d="M32 76L24 112M52 76L84 112"/><rect class="sc-led" x="28" y="63" width="26" height="7" rx="3.5"/></svg>
+          <h4 class="prof__name">Парящий</h4>
+          <p class="prof__text">Світло по периметру: стеля ніби висить у повітрі.</p>
+        </li>
+        <li class="prof" data-reveal data-profile="beam">
+          <div class="prof__top"><span class="prof__n">05</span><span class="prof__price">+550 грн/м.п.</span></div>
+          <svg class="prof__sc" viewBox="0 0 200 116" aria-hidden="true"><path class="sc-wall" d="M24 6V112"/><path class="sc-slab" d="M24 14H196"/><path class="sc-can" d="M104 44H196"/><path class="sc-pro" d="M24 88H104V44"/><path class="sc-can" d="M32 88H98"/><path class="sc-acc" d="M104 44v10"/></svg>
+          <h4 class="prof__name">Брус</h4>
+          <p class="prof__text">Обʼємний перехід між рівнями: короб, ніша під штори, перепад.</p>
+        </li>
+        <li class="prof" data-reveal data-profile="separator">
+          <div class="prof__top"><span class="prof__n">06</span><span class="prof__price">+550 грн/м.п.</span></div>
+          <svg class="prof__sc" viewBox="0 0 200 116" aria-hidden="true"><path class="sc-wall" d="M24 6V112"/><path class="sc-slab" d="M24 14H196"/><path class="sc-can" d="M24 66H90"/><path class="sc-can sc-can--alt" d="M110 66H196"/><path class="sc-pro" d="M90 46h20v30H90z"/><path class="sc-acc" d="M100 46V14"/></svg>
+          <h4 class="prof__name">Сепаратор</h4>
+          <p class="prof__text">Поєднує два полотна в одній площині – різні кольори чи зони.</p>
+        </li>
+    </ul>
+
+    <div class="factory" data-reveal>
+      <div class="factory__body">
+        <p class="factory__label" data-bind="ceilings.factory_label">Власне виробництво</p>
+        <p class="factory__title" data-bind="ceilings.factory_title">Полотно з власного цеху</p>
+        <p class="factory__text" data-bind="ceilings.factory_text">Ріжемо й зварюємо під розмір вашої кімнати – без посередників і чекання постачальника.</p>
+      </div>
+      <a class="btn btn--glow factory__btn" href="dealers.html"><span class="btn__tx" data-bind="ceilings.factory_link">Працюєте зі стелями? Дилерам</span><span class="btn__ar" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></span></a>
+      <div class="ticker" aria-hidden="true"><div class="ticker__in"><span>Розкрій</span><span>Зварювання швів</span><span>Контроль розміру</span><span>Каталог кольорів</span><span>Розкрій</span><span>Зварювання швів</span><span>Контроль розміру</span><span>Каталог кольорів</span></div></div>
+    </div>
+
+    <div class="hint" data-reveal>
+      <p data-bind="ceilings.hint">Не знаєте, що обрати? Замірник привезе зразки полотен і профілів – вирішите на місці.</p>
+      <a class="btn btn--line" href="#measure"><span class="btn__tx" data-bind="ceilings.hint_button">Безкоштовний замір</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- Далі блоки 6–13 (у роботі) -->
 <div class="todo" id="measure">
-  <p>Блоки 5–13 – наступні ітерації</p>
+  <p>Блоки 6–13 – наступні ітерації</p>
 </div>
 
 </main>
