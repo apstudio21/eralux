@@ -39,8 +39,13 @@
 }
 </script>
 </head>
-<body>
+<body data-page="home">
 <a class="skip" href="#main">Перейти до змісту</a>
+
+<!-- Надхедер -->
+<div class="topbar" id="topbar">
+  <p class="topbar__in"><span class="bolt" aria-hidden="true"><svg viewBox="0 0 12 16"><path d="M7 0 0 9h5l-1 7 7-9H6z"/></svg></span><span data-bind="hero.power">Працюємо навіть за відсутності світла</span></p>
+</div>
 
 <!-- 1. ХЕДЕР -->
 <header class="hdr" id="hdr">
@@ -103,8 +108,8 @@
 <section class="hero" id="top" aria-labelledby="hero-title">
   <div class="hero__frame">
     <div class="hero__meta" data-reveal>
-      <span class="hero__power"><span class="bolt" aria-hidden="true"><svg viewBox="0 0 12 16"><path d="M7 0 0 9h5l-1 7 7-9H6z"/></svg></span><span data-bind="hero.label">Працюємо навіть без світла</span></span>
-      <span data-bind="hero.label_right">Львів, Стрий і область · з 2010 року</span>
+      <span data-bind="hero.label">Львів, Стрий і область</span>
+      <span data-bind="hero.label_right">З 2010 року</span>
     </div>
 
     <h1 class="hero__title" id="hero-title">
@@ -128,7 +133,7 @@
         <dl class="hfacts">
           <div class="hfacts__i">
             <dt><a class="hfacts__link" id="hero-rate" href="https://maps.app.goo.gl/RYuzzSQdiH32nRLD8" target="_blank" rel="noopener"><span data-bind="hero.rating_value">5,0</span><span class="stars" aria-hidden="true">★★★★★</span></a></dt>
-            <dd><span data-bind="hero.rating_count">100+</span> відгуків у Google</dd>
+            <dd><span data-bind="hero.rating_count">156</span> відгуків у Google</dd>
           </div>
           <div class="hfacts__i">
             <dt data-bind="hero.tag1">від 350 грн/м²</dt>
@@ -669,26 +674,153 @@
       <div class="score" data-reveal>
         <p class="score__n"><span data-bind="reviews.rating">5,0</span></p>
         <p class="score__stars" aria-label="Оцінка 5 з 5">★★★★★</p>
-        <p class="score__t"><b data-bind="reviews.count">100+</b> <span data-bind="reviews.count_label">відгуків у Google</span></p>
+        <p class="score__t"><b data-bind="reviews.count">156</b> <span data-bind="reviews.count_label">відгуків у Google</span></p>
         <a class="tlink score__link" id="revs-link" href="https://maps.app.goo.gl/RYuzzSQdiH32nRLD8" target="_blank" rel="noopener"><span data-bind="reviews.link_label">Читати всі в Google</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></a>
       </div>
       <div class="revs__rail">
         <ul class="revs__track" id="revs-track">
-          <li class="rev rev--empty"><p class="rev__stars" aria-hidden="true">★★★★★</p><p class="rev__q">Тут буде відгук клієнта з Google. Додайте його в адмінці: імʼя, текст і дату.</p><p class="rev__a"><b>Імʼя клієнта</b><span>Google</span></p></li>
-          <li class="rev rev--empty"><p class="rev__stars" aria-hidden="true">★★★★★</p><p class="rev__q">Тут буде відгук клієнта з Google. Додайте його в адмінці: імʼя, текст і дату.</p><p class="rev__a"><b>Імʼя клієнта</b><span>Google</span></p></li>
-          <li class="rev rev--empty"><p class="rev__stars" aria-hidden="true">★★★★★</p><p class="rev__q">Тут буде відгук клієнта з Google. Додайте його в адмінці: імʼя, текст і дату.</p><p class="rev__a"><b>Імʼя клієнта</b><span>Google</span></p></li>
+          <li class="rev"><p class="rev__stars" aria-label="Оцінка 5 з 5">★★★★★</p><p class="rev__q">Дякую за якісну роботу! Натяжну стелю встановили акуратно та швидко. Майстри ввічливі, і відповідальні. Стеля виглядає дуже гарно, рівно та сучасно. Повністю задоволений результатом, рекомендую</p><p class="rev__a"><b>Василь Юрчук</b><span>Google · 2026</span></p></li>
+          <li class="rev"><p class="rev__stars" aria-label="Оцінка 5 з 5">★★★★★</p><p class="rev__q">Стелями задоволені, кімната виглядає тепер зовсім інакше! Робота супер, рекомендуємо! Робили у Бібрці</p><p class="rev__a"><b>Галина Легендзевич</b><span>Google · 2025</span></p></li>
+          <li class="rev"><p class="rev__stars" aria-label="Оцінка 5 з 5">★★★★★</p><p class="rev__q">Зробили нам гарні стелі у громадську організацію! Робота дуже швидка, якісна. Рекомендуємо ералюкс до співпраці! Робили стелі у Стрию</p><p class="rev__a"><b>Микола Пищик</b><span>Google · 2025</span></p></li>
+          <li class="rev"><p class="rev__stars" aria-label="Оцінка 5 з 5">★★★★★</p><p class="rev__q">Зробили натяжні стелю, дуже файно, хлопці молоді, але своє діло добре знають! Робили в Стрию.</p><p class="rev__a"><b>elena bushta</b><span>Google · 2025</span></p></li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Далі блоки 11–13 (у роботі) -->
-<div class="todo" id="measure">
-  <p>Блоки 11–13 – наступні ітерації</p>
-</div>
+<!-- 11. ПИТАННЯ -->
+<section class="faq" id="faq" aria-labelledby="faq-title">
+  <div class="wrap faq__grid">
+    <div class="faq__side">
+      <p class="label" data-reveal><span data-bind="faq.label">Питання</span></p>
+      <h2 class="h2" id="faq-title" data-reveal><span data-bind="faq.title_1">Часті</span> <b data-bind="faq.title_2">питання</b></h2>
+      <p class="faq__lead" data-reveal data-bind="faq.text">Коротко про ціну, строки й гарантію. Якщо питання інше – подзвоніть, відповімо одразу.</p>
+      <div class="ask" data-reveal>
+        <p class="ask__t" data-bind="faq.ask_title">Не знайшли відповідь?</p>
+        <a class="ask__tel" href="tel:+380670063755" data-tel>+38 067 006 37 55</a>
+        <p class="ask__s" data-bind="faq.ask_text">пн–пт 9:00–18:00, сб 10:00–16:00</p>
+      </div>
+    </div>
+    <div class="faq__list" id="faq-list">
+        <details class="qa" data-reveal>
+          <summary><span class="qa__q">Скільки коштує натяжна стеля в кімнату?</span><i aria-hidden="true"></i></summary>
+          <div class="qa__a"><div><p>Полотно з монтажем – від 350 грн/м², профіль по периметру – 200 грн/м.п. Кімната 12 м² виходить близько 7 000 грн. Орієнтовну ціну своєї кімнати порахуйте в калькуляторі, точну назве замірник.</p></div></div>
+        </details>
+        <details class="qa" data-reveal>
+          <summary><span class="qa__q">Що входить у ціну?</span><i aria-hidden="true"></i></summary>
+          <div class="qa__a"><div><p>Полотно, профіль зі вставкою, монтаж і чотири кути. Окремо рахуються світильники й закладні під них, складні профілі (тіньовий, парящий), обхід труб і ніші.</p></div></div>
+        </details>
+        <details class="qa" data-reveal>
+          <summary><span class="qa__q">Скільки триває монтаж?</span><i aria-hidden="true"></i></summary>
+          <div class="qa__a"><div><p>Одну кімнату зазвичай робимо за день, квартиру – за кілька днів. Точні строки назвемо на замірі, коли побачимо приміщення.</p></div></div>
+        </details>
+        <details class="qa" data-reveal>
+          <summary><span class="qa__q">Чи буде запах після монтажу?</span><i aria-hidden="true"></i></summary>
+          <div class="qa__a"><div><p>Легкий запах може бути перші дні – він швидко вивітрюється. Полотна сертифіковані й безпечні для житлових кімнат.</p></div></div>
+        </details>
+        <details class="qa" data-reveal>
+          <summary><span class="qa__q">Що буде, якщо затоплять сусіди?</span><i aria-hidden="true"></i></summary>
+          <div class="qa__a"><div><p>Полотно витримує до 100 літрів води на квадратний метр. Приїдемо, зіллємо воду – і стеля повернеться до попереднього вигляду.</p></div></div>
+        </details>
+        <details class="qa" data-reveal>
+          <summary><span class="qa__q">Яка гарантія?</span><i aria-hidden="true"></i></summary>
+          <div class="qa__a"><div><p>10 років на полотно і 3 роки на монтаж. Після роботи підписуємо акт і видаємо гарантію.</p></div></div>
+        </details>
+        <details class="qa" data-reveal>
+          <summary><span class="qa__q">Чи треба виносити меблі?</span><i aria-hidden="true"></i></summary>
+          <div class="qa__a"><div><p>Ні. Відсунемо їх від стін і накриємо плівкою, а після монтажу приберемо за собою.</p></div></div>
+        </details>
+        <details class="qa" data-reveal>
+          <summary><span class="qa__q">Чим ваше полотно відрізняється від інших?</span><i aria-hidden="true"></i></summary>
+          <div class="qa__a"><div><p>Ми самі ріжемо й зварюємо полотно з європейської плівки (Renolit, Lackfolie, Zak du Plateau) у власному цеху. Розмір і шви контролюємо самі – без посередників.</p></div></div>
+        </details>
+        <details class="qa" data-reveal>
+          <summary><span class="qa__q">Чи працюєте за межами Львова?</span><i aria-hidden="true"></i></summary>
+          <div class="qa__a"><div><p>Так: Стрий, Дрогобич, Самбір, Долина та область. Вартість доїзду назвемо під час дзвінка.</p></div></div>
+        </details>
+    </div>
+  </div>
+  <script type="application/ld+json" id="faq-ld">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Скільки коштує натяжна стеля в кімнату?", "acceptedAnswer": {"@type": "Answer", "text": "Полотно з монтажем – від 350 грн/м², профіль по периметру – 200 грн/м.п. Кімната 12 м² виходить близько 7 000 грн. Орієнтовну ціну своєї кімнати порахуйте в калькуляторі, точну назве замірник."}}, {"@type": "Question", "name": "Що входить у ціну?", "acceptedAnswer": {"@type": "Answer", "text": "Полотно, профіль зі вставкою, монтаж і чотири кути. Окремо рахуються світильники й закладні під них, складні профілі (тіньовий, парящий), обхід труб і ніші."}}, {"@type": "Question", "name": "Скільки триває монтаж?", "acceptedAnswer": {"@type": "Answer", "text": "Одну кімнату зазвичай робимо за день, квартиру – за кілька днів. Точні строки назвемо на замірі, коли побачимо приміщення."}}, {"@type": "Question", "name": "Чи буде запах після монтажу?", "acceptedAnswer": {"@type": "Answer", "text": "Легкий запах може бути перші дні – він швидко вивітрюється. Полотна сертифіковані й безпечні для житлових кімнат."}}, {"@type": "Question", "name": "Що буде, якщо затоплять сусіди?", "acceptedAnswer": {"@type": "Answer", "text": "Полотно витримує до 100 літрів води на квадратний метр. Приїдемо, зіллємо воду – і стеля повернеться до попереднього вигляду."}}, {"@type": "Question", "name": "Яка гарантія?", "acceptedAnswer": {"@type": "Answer", "text": "10 років на полотно і 3 роки на монтаж. Після роботи підписуємо акт і видаємо гарантію."}}, {"@type": "Question", "name": "Чи треба виносити меблі?", "acceptedAnswer": {"@type": "Answer", "text": "Ні. Відсунемо їх від стін і накриємо плівкою, а після монтажу приберемо за собою."}}, {"@type": "Question", "name": "Чим ваше полотно відрізняється від інших?", "acceptedAnswer": {"@type": "Answer", "text": "Ми самі ріжемо й зварюємо полотно з європейської плівки (Renolit, Lackfolie, Zak du Plateau) у власному цеху. Розмір і шви контролюємо самі – без посередників."}}, {"@type": "Question", "name": "Чи працюєте за межами Львова?", "acceptedAnswer": {"@type": "Answer", "text": "Так: Стрий, Дрогобич, Самбір, Долина та область. Вартість доїзду назвемо під час дзвінка."}}]}</script>
+</section>
+
+<!-- 12. ЗАМІР + КОНТАКТИ -->
+<section class="cta" id="measure" aria-labelledby="cta-title">
+  <div class="cta__glow" aria-hidden="true"></div>
+  <div class="wrap cta__grid">
+    <div class="cta__main">
+      <p class="label" data-reveal><span data-bind="cta.label">Безкоштовний замір</span></p>
+      <h2 class="h2" id="cta-title" data-reveal><span data-bind="cta.title_1">Запишіться на</span> <b data-bind="cta.title_2">безкоштовний замір</b></h2>
+      <p class="cta__lead" data-reveal data-bind="cta.text">Замірник приїде зі зразками полотен і профілів, поміряє кімнату й назве точну ціну. Ні до чого не зобовʼязує.</p>
+
+      <form class="lead" id="lead-form" data-form="measure" novalidate data-reveal>
+        <div class="lead__row">
+          <div class="fld fld--dark"><label for="lead-name">Імʼя</label><input id="lead-name" name="name" type="text" autocomplete="given-name" maxlength="80" placeholder="Як до вас звертатися"></div>
+          <div class="fld fld--dark"><label for="lead-tel">Телефон</label><input id="lead-tel" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+38 (0__) ___-__-__" required></div>
+        </div>
+        <div class="lead__row">
+          <div class="fld fld--dark"><label for="lead-city">Місто</label><select id="lead-city" name="city"><option selected>Львів</option><option>Стрий</option><option>Дрогобич</option><option>Самбір</option><option>Долина</option><option>Інше місто</option></select></div>
+          <div class="fld fld--dark"><label for="lead-time">Коли зручно</label><select id="lead-time" name="time"><option>Найближчими днями</option><option>У будні</option><option>У суботу</option><option>Передзвоніть – домовимося</option></select></div>
+        </div>
+        <div class="fld fld--dark"><label for="lead-comment">Коментар <span>необовʼязково</span></label><textarea id="lead-comment" name="comment" rows="3" maxlength="900" placeholder="Кімнати, площа, побажання до світла"></textarea></div>
+        <p class="lead__case" id="lead-case" hidden></p>
+        <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="lead__foot">
+          <button class="btn btn--glow" type="submit"><span class="btn__tx" data-bind="cta.button">Записатися на замір</span><span class="btn__ar" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></span></button>
+          <p class="lead__small">Натискаючи кнопку, ви погоджуєтесь з <a href="privacy.html">політикою конфіденційності</a>.</p>
+        </div>
+        <p class="lead__err" role="alert" hidden></p>
+      </form>
+      <div class="lead-ok" id="lead-ok" hidden tabindex="-1">
+        <span class="res__check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+        <p class="res__okt" data-bind="cta.ok_title">Заявку прийнято!</p>
+        <p class="res__okp" data-bind="cta.ok_text">Передзвонимо в робочий час і домовимося про день заміру.</p>
+      </div>
+    </div>
+
+    <aside class="cta__side" aria-label="Контакти" data-reveal>
+      <div class="cbl">
+        <p class="cbl__t">Телефони</p>
+        <a class="cbl__big" href="tel:+380670063755">+38 067 006 37 55</a>
+        <a class="cbl__big" href="tel:+380634054755">+38 063 405 47 55</a>
+        <p class="cbl__s">пн–пт 9:00–18:00 · сб 10:00–16:00</p>
+      </div>
+      <div class="cbl">
+        <p class="cbl__t">Офіси</p>
+        <a class="cbl__addr" href="https://www.google.com/maps/search/?api=1&amp;query=%D0%9B%D1%8C%D0%B2%D1%96%D0%B2%2C+%D0%B2%D1%83%D0%BB.+%D0%9F%D1%83%D0%BB%D1%8E%D1%8F+40" target="_blank" rel="noopener"><span><b>Львів</b> вул. Пулюя, 40</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></a>
+        <a class="cbl__addr" href="https://maps.app.goo.gl/RYuzzSQdiH32nRLD8" target="_blank" rel="noopener"><span><b>Стрий</b> вул. Січових Стрільців, 5</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></a>
+      </div>
+      <div class="cbl">
+        <p class="cbl__t">Виїжджаємо</p>
+        <p class="cbl__cities">Львів · Стрий · Дрогобич · Самбір · Долина · область</p>
+      </div>
+      <a class="tlink tlink--light" href="https://www.facebook.com/eraluxstryi/" target="_blank" rel="noopener"><span>Ми у Facebook</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></a>
+    </aside>
+  </div>
+</section>
 
 </main>
+
+<!-- 13. ФУТЕР -->
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__top">
+      <a class="ftr__logo" href="#top" aria-label="Eralux – на початок"><img src="images/brand/logo-light.svg" alt="Eralux" width="90" height="72" loading="lazy"></a>
+      <p class="ftr__slogan">Натяжні стелі від виробника.<br>Львів, Стрий і область – з 2010 року.</p>
+      <a class="ftr__up" href="#top" aria-label="Нагору"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></a>
+    </div>
+    <div class="ftr__cols">
+      <nav aria-label="Розділи сайту"><p class="ftr__t">Сайт</p><ul><li><a href="#light">Світло</a></li><li><a href="#ceilings">Полотно і профіль</a></li><li><a href="#projects">Проєкти</a></li><li><a href="#calc">Калькулятор</a></li><li><a href="#faq">Питання</a></li></ul></nav>
+      <nav aria-label="Співпраця"><p class="ftr__t">Співпраця</p><ul><li><a href="dealers.html">Дилерам</a></li><li><a href="vacancies.html">Вакансії</a></li></ul></nav>
+      <div><p class="ftr__t">Контакти</p><ul><li><a href="tel:+380670063755">+38 067 006 37 55</a></li><li><a href="tel:+380634054755">+38 063 405 47 55</a></li><li>Львів, вул. Пулюя, 40</li><li>Стрий, вул. Січових Стрільців, 5</li></ul></div>
+    </div>
+    <div class="ftr__bot">
+      <p>© 2010–<span data-year>2026</span> Eralux. Натяжні стелі від виробника.</p>
+      <a href="privacy.html">Політика конфіденційності</a>
+    </div>
+  </div>
+</footer>
+
 
 <!-- Мобільна планка -->
 <div class="mbar" id="mbar">

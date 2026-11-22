@@ -1,6 +1,6 @@
 {
-  "label": "Працюємо навіть без світла",
-  "label_right": "Львів, Стрий і область · з 2010 року",
+  "label": "Львів, Стрий і область",
+  "label_right": "З 2010 року",
   "title_1": "Натяжні стелі",
   "title_2": "у Львові та області.",
   "title_3": "Від виробника",
@@ -8,12 +8,13 @@
   "cta_primary": "Безкоштовний замір",
   "cta_secondary": "Порахувати вартість",
   "rating_value": "5,0",
-  "rating_count": "100+",
+  "rating_count": "156",
   "rating_url": "https://maps.app.goo.gl/RYuzzSQdiH32nRLD8",
   "tag1": "від 350 грн/м²",
   "tag2": "0 грн",
   "tag1_note": "полотно з монтажем",
   "tag2_note": "замір і консультація",
+  "power": "Працюємо навіть за відсутності світла",
   "photos": [
     {
       "image": "images/hero/h1-1280.webp",

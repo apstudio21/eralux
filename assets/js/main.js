@@ -5,6 +5,7 @@
   var doc = document.documentElement;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var $ = function (id) { return document.getElementById(id); };
+  var HOME = document.body.getAttribute('data-page') !== 'sub';
 
   /* ---------- Безпечні перевірки значень із адмінки ---------- */
   var RE_HREF = /^(#[a-z0-9-]+|[a-z0-9-]+\.html(#[a-z0-9-]+)?)$/;
@@ -38,13 +39,14 @@
         h.nav.forEach(function (it) {
           if (!it || typeof it.label !== 'string' || !RE_HREF.test(it.href || '')) return;
           var li = document.createElement('li'), a = document.createElement('a');
-          a.href = it.href; a.textContent = it.label; li.appendChild(a); frag.appendChild(li);
+          a.href = (HOME || it.href.charAt(0) !== '#') ? it.href : 'index.html' + it.href; a.textContent = it.label; li.appendChild(a); frag.appendChild(li);
         });
         if (frag.childNodes.length) { ul.textContent = ''; ul.appendChild(frag); }
       });
     }
     if (RE_TEL.test(h.phone_tel || '')) {
       ['header-phone', 'menu-phone', 'mbar-call'].forEach(function (id) { var a = $(id); if (a) a.href = 'tel:' + h.phone_tel; });
+      document.querySelectorAll('[data-tel]').forEach(function (a) { a.href = 'tel:' + h.phone_tel; if (h.phone_label) a.textContent = h.phone_label; });
     }
   }
 
@@ -793,6 +795,122 @@
     track.addEventListener('scroll', upd, { passive: true }); window.addEventListener('resize', upd); upd();
   }
 
+
+  /* ---------- 11. Питання ---------- */
+  function initFaq(d) {
+    var list = $('faq-list'); if (!list) return;
+    if (d) {
+      bindText('faq', d);
+      var items = Array.isArray(d.items) ? d.items.filter(function (x) { return x && x.q && x.a; }) : [];
+      if (items.length) {
+        var tpl = list.querySelector('.qa'), frag = document.createDocumentFragment();
+        items.forEach(function (x) { var el = tpl.cloneNode(true); el.removeAttribute('open'); el.classList.remove('is-open'); el.querySelector('.qa__q').textContent = x.q; el.querySelector('.qa__a p').textContent = x.a; frag.appendChild(el); });
+        list.textContent = ''; list.appendChild(frag);
+        var ld = $('faq-ld');
+        if (ld) ld.textContent = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: items.map(function (x) { return { '@type': 'Question', name: x.q, acceptedAnswer: { '@type': 'Answer', text: x.a } }; }) });
+        list.querySelectorAll('[data-reveal]').forEach(function (el) { el.classList.add('is-in'); });
+      }
+    }
+    list.addEventListener('click', function (e) {
+      var sum = e.target.closest('summary'); if (!sum) return;
+      e.preventDefault();
+      var qa = sum.parentNode, open = !qa.classList.contains('is-open');
+      list.querySelectorAll('.qa.is-open').forEach(function (o) { if (o !== qa) closeQa(o); });
+      if (open) { qa.open = true; requestAnimationFrame(function () { qa.classList.add('is-open'); }); }
+      else closeQa(qa);
+    });
+    function closeQa(qa) { qa.classList.remove('is-open'); setTimeout(function () { if (!qa.classList.contains('is-open')) qa.open = false; }, reduce ? 0 : 500); }
+  }
+
+  /* ---------- 12. Форма заміру (і форми підсторінок) ---------- */
+  function initLeadForm(form, ok, kind) {
+    if (!form) return;
+    var tel = form.querySelector('input[type="tel"]'), err = form.querySelector('.lead__err'), btn = form.querySelector('button[type="submit"]');
+    maskPhone(tel);
+    form.addEventListener('submit', function (e) {
+      e.preventDefault(); err.hidden = true;
+      if (form.company && form.company.value) return;
+      if (!phoneOk(tel.value)) { tel.setAttribute('aria-invalid', 'true'); err.textContent = 'Перевірте номер: +38 (0XX) XXX-XX-XX'; err.hidden = false; tel.focus(); return; }
+      var data = { form: kind, phone: '+' + phoneDigits(tel.value), page: location.pathname };
+      function v(n) { var f = form.elements[n]; return f && f.value ? String(f.value).trim().slice(0, 900) : ''; }
+      if (v('name')) data.name = v('name');
+      if (v('city')) data.city = v('city');
+      if (v('time')) data.time = v('time');
+      if (v('comment')) data.comment = v('comment');
+      var det = [];
+      if (v('org')) det.push('компанія: ' + v('org'));
+      if (v('volume')) det.push('обсяг: ' + v('volume'));
+      if (v('vacancy')) det.push('вакансія: ' + v('vacancy'));
+      if (det.length) data.details = det.join('; ');
+      if (doc.dataset.caseName) data.case = doc.dataset.caseName;
+      btn.disabled = true;
+      sendLead(data).then(function () {
+        form.hidden = true; ok.hidden = false; ok.focus({ preventScroll: true });
+      }).catch(function () { err.textContent = 'Не вдалося надіслати. Подзвоніть нам: +38 067 006 37 55'; err.hidden = false; })
+        .then(function () { btn.disabled = false; });
+    });
+  }
+  function initCaseLink() {
+    var note = $('lead-case'); if (!note) return;
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('[data-case-name]'); if (!a || !a.dataset.caseName) return;
+      doc.dataset.caseName = a.dataset.caseName;
+      note.textContent = 'Обʼєкт із сайту: «' + a.dataset.caseName + '» – замірник знатиме, що вам сподобалось.'; note.hidden = false;
+    });
+  }
+
+
+  /* ---------- Підсторінки ---------- */
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function fillList(ul, items, build) {
+    if (!ul || !Array.isArray(items)) return;
+    var ok = items.filter(Boolean); if (!ok.length) return;
+    ul.textContent = ''; ok.forEach(function (x, i) { var li = build(x, i); li.classList.add('is-in'); ul.appendChild(li); });
+  }
+  function initSubpages() {
+    var dl = $('dealer-lead');
+    if (dl) {
+      initLeadForm(dl, $('dealer-ok'), 'dealer');
+      load('dealers').then(function (d) {
+        if (!d) return; bindText('dealers', d);
+        fillList(document.querySelector('.cards'), d.offer, function (x, i) { var li = el('li', 'card'); li.appendChild(el('span', 'card__n', '0' + (i + 1))); li.appendChild(el('h3', 'card__t', x.title || '')); li.appendChild(el('p', 'card__p', x.text || '')); return li; });
+        fillList(document.querySelector('.bigs'), d.why, function (x) { var li = el('li', 'big'); li.appendChild(el('p', 'big__v', x.value || '')); li.appendChild(el('p', 'big__l', x.label || '')); return li; });
+        fillList(document.querySelector('.nsteps'), d.steps, function (x, i) { var li = el('li', 'nstep'); li.appendChild(el('span', 'nstep__n', '0' + (i + 1))); li.appendChild(el('h3', 'nstep__t', x.title || '')); li.appendChild(el('p', 'nstep__p', x.text || '')); return li; });
+        if (Array.isArray(d.volumes) && d.volumes.length) { var s = $('d-vol'); s.textContent = ''; d.volumes.forEach(function (v) { s.appendChild(el('option', '', v)); }); }
+      });
+    }
+    var jl = $('job-lead');
+    if (jl) {
+      initLeadForm(jl, $('job-ok'), 'job');
+      var sel = $('j-vac');
+      load('vacancies').then(function (d) {
+        if (!d) return; bindText('vacancies', d);
+        fillList(document.querySelector('.cards'), d.why, function (x, i) { var li = el('li', 'card'); li.appendChild(el('span', 'card__n', '0' + (i + 1))); li.appendChild(el('h3', 'card__t', x.title || '')); li.appendChild(el('p', 'card__p', x.text || '')); return li; });
+        var items = Array.isArray(d.items) ? d.items.filter(function (x) { return x && x.title; }) : [];
+        var box = $('vacs'), tpl = box.querySelector('.vac');
+        if (tpl) {
+          box.textContent = '';
+          if (!items.length) { box.appendChild(el('p', 'note', 'Зараз відкритих вакансій немає, але ми завжди раді знайомству – залиште контакти нижче.')); }
+          items.forEach(function (x) {
+            var a = tpl.cloneNode(true); a.classList.add('is-in');
+            a.querySelector('.vac__t').textContent = x.title;
+            a.querySelector('.vac__meta').textContent = [x.city, x.schedule].filter(Boolean).join(' · ');
+            a.querySelector('.vac__pay').textContent = x.salary || '';
+            var lists = a.querySelectorAll('.vac__list');
+            [x.requirements, x.conditions].forEach(function (arr, k) { lists[k].textContent = ''; (arr || []).forEach(function (t) { if (t) lists[k].appendChild(el('li', '', t)); }); });
+            a.querySelector('[data-vacancy]').dataset.vacancy = x.title;
+            box.appendChild(a);
+          });
+          sel.textContent = ''; items.forEach(function (x) { sel.appendChild(el('option', '', x.title)); }); sel.appendChild(el('option', '', 'Інша посада'));
+        }
+      });
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest('[data-vacancy]'); if (!a) return;
+        for (var i = 0; i < sel.options.length; i++) if (sel.options[i].text === a.dataset.vacancy) sel.selectedIndex = i;
+      });
+    }
+  }
+
   /* ---------- Хедер: прилипає, ховається при скролі вниз ---------- */
   function initHeader() {
     var hdr = $('hdr'), mbar = $('mbar'), lastY = window.scrollY, ticking = false;
@@ -804,6 +922,16 @@
     }
     window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
     update();
+    // біля форм нижня планка не потрібна
+    var forms = document.querySelectorAll('.cta, .res');
+    if (mbar && forms.length && 'IntersectionObserver' in window) {
+      var vis = new Set();
+      var io = new IntersectionObserver(function (en) {
+        en.forEach(function (e) { if (e.isIntersecting) vis.add(e.target); else vis.delete(e.target); });
+        mbar.classList.toggle('is-hide', vis.size > 0);
+      }, { threshold: 0.2 });
+      forms.forEach(function (f) { io.observe(f); });
+    }
   }
 
   /* ---------- Меню: «пігулка», що їде за курсором ---------- */
@@ -869,7 +997,7 @@
   initNavPill();
   initMenu();
 
-  Promise.race([Promise.all([load('header'), load('hero'), load('stats'), load('light'), load('prices'), load('ceilings'), load('before_after'), load('projects'), load('calc'), load('process'), load('reviews')]), timeout(1200)]).then(function (res) {
+  Promise.race([Promise.all([load('header'), load('hero'), load('stats'), load('light'), load('prices'), load('ceilings'), load('before_after'), load('projects'), load('calc'), load('process'), load('reviews'), load('faq'), load('cta')]), timeout(1200)]).then(function (res) {
     if (res) { applyHeader(res[0]); applyHero(res[1]); applyStats(res[2]); }
     initLight(res ? res[3] : null, res ? res[4] : null);
     initCeilings(res ? res[5] : null, res ? res[4] : null);
@@ -878,6 +1006,12 @@
     initCalc(res ? res[8] : null, res ? res[4] : null);
     initProcess(res ? res[9] : null);
     initReviews(res ? res[10] : null);
+    initFaq(res ? res[11] : null);
+    if (res && res[12]) bindText('cta', res[12]);
+    initLeadForm($('lead-form'), $('lead-ok'), 'measure');
+    initCaseLink();
+    initSubpages();
+    document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
     reveals();
     var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
     Promise.race([fonts, timeout(900)]).then(start);

@@ -34,7 +34,8 @@ collections:
         label: "2. Перший екран"
         file: "content/hero.json"
         fields:
-          - { label: "Мітка зліва (з блискавкою)", name: "label", widget: "string" }
+          - { label: "Надхедер (з блискавкою)", name: "power", widget: "string" }
+          - { label: "Мітка зліва", name: "label", widget: "string" }
           - { label: "Мітка справа", name: "label_right", widget: "string" }
           - { label: "Заголовок – рядок 1", name: "title_1", widget: "string", hint: "Залиште «Натяжні стелі» – це важливо для Google" }
           - { label: "Заголовок – рядок 2", name: "title_2", widget: "string" }
@@ -355,3 +356,77 @@ collections:
               - { label: "Оцінка (1–5)", name: "rating", widget: "number", value_type: "int", min: 1, max: 5, default: 5 }
               - { label: "Джерело", name: "source", widget: "select", options: ["Google", "Facebook"], default: "Google" }
               - { label: "Дата (напр. березень 2026)", name: "date", widget: "string", required: false }
+
+      - name: "faq"
+        label: "11. Питання"
+        file: "content/faq.json"
+        fields:
+          - { label: "Мітка", name: "label", widget: "string" }
+          - { label: "Заголовок – частина 1", name: "title_1", widget: "string" }
+          - { label: "Заголовок – частина 2 (зелена)", name: "title_2", widget: "string" }
+          - { label: "Текст", name: "text", widget: "text" }
+          - { label: "Картка – заголовок", name: "ask_title", widget: "string" }
+          - { label: "Картка – графік", name: "ask_text", widget: "string" }
+          - label: "Питання"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.q}}"
+            fields:
+              - { label: "Питання", name: "q", widget: "string" }
+              - { label: "Відповідь", name: "a", widget: "text" }
+
+      - name: "cta"
+        label: "12. Заявка на замір"
+        file: "content/cta.json"
+        fields:
+          - { label: "Мітка", name: "label", widget: "string" }
+          - { label: "Заголовок – частина 1", name: "title_1", widget: "string" }
+          - { label: "Заголовок – частина 2 (світла)", name: "title_2", widget: "string" }
+          - { label: "Текст", name: "text", widget: "text" }
+          - { label: "Кнопка", name: "button", widget: "string" }
+          - { label: "Після відправки – заголовок", name: "ok_title", widget: "string" }
+          - { label: "Після відправки – текст", name: "ok_text", widget: "text" }
+
+  - name: "pages"
+    label: "Сторінки"
+    files:
+      - name: "dealers"
+        label: "Дилерам"
+        file: "content/dealers.json"
+        fields:
+          - { label: "Мітка зліва", name: "label", widget: "string" }
+          - { label: "Мітка справа", name: "label_right", widget: "string" }
+          - { label: "Заголовок – частина 1", name: "title_1", widget: "string" }
+          - { label: "Заголовок – частина 2 (зелена)", name: "title_2", widget: "string" }
+          - { label: "Текст", name: "text", widget: "text" }
+          - { label: "Кнопка", name: "button", widget: "string" }
+          - { label: "«Що пропонуємо» – заголовок 1", name: "offer_title_1", widget: "string" }
+          - { label: "«Що пропонуємо» – заголовок 2", name: "offer_title_2", widget: "string" }
+          - { label: "Що пропонуємо", name: "offer", widget: "list", summary: "{{fields.title}}", fields: [{ label: "Назва", name: "title", widget: "string" }, { label: "Текст", name: "text", widget: "text" }] }
+          - { label: "Чому з нами", name: "why", widget: "list", summary: "{{fields.value}} – {{fields.label}}", fields: [{ label: "Велике значення", name: "value", widget: "string" }, { label: "Підпис", name: "label", widget: "string" }] }
+          - { label: "Як почати", name: "steps", widget: "list", summary: "{{fields.title}}", fields: [{ label: "Крок", name: "title", widget: "string" }, { label: "Текст", name: "text", widget: "text" }] }
+          - { label: "Умови (примітка)", name: "terms", widget: "text" }
+          - { label: "Варіанти обсягу у формі", name: "volumes", widget: "list", field: { label: "Варіант", name: "v", widget: "string" } }
+
+      - name: "vacancies"
+        label: "Вакансії"
+        file: "content/vacancies.json"
+        fields:
+          - { label: "Мітка зліва", name: "label", widget: "string" }
+          - { label: "Мітка справа", name: "label_right", widget: "string" }
+          - { label: "Заголовок – частина 1", name: "title_1", widget: "string" }
+          - { label: "Заголовок – частина 2 (зелена)", name: "title_2", widget: "string" }
+          - { label: "Текст", name: "text", widget: "text" }
+          - { label: "Кнопка", name: "button", widget: "string" }
+          - { label: "Чому в нас", name: "why", widget: "list", summary: "{{fields.title}}", fields: [{ label: "Назва", name: "title", widget: "string" }, { label: "Текст", name: "text", widget: "text" }] }
+          - label: "Вакансії (порожньо – покажемо «зараз вакансій немає»)"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Посада", name: "title", widget: "string" }
+              - { label: "Місто", name: "city", widget: "string" }
+              - { label: "Графік", name: "schedule", widget: "string" }
+              - { label: "Оплата", name: "salary", widget: "string" }
+              - { label: "Що потрібно", name: "requirements", widget: "list", field: { label: "Пункт", name: "r", widget: "string" } }
+              - { label: "Що пропонуємо", name: "conditions", widget: "list", field: { label: "Пункт", name: "c", widget: "string" }, hint: "Не вказуйте вік, стать тощо – закон забороняє дискримінаційні вимоги в оголошеннях." }
