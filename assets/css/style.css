@@ -225,12 +225,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .hero__ctas { align-items: center; column-gap: 24px; }
 
 /* Мітки-текст через крапку (менше «пігулок») */
-.ba__chips li, .case__meta li { height: auto; padding: 0; background: none; box-shadow: none; border-radius: 0; }
-.ba__chips, .case__meta { gap: 0; }
-.ba__chips li + li::before, .case__meta li + li::before { content: "·"; margin: 0 10px; color: var(--mute); }
-.case__meta li + li::before { color: var(--night-mute); }
-.ba__chips li { font: 400 15px/1.4 var(--text); color: var(--ink); }
-.case__meta li { font: 400 14px/1.4 var(--text); }
+
 
 /* Теги умов */
 .pills { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -524,6 +519,15 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .case__title { font: 400 clamp(24px, 1vw + 18px, 36px)/1.1 var(--display); letter-spacing: -.02em; }
 .case__meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
 .case__meta li { height: 32px; display: inline-flex; align-items: center; padding: 0 12px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--night-line); font: 400 13px/1 var(--text); color: var(--night-mute); }
+/* Мітки текстом через «·»: крапка першого елемента в кожному рядку ховається за лівим краєм */
+.ba__chips, .case__meta { gap: 2px 0; clip-path: inset(-4px -4px -4px 22px); }
+.ba__chips { margin-left: -22px; }
+.case__meta { margin-left: -22px; }
+.ba__chips li, .case__meta li { height: auto; padding: 0; background: none; box-shadow: none; border-radius: 0; white-space: nowrap; }
+.ba__chips li::before, .case__meta li::before { content: "·"; display: inline-block; width: 22px; text-align: center; color: var(--mute); }
+.case__meta li::before { color: var(--night-mute); }
+.ba__chips li { font: 400 15px/1.5 var(--text); color: var(--ink); }
+.case__meta li { font: 400 14px/1.5 var(--text); }
 .case__sum { text-align: left; }
 @media (min-width: 768px) { .case__sum { text-align: right; } }
 .case__price { font: 300 clamp(30px, 1.4vw + 22px, 46px)/1 var(--display); letter-spacing: -.03em; color: var(--night-mute); white-space: nowrap; }
@@ -830,10 +834,12 @@ html:not(.js) .qa[open] .qa__a { grid-template-rows: 1fr; }
 /* ---------- 13. Футер ---------- */
 .ftr { background: #141915; color: var(--night-mute); padding: 64px 0 calc(28px + env(safe-area-inset-bottom)); }
 @media (max-width: 767px) { .ftr { padding-bottom: 96px; } }
-.ftr__top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; padding-bottom: 40px; border-bottom: 1px solid var(--night-line); }
-.ftr__logo img { width: auto; height: 64px; }
-.ftr__slogan { flex: 1; min-width: 240px; font: 400 clamp(18px, .5vw + 15px, 22px)/1.4 var(--display); color: var(--linen); }
-@media (min-width: 768px) { .ftr__slogan { margin-left: 32px; } }
+.ftr__top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 40px; border-bottom: 1px solid var(--night-line); }
+.ftr__logo { display: block; line-height: 0; }
+.ftr__logo img { width: auto; height: 72px; }
+.ftr__slogan { flex: 1; min-width: 200px; font: 400 16px/1.5 var(--display); color: var(--night-mute); }
+.ftr__slogan b { font-weight: inherit; color: var(--linen); }
+@media (min-width: 768px) { .ftr__slogan { margin-left: 8px; } }
 .ftr__up { width: var(--btn-h); height: var(--btn-h); border-radius: 50%; display: grid; place-items: center; box-shadow: inset 0 0 0 1px var(--night-line); color: var(--linen); transition: background-color .4s var(--ease), color .4s var(--ease); }
 .ftr__up svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: transform .4s var(--ease); }
 .ftr__up:hover { background: var(--glow); color: var(--night); }
@@ -846,6 +852,7 @@ html:not(.js) .qa[open] .qa__a { grid-template-rows: 1fr; }
 .ftr__cols a:hover { color: var(--glow); }
 .ftr__bot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 24px; border-top: 1px solid var(--night-line); font: 400 13px/1.4 var(--text); }
 .ftr__bot a { color: var(--night-mute); }
+@media (max-width: 767px) { .ftr__top .ftr__slogan { margin-left: 0; } .ftr__top { flex-wrap: nowrap; gap: 18px; } .ftr__logo img { height: 64px; } .ftr__slogan { min-width: 0; font-size: 14px; line-height: 1.55; } .ftr__up { display: none; } }
 
 
 /* ---------- Підсторінки ---------- */
