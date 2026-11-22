@@ -1,0 +1,124 @@
+{
+  "label": "Наші обʼєкти",
+  "title_1": "Стелі, які ми",
+  "title_2": "вже натягнули",
+  "text": "Кожен обʼєкт – з розкладкою ціни за нашим прайсом. Без «менеджер уточнить».",
+  "button": "Хочу схожу",
+  "toggle": "Розкладка ціни",
+  "items": [
+    {
+      "title": "Лофт зі світловими лініями",
+      "district": "Франківський р-н",
+      "area": "52 м²",
+      "canvas": "Матове",
+      "profile": "Тіньовий",
+      "light": "Світлові лінії",
+      "photos": [
+        "images/projects/loft-2.webp",
+        "images/projects/loft-1.webp",
+        "images/projects/loft-3.webp",
+        "images/projects/loft-4.webp"
+      ],
+      "alt": "Лофт із сірими стінами, світловими лініями в натяжній стелі та сходами",
+      "breakdown": [
+        {
+          "label": "Полотно й профіль, периметр 30 м",
+          "value": 24200
+        },
+        {
+          "label": "Тіньовий профіль, 30 м.п.",
+          "value": 7500
+        },
+        {
+          "label": "Світлові лінії, 24 м.п.",
+          "value": 40800
+        }
+      ]
+    },
+    {
+      "title": "Кухня-їдальня",
+      "district": "Сихів",
+      "area": "28 м²",
+      "canvas": "Матове",
+      "profile": "Тіньовий",
+      "light": "Точкові + трек",
+      "photos": [
+        "images/projects/kitchen-1.webp",
+        "images/projects/kitchen-2.webp",
+        "images/projects/kitchen-3.webp",
+        "images/projects/kitchen-4.webp"
+      ],
+      "alt": "Кухня-їдальня з матовою натяжною стелею, точковими світильниками і треком",
+      "breakdown": [
+        {
+          "label": "Полотно й профіль, периметр 22 м",
+          "value": 14200
+        },
+        {
+          "label": "Тіньовий профіль, 22 м.п.",
+          "value": 5500
+        },
+        {
+          "label": "14 точкових і трек 3 м",
+          "value": 10200
+        }
+      ]
+    },
+    {
+      "title": "Вітальня з треком",
+      "district": "Стрий",
+      "area": "24 м²",
+      "canvas": "Матове",
+      "profile": "Тіньовий",
+      "light": "Вбудований трек",
+      "photos": [
+        "images/projects/living-1.webp",
+        "images/projects/living-2.webp"
+      ],
+      "alt": "Вітальня з бірюзовою стіною, вбудованим треком і підвісними світильниками",
+      "breakdown": [
+        {
+          "label": "Полотно й профіль, периметр 20 м",
+          "value": 12400
+        },
+        {
+          "label": "Тіньовий профіль, 20 м.п.",
+          "value": 5000
+        },
+        {
+          "label": "Вбудований трек 6 м.п. і люстра",
+          "value": 12650
+        }
+      ]
+    },
+    {
+      "title": "Квартира без зайвого",
+      "district": "Дрогобич",
+      "area": "34 м²",
+      "canvas": "Матове",
+      "profile": "ПВХ зі вставкою",
+      "light": "Точкові + люстра",
+      "photos": [
+        "images/projects/flat-2.webp",
+        "images/projects/flat-1.webp",
+        "images/projects/flat-3.webp",
+        "images/projects/flat-4.webp"
+      ],
+      "alt": "Світла вітальня з матовою стелею, точковими світильниками й люстрою",
+      "breakdown": [
+        {
+          "label": "Полотно й профіль, периметр 48 м",
+          "value": 21500
+        },
+        {
+          "label": "Профіль ПВХ зі вставкою",
+          "value": 0
+        },
+        {
+          "label": "12 точкових і люстра",
+          "value": 4250
+        }
+      ]
+    }
+  ]
+}

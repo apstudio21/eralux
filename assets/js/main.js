@@ -261,6 +261,232 @@
     });
   }
 
+
+  /* ---------- 6. До / після ---------- */
+  function initBA(d) {
+    var cmp = $('cmp'); if (!cmp) return;
+    if (d) bindText('ba', d);
+    var before = $('cmp-before'), after = $('cmp-after'), handle = $('cmp-handle');
+    var pairs = (d && Array.isArray(d.pairs)) ? d.pairs.filter(function (x) { return x && RE_IMG.test(x.before || '') && RE_IMG.test(x.after || ''); }).slice(0, 6) : [];
+    var T = 14.4, p = 50, touched = false;
+
+    function set(v) {
+      p = Math.max(4, Math.min(96, v));
+      cmp.style.setProperty('--p', p.toFixed(2));
+      handle.setAttribute('aria-valuenow', Math.round(p));
+      handle.setAttribute('aria-valuetext', Math.round(100 - p) + '% – після');
+    }
+    function fromPointer(e) {
+      var r = cmp.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width * 100, y = (e.clientY - r.top) / r.height;
+      set(x - T + 2 * T * y);   // лінія проходить рівно під пальцем, з урахуванням нахилу 21°
+    }
+    var dragging = false;
+    cmp.addEventListener('pointerdown', function (e) {
+      if (e.button !== 0) return;
+      dragging = true; touched = true; cmp.classList.add('is-drag');
+      try { cmp.setPointerCapture(e.pointerId); } catch (err) {}
+      fromPointer(e);
+    });
+    cmp.addEventListener('pointermove', function (e) { if (dragging) { fromPointer(e); } });
+    function stop() { dragging = false; cmp.classList.remove('is-drag'); }
+    cmp.addEventListener('pointerup', stop);
+    cmp.addEventListener('pointercancel', stop);
+    handle.addEventListener('keydown', function (e) {
+      var k = e.key, step = e.shiftKey ? 10 : 5;
+      if (k === 'ArrowLeft' || k === 'ArrowDown') set(p - step);
+      else if (k === 'ArrowRight' || k === 'ArrowUp') set(p + step);
+      else if (k === 'Home') set(4); else if (k === 'End') set(96); else return;
+      touched = true; e.preventDefault();
+    });
+
+    // підказка рухом при першій появі
+    function hint() {
+      if (reduce || touched) return;
+      var keys = [50, 30, 70, 50], dur = 2400, t0 = null;
+      function ease(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+      function step(t) {
+        if (touched) return;
+        if (!t0) t0 = t;
+        var k = Math.min((t - t0) / dur, 1), seg = Math.min(Math.floor(k * 3), 2), lt = ease(k * 3 - seg);
+        set(keys[seg] + (keys[seg + 1] - keys[seg]) * lt);
+        if (k < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { io.disconnect(); setTimeout(hint, 700); } }, { threshold: 0.55 });
+      io.observe(cmp);
+    }
+
+    // кілька пар з адмінки
+    var info = document.querySelector('.ba__info');
+    function show(i, animate) {
+      var x = pairs[i]; if (!x) return;
+      function apply() {
+        before.src = x.before; after.src = x.after;
+        before.alt = x.alt_before || 'До'; after.alt = x.alt_after || 'Після';
+        $('ba-n').textContent = 'Обʼєкт ' + (i < 9 ? '0' : '') + (i + 1);
+        $('ba-pair-title').textContent = x.title || '';
+        $('ba-pair-text').textContent = x.text || '';
+        var ul = $('ba-chips'); ul.textContent = '';
+        (Array.isArray(x.chips) ? x.chips : []).forEach(function (c) { if (typeof c === 'string' && c.trim()) { var li = document.createElement('li'); li.textContent = c.trim(); ul.appendChild(li); } });
+        set(50);
+        cmp.classList.remove('is-out'); info.classList.remove('is-out');
+      }
+      if (animate && !reduce) { cmp.classList.add('ba__fade', 'is-out'); info.classList.add('ba__fade', 'is-out'); setTimeout(apply, 350); } else apply();
+    }
+    if (pairs.length) show(0, false);
+    if (pairs.length > 1) {
+      var list = $('ba-list'); list.hidden = false;
+      pairs.forEach(function (x, i) {
+        var b = document.createElement('button'), im = document.createElement('img');
+        b.type = 'button'; b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false'); b.setAttribute('aria-label', x.title || ('Обʼєкт ' + (i + 1)));
+        im.src = x.after; im.alt = ''; im.loading = 'lazy'; b.appendChild(im);
+        b.addEventListener('click', function () {
+          list.querySelectorAll('button').forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+          show(i, true);
+        });
+        list.appendChild(b);
+      });
+    }
+  }
+
+  /* ---------- 7. Проєкти ---------- */
+  function caseCard(x, i) {
+    var li = document.createElement('li'); li.className = 'case'; li.dataset.case = i;
+    var photos = (x.photos || []).filter(function (s) { return RE_IMG.test(s || ''); }).slice(0, 5);
+    var pic = document.createElement('div'); pic.className = 'case__pic';
+    var img = document.createElement('img'); img.className = 'case__img'; img.src = photos[0] || ''; img.alt = x.alt || x.title || ''; img.loading = 'lazy'; img.width = 1400; img.height = 933; img.draggable = false;
+    pic.appendChild(img);
+    var tags = document.createElement('div'); tags.className = 'case__tags';
+    [x.district, x.area].forEach(function (t) { if (t) { var s = document.createElement('span'); s.className = 'tag'; s.textContent = t; tags.appendChild(s); } });
+    pic.appendChild(tags);
+    if (photos.length > 1) {
+      var ths = document.createElement('div'); ths.className = 'case__ths';
+      photos.forEach(function (src, k) {
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'case__th' + (k ? '' : ' is-on'); b.dataset.src = src; b.setAttribute('aria-label', 'Фото ' + (k + 1));
+        var ti = document.createElement('img'); ti.src = src; ti.alt = ''; ti.loading = 'lazy'; b.appendChild(ti); ths.appendChild(b);
+      });
+      pic.appendChild(ths);
+    }
+    li.appendChild(pic);
+    var body = document.createElement('div'); body.className = 'case__body';
+    var main = document.createElement('div'); main.className = 'case__main';
+    var h = document.createElement('h3'); h.className = 'case__title'; h.textContent = x.title || ''; main.appendChild(h);
+    var meta = document.createElement('ul'); meta.className = 'case__meta';
+    [x.canvas, x.profile, x.light].forEach(function (t) { if (t) { var m = document.createElement('li'); m.textContent = t; meta.appendChild(m); } });
+    main.appendChild(meta); body.appendChild(main);
+    var total = 0, rows = (x.breakdown || []).filter(function (b) { return b && b.label; });
+    rows.forEach(function (b) { total += Number(b.value) || 0; });
+    var sum = document.createElement('div'); sum.className = 'case__sum';
+    var pr = document.createElement('p'); pr.className = 'case__price';
+    var ps = document.createElement('span'); ps.textContent = '≈ ' + fmt(total); pr.appendChild(ps); pr.appendChild(document.createTextNode(' грн'));
+    var un = document.createElement('p'); un.className = 'case__under'; un.textContent = 'під ключ';
+    sum.appendChild(pr); sum.appendChild(un); body.appendChild(sum); li.appendChild(body);
+    var more = document.createElement('div'); more.className = 'case__more';
+    var tg = document.createElement('button'); tg.type = 'button'; tg.className = 'case__toggle'; tg.setAttribute('aria-expanded', 'false'); tg.setAttribute('aria-controls', 'case-break-x' + i);
+    var tgs = document.createElement('span'); tgs.textContent = 'Розкладка ціни'; tg.appendChild(tgs); tg.appendChild(document.createElement('i'));
+    var br = document.createElement('div'); br.className = 'case__break'; br.id = 'case-break-x' + i;
+    var ul = document.createElement('ul');
+    rows.forEach(function (b) {
+      var r = document.createElement('li'), l = document.createElement('span'), v = document.createElement('b');
+      l.textContent = b.label; v.textContent = Number(b.value) > 0 ? fmt(b.value) + ' грн' : 'у ціні';
+      r.appendChild(l); r.appendChild(v); ul.appendChild(r);
+    });
+    br.appendChild(ul);
+    var cta = document.querySelector('.case__cta').cloneNode(true); cta.dataset.caseName = x.title || '';
+    more.appendChild(tg); more.appendChild(br); more.appendChild(cta); li.appendChild(more);
+    return li;
+  }
+
+  function initCases(d) {
+    var track = $('cases-track'), rail = $('cases-rail'); if (!track) return;
+    if (d) bindText('projects', d);
+    if (d && Array.isArray(d.items)) {
+      var items = d.items.filter(function (x) { return x && x.title && Array.isArray(x.photos) && x.photos.some(function (s) { return RE_IMG.test(s || ''); }); }).slice(0, 8);
+      if (items.length) {
+        var frag = document.createDocumentFragment();
+        items.forEach(function (x, i) { frag.appendChild(caseCard(x, i)); });
+        track.textContent = ''; track.appendChild(frag);
+      }
+    }
+    var cards = track.querySelectorAll('.case'), n = cards.length;
+    $('cases-all').textContent = (n < 10 ? '0' : '') + n;
+
+    // фото серії: клік або наведення на мініатюру
+    track.addEventListener('click', function (e) {
+      var th = e.target.closest('.case__th');
+      if (th) { swapCase(th); return; }
+      var tg = e.target.closest('.case__toggle');
+      if (tg) { var c = tg.closest('.case'), open = !c.classList.contains('is-open'); c.classList.toggle('is-open', open); tg.setAttribute('aria-expanded', open ? 'true' : 'false'); return; }
+      var cta = e.target.closest('.case__cta');
+      if (cta) { document.documentElement.dataset.caseName = cta.dataset.caseName || ''; }
+    });
+    track.addEventListener('mouseover', function (e) { var th = e.target.closest('.case__th'); if (th && !th.classList.contains('is-on')) swapCase(th); });
+    function swapCase(th) {
+      var c = th.closest('.case'), img = c.querySelector('.case__img');
+      c.querySelectorAll('.case__th').forEach(function (o) { o.classList.toggle('is-on', o === th); });
+      var src = th.dataset.src; if (!RE_IMG.test(src || '')) return;
+      if (reduce) { img.removeAttribute('srcset'); img.src = src; return; }
+      img.classList.add('is-swap');
+      var pre = new Image(); pre.onload = pre.onerror = function () { img.removeAttribute('srcset'); img.src = src; requestAnimationFrame(function () { img.classList.remove('is-swap'); }); };
+      setTimeout(function () { pre.src = src; }, 180);
+    }
+
+    // навігація, лічильник, смуга прогресу
+    var prev = $('cases-prev'), next = $('cases-next'), cur = $('cases-cur'), bar = $('cases-bar');
+    function idx() {
+      var best = 0, min = Infinity, pad = parseFloat(getComputedStyle(track).paddingLeft) || 0;
+      cards.forEach(function (c, i) { var d = Math.abs(c.offsetLeft - pad - track.scrollLeft); if (d < min) { min = d; best = i; } });
+      return best;
+    }
+    function update() {
+      var i = idx(), max = track.scrollWidth - track.clientWidth;
+      cur.textContent = (i < 9 ? '0' : '') + (i + 1);
+      prev.disabled = track.scrollLeft < 4; next.disabled = track.scrollLeft > max - 4;
+      var k = max > 0 ? track.scrollLeft / max : 1;
+      bar.style.width = ((1 / n) + (1 - 1 / n) * k) * 100 + '%';
+    }
+    function go(i) {
+      i = Math.max(0, Math.min(n - 1, i));
+      var pad = parseFloat(getComputedStyle(track).paddingLeft) || 0;
+      track.scrollTo({ left: cards[i].offsetLeft - pad, behavior: reduce ? 'auto' : 'smooth' });
+    }
+    prev.addEventListener('click', function () { go(idx() - 1); });
+    next.addEventListener('click', function () { go(idx() + 1); });
+    var tk = false;
+    track.addEventListener('scroll', function () { if (!tk) { tk = true; requestAnimationFrame(function () { update(); tk = false; }); } }, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+
+    // перетягування мишею + курсор «Тягніть»
+    var bubble = $('cases-drag'), down = false, moved = 0, sx = 0, sl = 0;
+    var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    track.addEventListener('pointerdown', function (e) {
+      if (e.pointerType !== 'mouse' || e.button !== 0 || e.target.closest('a, button')) return;
+      down = true; moved = 0; sx = e.clientX; sl = track.scrollLeft; track.classList.add('is-drag');
+    });
+    window.addEventListener('pointermove', function (e) {
+      if (down) { var dx = e.clientX - sx; moved = Math.max(moved, Math.abs(dx)); track.scrollLeft = sl - dx; }
+    });
+    window.addEventListener('pointerup', function () {
+      if (!down) return; down = false; track.classList.remove('is-drag');
+      if (moved > 4) go(idx());
+    });
+    track.addEventListener('click', function (e) { if (moved > 6) { e.preventDefault(); e.stopPropagation(); moved = 0; } }, true);
+    if (fine && !reduce) {
+      rail.addEventListener('pointermove', function (e) {
+        var r = rail.getBoundingClientRect();
+        bubble.style.setProperty('--x', (e.clientX - r.left) + 'px');
+        bubble.style.setProperty('--y', (e.clientY - r.top) + 'px');
+        bubble.classList.add('is-on');
+        bubble.classList.toggle('is-small', !!e.target.closest('a, button'));
+      });
+      rail.addEventListener('pointerleave', function () { bubble.classList.remove('is-on'); });
+    }
+  }
+
   /* ---------- Хедер: прилипає, ховається при скролі вниз ---------- */
   function initHeader() {
     var hdr = $('hdr'), mbar = $('mbar'), lastY = window.scrollY, ticking = false;
@@ -337,10 +563,12 @@
   initNavPill();
   initMenu();
 
-  Promise.race([Promise.all([load('header'), load('hero'), load('stats'), load('light'), load('prices'), load('ceilings')]), timeout(1200)]).then(function (res) {
+  Promise.race([Promise.all([load('header'), load('hero'), load('stats'), load('light'), load('prices'), load('ceilings'), load('before_after'), load('projects')]), timeout(1200)]).then(function (res) {
     if (res) { applyHeader(res[0]); applyHero(res[1]); applyStats(res[2]); }
     initLight(res ? res[3] : null, res ? res[4] : null);
     initCeilings(res ? res[5] : null, res ? res[4] : null);
+    initBA(res ? res[6] : null);
+    initCases(res ? res[7] : null);
     reveals();
     var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
     Promise.race([fonts, timeout(900)]).then(start);

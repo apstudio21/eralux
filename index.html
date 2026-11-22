@@ -337,9 +337,166 @@
   </div>
 </section>
 
-<!-- Далі блоки 6–13 (у роботі) -->
+<!-- 6. ДО / ПІСЛЯ -->
+<section class="ba" id="before-after" aria-labelledby="ba-title">
+  <div class="wrap">
+    <div class="ba__head">
+      <div>
+        <p class="label" data-reveal><span data-bind="ba.label">Результат</span></p>
+        <h2 class="h2" id="ba-title" data-reveal><span data-bind="ba.title_1">До і</span> <b data-bind="ba.title_2">після</b></h2>
+      </div>
+      <p class="ba__lead" data-reveal data-bind="ba.text">Та сама кімната до монтажу і після. Потягніть лінію – подивіться, що змінилось.</p>
+    </div>
+
+    <div class="ba__grid">
+      <div class="cmp" id="cmp" data-reveal style="--p: 50">
+        <img class="cmp__img cmp__before" id="cmp-before" src="images/before-after/ba1-before.webp" width="960" height="720" alt="До: на голій стелі встановлено вигнутий профіль і закладні під світильники" loading="lazy" draggable="false">
+        <img class="cmp__img cmp__after" id="cmp-after" src="images/before-after/ba1-after.webp" width="960" height="720" alt="Після: дворівнева глянцева стеля з точковими світильниками" loading="lazy" draggable="false">
+        <span class="cmp__lab cmp__lab--b" aria-hidden="true">До</span>
+        <span class="cmp__lab cmp__lab--a" aria-hidden="true">Після</span>
+        <span class="cmp__line" aria-hidden="true"></span>
+        <span class="cmp__handle" id="cmp-handle" role="slider" tabindex="0" aria-label="Порівняння до і після" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext="50% – після">
+          <svg viewBox="0 0 26 26" aria-hidden="true"><path d="M9 8l-5 5 5 5M17 8l5 5-5 5"/></svg>
+        </span>
+      </div>
+
+      <div class="ba__info" data-reveal>
+        <p class="ba__n" id="ba-n">Обʼєкт 01</p>
+        <h3 class="ba__title" id="ba-pair-title">Дворівнева глянцева стеля</h3>
+        <ul class="ba__chips" id="ba-chips"><li>Глянець</li><li>Два рівні</li><li>Точкові світильники</li></ul>
+        <p class="ba__text" id="ba-pair-text">Від голої стелі до готової: профіль за вигином стіни, другий рівень і світло.</p>
+        <ul class="ba__list" id="ba-list" hidden></ul>
+        <a class="btn btn--dark" href="#measure"><span class="btn__tx" data-bind="ba.button">Хочу так само</span><span class="btn__ar" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. ПРОЄКТИ -->
+<section class="cases" id="projects" aria-labelledby="cases-title">
+  <div class="wrap">
+    <div class="cases__head">
+      <div>
+        <p class="label" data-reveal><span data-bind="projects.label">Наші обʼєкти</span></p>
+        <h2 class="h2" id="cases-title" data-reveal><span data-bind="projects.title_1">Стелі, які ми</span> <b data-bind="projects.title_2">вже натягнули</b></h2>
+      </div>
+      <div class="cases__aside" data-reveal>
+        <p class="cases__lead" data-bind="projects.text">Кожен обʼєкт – з розкладкою ціни за нашим прайсом. Без «менеджер уточнить».</p>
+        <div class="cases__nav">
+          <span class="cases__count" aria-live="polite"><b id="cases-cur">01</b> / <span id="cases-all">04</span></span>
+          <button type="button" class="rbtn" id="cases-prev" aria-label="Попередній обʼєкт"><svg viewBox="0 0 16 16"><path d="M10 3L5 8l5 5"/></svg></button>
+          <button type="button" class="rbtn" id="cases-next" aria-label="Наступний обʼєкт"><svg viewBox="0 0 16 16"><path d="M6 3l5 5-5 5"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cases__rail" id="cases-rail">
+    <ul class="cases__track" id="cases-track">
+      <li class="case" data-case="0">
+        <div class="case__pic">
+          <img class="case__img" src="images/projects/loft-2-800.webp" srcset="images/projects/loft-2-800.webp 800w, images/projects/loft-2.webp 1400w" sizes="(min-width: 1024px) 58vw, 86vw" width="1400" height="933" alt="Лофт із сірими стінами, світловими лініями в натяжній стелі та сходами" loading="lazy" draggable="false">
+          <div class="case__tags"><span class="tag">Франківський р-н</span><span class="tag">52 м²</span></div>
+          <div class="case__ths"><button type="button" class="case__th is-on" data-src="images/projects/loft-2.webp" aria-label="Фото 1"><img src="images/projects/loft-2-t.webp" width="300" height="200" alt="" loading="lazy"></button><button type="button" class="case__th" data-src="images/projects/loft-1.webp" aria-label="Фото 2"><img src="images/projects/loft-1-t.webp" width="300" height="200" alt="" loading="lazy"></button><button type="button" class="case__th" data-src="images/projects/loft-3.webp" aria-label="Фото 3"><img src="images/projects/loft-3-t.webp" width="300" height="200" alt="" loading="lazy"></button><button type="button" class="case__th" data-src="images/projects/loft-4.webp" aria-label="Фото 4"><img src="images/projects/loft-4-t.webp" width="300" height="200" alt="" loading="lazy"></button></div>
+        </div>
+        <div class="case__body">
+          <div class="case__main">
+            <h3 class="case__title">Лофт зі світловими лініями</h3>
+            <ul class="case__meta"><li>Матове</li><li>Тіньовий</li><li>Світлові лінії</li></ul>
+          </div>
+          <div class="case__sum">
+            <p class="case__price"><span>≈ 72 500</span> грн</p>
+            <p class="case__under">під ключ</p>
+          </div>
+        </div>
+        <div class="case__more">
+          <button type="button" class="case__toggle" aria-expanded="false" aria-controls="case-break-1"><span>Розкладка ціни</span><i aria-hidden="true"></i></button>
+          <div class="case__break" id="case-break-1">
+            <ul><li><span>Полотно й профіль, периметр 30 м</span><b>24 200 грн</b></li><li><span>Тіньовий профіль, 30 м.п.</span><b>7 500 грн</b></li><li><span>Світлові лінії, 24 м.п.</span><b>40 800 грн</b></li></ul>
+          </div>
+          <a class="btn btn--glow case__cta" href="#measure" data-case-name="Лофт зі світловими лініями"><span class="btn__tx">Хочу схожу</span><span class="btn__ar" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></span></a>
+        </div>
+      </li>
+      <li class="case" data-case="1">
+        <div class="case__pic">
+          <img class="case__img" src="images/projects/kitchen-1-800.webp" srcset="images/projects/kitchen-1-800.webp 800w, images/projects/kitchen-1.webp 1400w" sizes="(min-width: 1024px) 58vw, 86vw" width="1400" height="933" alt="Кухня-їдальня з матовою натяжною стелею, точковими світильниками і треком" loading="lazy" draggable="false">
+          <div class="case__tags"><span class="tag">Сихів</span><span class="tag">28 м²</span></div>
+          <div class="case__ths"><button type="button" class="case__th is-on" data-src="images/projects/kitchen-1.webp" aria-label="Фото 1"><img src="images/projects/kitchen-1-t.webp" width="300" height="200" alt="" loading="lazy"></button><button type="button" class="case__th" data-src="images/projects/kitchen-2.webp" aria-label="Фото 2"><img src="images/projects/kitchen-2-t.webp" width="300" height="200" alt="" loading="lazy"></button><button type="button" class="case__th" data-src="images/projects/kitchen-3.webp" aria-label="Фото 3"><img src="images/projects/kitchen-3-t.webp" width="300" height="200" alt="" loading="lazy"></button><button type="button" class="case__th" data-src="images/projects/kitchen-4.webp" aria-label="Фото 4"><img src="images/projects/kitchen-4-t.webp" width="300" height="200" alt="" loading="lazy"></button></div>
+        </div>
+        <div class="case__body">
+          <div class="case__main">
+            <h3 class="case__title">Кухня-їдальня</h3>
+            <ul class="case__meta"><li>Матове</li><li>Тіньовий</li><li>Точкові + трек</li></ul>
+          </div>
+          <div class="case__sum">
+            <p class="case__price"><span>≈ 29 900</span> грн</p>
+            <p class="case__under">під ключ</p>
+          </div>
+        </div>
+        <div class="case__more">
+          <button type="button" class="case__toggle" aria-expanded="false" aria-controls="case-break-2"><span>Розкладка ціни</span><i aria-hidden="true"></i></button>
+          <div class="case__break" id="case-break-2">
+            <ul><li><span>Полотно й профіль, периметр 22 м</span><b>14 200 грн</b></li><li><span>Тіньовий профіль, 22 м.п.</span><b>5 500 грн</b></li><li><span>14 точкових і трек 3 м</span><b>10 200 грн</b></li></ul>
+          </div>
+          <a class="btn btn--glow case__cta" href="#measure" data-case-name="Кухня-їдальня"><span class="btn__tx">Хочу схожу</span><span class="btn__ar" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></span></a>
+        </div>
+      </li>
+      <li class="case" data-case="2">
+        <div class="case__pic">
+          <img class="case__img" src="images/projects/living-1-800.webp" srcset="images/projects/living-1-800.webp 800w, images/projects/living-1.webp 1400w" sizes="(min-width: 1024px) 58vw, 86vw" width="1400" height="933" alt="Вітальня з бірюзовою стіною, вбудованим треком і підвісними світильниками" loading="lazy" draggable="false">
+          <div class="case__tags"><span class="tag">Стрий</span><span class="tag">24 м²</span></div>
+          <div class="case__ths"><button type="button" class="case__th is-on" data-src="images/projects/living-1.webp" aria-label="Фото 1"><img src="images/projects/living-1-t.webp" width="300" height="200" alt="" loading="lazy"></button><button type="button" class="case__th" data-src="images/projects/living-2.webp" aria-label="Фото 2"><img src="images/projects/living-2-t.webp" width="300" height="200" alt="" loading="lazy"></button></div>
+        </div>
+        <div class="case__body">
+          <div class="case__main">
+            <h3 class="case__title">Вітальня з треком</h3>
+            <ul class="case__meta"><li>Матове</li><li>Тіньовий</li><li>Вбудований трек</li></ul>
+          </div>
+          <div class="case__sum">
+            <p class="case__price"><span>≈ 30 050</span> грн</p>
+            <p class="case__under">під ключ</p>
+          </div>
+        </div>
+        <div class="case__more">
+          <button type="button" class="case__toggle" aria-expanded="false" aria-controls="case-break-3"><span>Розкладка ціни</span><i aria-hidden="true"></i></button>
+          <div class="case__break" id="case-break-3">
+            <ul><li><span>Полотно й профіль, периметр 20 м</span><b>12 400 грн</b></li><li><span>Тіньовий профіль, 20 м.п.</span><b>5 000 грн</b></li><li><span>Вбудований трек 6 м.п. і люстра</span><b>12 650 грн</b></li></ul>
+          </div>
+          <a class="btn btn--glow case__cta" href="#measure" data-case-name="Вітальня з треком"><span class="btn__tx">Хочу схожу</span><span class="btn__ar" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></span></a>
+        </div>
+      </li>
+      <li class="case" data-case="3">
+        <div class="case__pic">
+          <img class="case__img" src="images/projects/flat-2-800.webp" srcset="images/projects/flat-2-800.webp 800w, images/projects/flat-2.webp 1400w" sizes="(min-width: 1024px) 58vw, 86vw" width="1400" height="933" alt="Світла вітальня з матовою стелею, точковими світильниками й люстрою" loading="lazy" draggable="false">
+          <div class="case__tags"><span class="tag">Дрогобич</span><span class="tag">34 м²</span></div>
+          <div class="case__ths"><button type="button" class="case__th is-on" data-src="images/projects/flat-2.webp" aria-label="Фото 1"><img src="images/projects/flat-2-t.webp" width="300" height="200" alt="" loading="lazy"></button><button type="button" class="case__th" data-src="images/projects/flat-1.webp" aria-label="Фото 2"><img src="images/projects/flat-1-t.webp" width="300" height="200" alt="" loading="lazy"></button><button type="button" class="case__th" data-src="images/projects/flat-3.webp" aria-label="Фото 3"><img src="images/projects/flat-3-t.webp" width="300" height="200" alt="" loading="lazy"></button><button type="button" class="case__th" data-src="images/projects/flat-4.webp" aria-label="Фото 4"><img src="images/projects/flat-4-t.webp" width="300" height="200" alt="" loading="lazy"></button></div>
+        </div>
+        <div class="case__body">
+          <div class="case__main">
+            <h3 class="case__title">Квартира без зайвого</h3>
+            <ul class="case__meta"><li>Матове</li><li>ПВХ зі вставкою</li><li>Точкові + люстра</li></ul>
+          </div>
+          <div class="case__sum">
+            <p class="case__price"><span>≈ 25 750</span> грн</p>
+            <p class="case__under">під ключ</p>
+          </div>
+        </div>
+        <div class="case__more">
+          <button type="button" class="case__toggle" aria-expanded="false" aria-controls="case-break-4"><span>Розкладка ціни</span><i aria-hidden="true"></i></button>
+          <div class="case__break" id="case-break-4">
+            <ul><li><span>Полотно й профіль, периметр 48 м</span><b>21 500 грн</b></li><li><span>Профіль ПВХ зі вставкою</span><b>у ціні</b></li><li><span>12 точкових і люстра</span><b>4 250 грн</b></li></ul>
+          </div>
+          <a class="btn btn--glow case__cta" href="#measure" data-case-name="Квартира без зайвого"><span class="btn__tx">Хочу схожу</span><span class="btn__ar" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></span></a>
+        </div>
+      </li>
+    </ul>
+    <span class="drag" id="cases-drag" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 4L1 8l4 4M11 4l4 4-4 4"/></svg>Тягніть</span>
+  </div>
+  <div class="wrap"><div class="cases__bar" aria-hidden="true"><i id="cases-bar"></i></div></div>
+</section>
+
+<!-- Далі блоки 8–13 (у роботі) -->
 <div class="todo" id="measure">
-  <p>Блоки 6–13 – наступні ітерації</p>
+  <p>Блоки 8–13 – наступні ітерації</p>
 </div>
 
 </main>

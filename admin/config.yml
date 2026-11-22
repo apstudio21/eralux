@@ -228,3 +228,56 @@ collections:
           - { label: "Смуга виробництва – кнопка", name: "factory_link", widget: "string" }
           - { label: "Підказка внизу", name: "hint", widget: "text" }
           - { label: "Підказка – кнопка", name: "hint_button", widget: "string" }
+
+      - name: "before_after"
+        label: "6. До / після"
+        file: "content/before_after.json"
+        fields:
+          - { label: "Мітка", name: "label", widget: "string" }
+          - { label: "Заголовок – частина 1", name: "title_1", widget: "string" }
+          - { label: "Заголовок – частина 2 (зелена)", name: "title_2", widget: "string" }
+          - { label: "Текст", name: "text", widget: "text" }
+          - { label: "Кнопка", name: "button", widget: "string" }
+          - label: "Пари фото (до 6)"
+            name: "pairs"
+            widget: "list"
+            max: 6
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Назва", name: "title", widget: "string" }
+              - { label: "Мітки (2–4)", name: "chips", widget: "list", field: { label: "Мітка", name: "chip", widget: "string" } }
+              - { label: "Опис", name: "text", widget: "text" }
+              - { label: "Фото ДО", name: "before", widget: "image", hint: "4:3, від 1200 px. Найкраще – з того самого місця, що й ПІСЛЯ." }
+              - { label: "Фото ПІСЛЯ", name: "after", widget: "image", hint: "4:3, того ж розміру, що й ДО." }
+              - { label: "Опис фото ДО (alt)", name: "alt_before", widget: "string" }
+              - { label: "Опис фото ПІСЛЯ (alt)", name: "alt_after", widget: "string" }
+
+      - name: "projects"
+        label: "7. Проєкти"
+        file: "content/projects.json"
+        fields:
+          - { label: "Мітка", name: "label", widget: "string" }
+          - { label: "Заголовок – частина 1", name: "title_1", widget: "string" }
+          - { label: "Заголовок – частина 2 (світла)", name: "title_2", widget: "string" }
+          - { label: "Текст", name: "text", widget: "text" }
+          - label: "Обʼєкти"
+            name: "items"
+            widget: "list"
+            max: 8
+            summary: "{{fields.title}} · {{fields.district}} · {{fields.area}}"
+            fields:
+              - { label: "Назва", name: "title", widget: "string" }
+              - { label: "Район / місто", name: "district", widget: "string" }
+              - { label: "Площа (напр. 52 м²)", name: "area", widget: "string" }
+              - { label: "Полотно", name: "canvas", widget: "string" }
+              - { label: "Профіль", name: "profile", widget: "string" }
+              - { label: "Світло", name: "light", widget: "string" }
+              - { label: "Фото (2–5, перше – головне)", name: "photos", widget: "list", min: 1, max: 5, field: { label: "Фото", name: "photo", widget: "image" }, hint: "3:2, від 1400 px, WebP або JPG до 400 КБ" }
+              - { label: "Опис головного фото (alt)", name: "alt", widget: "string" }
+              - label: "Розкладка ціни (сума рахується сама)"
+                name: "breakdown"
+                widget: "list"
+                summary: "{{fields.label}} – {{fields.value}} грн"
+                fields:
+                  - { label: "Що", name: "label", widget: "string" }
+                  - { label: "Сума, грн (0 = «у ціні»)", name: "value", widget: "number", value_type: "int", min: 0 }
