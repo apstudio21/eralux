@@ -819,6 +819,13 @@ html:not(.js) .qa[open] .qa__a { grid-template-rows: 1fr; }
 .cbl__addr:hover svg { transform: translate(2px, -2px); color: var(--glow); }
 .cbl__cities { font: 400 16px/1.6 var(--text); color: var(--linen); }
 .tlink--light { color: var(--linen); }
+.tlink--calc { gap: 10px; }
+.tlink--calc .ico-calc { width: 20px; height: 20px; stroke-width: 1.5; }
+.ico-calc__k circle { fill: currentColor; stroke-width: 1; transition: opacity .3s var(--ease); }
+.ico-calc__scr { transform-origin: 13px 6px; transition: transform .5s var(--ease); }
+.tlink--calc:hover svg { transform: rotate(-8deg); }
+.tlink--calc:hover .ico-calc__scr { transform: scaleX(.45); }
+.tlink--calc:hover .ico-calc__k circle:nth-child(2n) { opacity: .25; }
 
 /* ---------- 13. Футер ---------- */
 .ftr { background: #141915; color: var(--night-mute); padding: 64px 0 calc(28px + env(safe-area-inset-bottom)); }
