@@ -45,8 +45,10 @@ collections:
           - { label: "Рейтинг Google (напр. 5,0)", name: "rating_value", widget: "string" }
           - { label: "Кількість відгуків (напр. 100+)", name: "rating_count", widget: "string" }
           - { label: "Посилання на профіль Google", name: "rating_url", widget: "string", pattern: ['^https://(maps\.app\.goo\.gl/|(www\.)?google\.|g\.page/)', "Посилання з Google Карт"] }
-          - { label: "Тег 1 (ціна)", name: "tag1", widget: "string" }
-          - { label: "Тег 2", name: "tag2", widget: "string" }
+          - { label: "Факт 2 – значення (ціна)", name: "tag1", widget: "string" }
+          - { label: "Факт 2 – підпис", name: "tag1_note", widget: "string" }
+          - { label: "Факт 3 – значення", name: "tag2", widget: "string" }
+          - { label: "Факт 3 – підпис", name: "tag2_note", widget: "string" }
           - label: "Фото (3 шт.)"
             name: "photos"
             widget: "list"
@@ -302,3 +304,54 @@ collections:
           - { label: "Після відправки – заголовок", name: "ok_title", widget: "string" }
           - { label: "Після відправки – текст", name: "ok_text", widget: "text" }
           - { label: "Площа за замовчуванням, м²", name: "default_area", widget: "number", value_type: "int", min: 5, max: 120 }
+
+      - name: "process"
+        label: "9. Як ми працюємо"
+        file: "content/process.json"
+        fields:
+          - { label: "Мітка", name: "label", widget: "string" }
+          - { label: "Заголовок – частина 1", name: "title_1", widget: "string" }
+          - { label: "Заголовок – частина 2 (зелена)", name: "title_2", widget: "string" }
+          - { label: "Текст", name: "text", widget: "text" }
+          - label: "Кроки (4)"
+            name: "steps"
+            widget: "list"
+            min: 4
+            max: 4
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Назва", name: "title", widget: "string" }
+              - { label: "Текст", name: "text", widget: "text" }
+              - { label: "Акцент (зелений рядок)", name: "accent", widget: "string", required: false }
+          - { label: "Монтаж – заголовок", name: "mount_title", widget: "string" }
+          - { label: "Монтаж – етапи", name: "mount", widget: "list", field: { label: "Етап", name: "step", widget: "string" } }
+          - { label: "Примітка 1", name: "note_1", widget: "string" }
+          - { label: "Примітка 2", name: "note_2", widget: "string" }
+          - { label: "Гарантія – початок", name: "guarantee", widget: "string" }
+          - { label: "Гарантія – виділене", name: "guarantee_b", widget: "string" }
+          - { label: "Фото", name: "photo", widget: "image", hint: "4:3, від 1000 px" }
+          - { label: "Опис фото (alt)", name: "photo_alt", widget: "string" }
+          - { label: "Мітка на фото", name: "photo_tag", widget: "string" }
+
+      - name: "reviews"
+        label: "10. Відгуки"
+        file: "content/reviews.json"
+        fields:
+          - { label: "Мітка", name: "label", widget: "string" }
+          - { label: "Заголовок – частина 1", name: "title_1", widget: "string" }
+          - { label: "Заголовок – частина 2 (зелена)", name: "title_2", widget: "string" }
+          - { label: "Рейтинг (напр. 5,0)", name: "rating", widget: "string" }
+          - { label: "Кількість відгуків (напр. 100+)", name: "count", widget: "string" }
+          - { label: "Підпис кількості", name: "count_label", widget: "string" }
+          - { label: "Текст посилання", name: "link_label", widget: "string" }
+          - { label: "Посилання на Google", name: "link", widget: "string", pattern: ['^https://(maps\.app\.goo\.gl/|(www\.)?google\.|g\.page/)', "Посилання з Google Карт"] }
+          - label: "Відгуки (лише справжні, з Google чи Facebook)"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.name}} – {{fields.date}}"
+            fields:
+              - { label: "Імʼя", name: "name", widget: "string" }
+              - { label: "Текст", name: "text", widget: "text" }
+              - { label: "Оцінка (1–5)", name: "rating", widget: "number", value_type: "int", min: 1, max: 5, default: 5 }
+              - { label: "Джерело", name: "source", widget: "select", options: ["Google", "Facebook"], default: "Google" }
+              - { label: "Дата (напр. березень 2026)", name: "date", widget: "string", required: false }

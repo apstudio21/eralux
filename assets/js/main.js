@@ -718,6 +718,81 @@
     }
   }
 
+
+  /* ---------- 9. Процес ---------- */
+  function initProcess(d) {
+    var wrap = $('steps'); if (!wrap) return;
+    if (d) {
+      bindText('process', d);
+      if (Array.isArray(d.steps)) {
+        var items = wrap.querySelectorAll('.step');
+        d.steps.slice(0, items.length).forEach(function (x, i) {
+          if (!x) return;
+          if (x.title) items[i].querySelector('.step__t').textContent = x.title;
+          if (x.text) items[i].querySelector('.step__p').textContent = x.text;
+          var a = items[i].querySelector('.step__x'); if (typeof x.accent === 'string') { a.textContent = x.accent; a.hidden = !x.accent.trim(); }
+        });
+      }
+      if (Array.isArray(d.mount) && d.mount.length) {
+        var ml = $('mount-list'), tpl = ml.querySelector('li');
+        var frag = document.createDocumentFragment();
+        d.mount.forEach(function (t) { if (typeof t !== 'string' || !t.trim()) return; var li = tpl.cloneNode(true); li.className = ''; li.lastChild.textContent = t.trim(); frag.appendChild(li); });
+        if (frag.childNodes.length) { ml.textContent = ''; ml.appendChild(frag); }
+      }
+      var ph = $('mount-photo');
+      if (ph && RE_IMG.test(d.photo || '') && d.photo !== ph.getAttribute('src')) ph.src = d.photo;
+      if (ph && d.photo_alt) ph.alt = d.photo_alt;
+    }
+    var fill = $('steps-fill'), steps = wrap.querySelectorAll('.step'), mq = window.matchMedia('(min-width: 900px)');
+    function upd() {
+      var r = wrap.getBoundingClientRect(), vh = window.innerHeight;
+      var k = Math.max(0, Math.min(1, (vh * .78 - r.top) / (mq.matches ? vh * .45 : r.height)));
+      if (mq.matches) { fill.style.width = k * 100 + '%'; fill.style.height = '100%'; } else { fill.style.height = k * 100 + '%'; fill.style.width = '100%'; }
+      steps.forEach(function (st, i) { st.classList.toggle('is-lit', k >= (mq.matches ? i / steps.length + .02 : (i + .15) / steps.length)); });
+    }
+    if (reduce) { fill.style.width = fill.style.height = '100%'; steps.forEach(function (st) { st.classList.add('is-lit'); }); }
+    else { var tk = false; window.addEventListener('scroll', function () { if (!tk) { tk = true; requestAnimationFrame(function () { upd(); tk = false; }); } }, { passive: true }); window.addEventListener('resize', upd); upd(); }
+
+    // чекліст монтажу відмічається по черзі
+    var lis = document.querySelectorAll('#mount-list li');
+    if (reduce || !('IntersectionObserver' in window)) { lis.forEach(function (l) { l.classList.add('is-done'); }); return; }
+    var io = new IntersectionObserver(function (en) {
+      if (!en[0].isIntersecting) return; io.disconnect();
+      lis.forEach(function (l, i) { setTimeout(function () { l.classList.add('is-done'); }, 250 + i * 320); });
+    }, { threshold: 0.5 });
+    io.observe($('mount-list'));
+  }
+
+  /* ---------- 10. Відгуки ---------- */
+  function initReviews(d) {
+    var track = $('revs-track'); if (!track) return;
+    if (d) {
+      bindText('reviews', d);
+      var link = $('revs-link'); if (link && RE_GMAPS.test(d.link || '')) link.href = d.link;
+      var items = Array.isArray(d.items) ? d.items.filter(function (x) { return x && x.name && x.text; }).slice(0, 20) : [];
+      if (items.length) {
+        var frag = document.createDocumentFragment();
+        items.forEach(function (x) {
+          var li = document.createElement('li'); li.className = 'rev';
+          var st = document.createElement('p'); st.className = 'rev__stars'; var n = Math.max(1, Math.min(5, Number(x.rating) || 5));
+          st.textContent = '★★★★★'.slice(0, n); st.setAttribute('aria-label', 'Оцінка ' + n + ' з 5');
+          var q = document.createElement('p'); q.className = 'rev__q'; q.textContent = x.text;
+          var a = document.createElement('p'); a.className = 'rev__a';
+          var b = document.createElement('b'); b.textContent = x.name;
+          var sp = document.createElement('span'); sp.textContent = [x.source || 'Google', x.date || ''].filter(Boolean).join(' · ');
+          a.appendChild(b); a.appendChild(sp); li.appendChild(st); li.appendChild(q); li.appendChild(a); frag.appendChild(li);
+        });
+        track.textContent = ''; track.appendChild(frag);
+      }
+    }
+    var prev = $('revs-prev'), next = $('revs-next');
+    function step() { var c = track.querySelector('.rev'); return c ? c.getBoundingClientRect().width + 16 : 300; }
+    function upd() { var max = track.scrollWidth - track.clientWidth; prev.disabled = track.scrollLeft < 4; next.disabled = track.scrollLeft > max - 4; }
+    prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: reduce ? 'auto' : 'smooth' }); });
+    next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: reduce ? 'auto' : 'smooth' }); });
+    track.addEventListener('scroll', upd, { passive: true }); window.addEventListener('resize', upd); upd();
+  }
+
   /* ---------- Хедер: прилипає, ховається при скролі вниз ---------- */
   function initHeader() {
     var hdr = $('hdr'), mbar = $('mbar'), lastY = window.scrollY, ticking = false;
@@ -794,13 +869,15 @@
   initNavPill();
   initMenu();
 
-  Promise.race([Promise.all([load('header'), load('hero'), load('stats'), load('light'), load('prices'), load('ceilings'), load('before_after'), load('projects'), load('calc')]), timeout(1200)]).then(function (res) {
+  Promise.race([Promise.all([load('header'), load('hero'), load('stats'), load('light'), load('prices'), load('ceilings'), load('before_after'), load('projects'), load('calc'), load('process'), load('reviews')]), timeout(1200)]).then(function (res) {
     if (res) { applyHeader(res[0]); applyHero(res[1]); applyStats(res[2]); }
     initLight(res ? res[3] : null, res ? res[4] : null);
     initCeilings(res ? res[5] : null, res ? res[4] : null);
     initBA(res ? res[6] : null);
     initCases(res ? res[7] : null);
     initCalc(res ? res[8] : null, res ? res[4] : null);
+    initProcess(res ? res[9] : null);
+    initReviews(res ? res[10] : null);
     reveals();
     var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
     Promise.race([fonts, timeout(900)]).then(start);

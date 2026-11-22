@@ -121,19 +121,24 @@
             <span class="btn__tx" data-bind="hero.cta_primary">Безкоштовний замір</span>
             <span class="btn__ar" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg><svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></span>
           </a>
-          <a class="btn btn--line" href="#calc"><span class="btn__tx" data-bind="hero.cta_secondary">Порахувати вартість</span></a>
+          <a class="tlink" href="#calc"><span data-bind="hero.cta_secondary">Порахувати вартість</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></a>
         </div>
       </div>
       <div class="hero__right" data-reveal>
-        <a class="rate" id="hero-rate" href="https://maps.app.goo.gl/RYuzzSQdiH32nRLD8" target="_blank" rel="noopener">
-          <span class="rate__score"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.8l2.5 5.3 5.7.7-4.2 3.9 1.1 5.7L10 14.6 4.9 17.4 6 11.7 1.8 7.8l5.7-.7z"/></svg><span data-bind="hero.rating_value">5,0</span></span>
-          <span class="rate__tx"><b data-bind="hero.rating_count">100+</b> відгуків у Google</span>
-          <span class="rate__ar" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 11l6-6M6 5h5v5"/></svg></span>
-        </a>
-        <ul class="pills" aria-label="Коротко про умови">
-          <li class="pill pill--price" data-bind="hero.tag1">від 350 грн/м²</li>
-          <li class="pill" data-bind="hero.tag2">Замір – 0 грн</li>
-        </ul>
+        <dl class="hfacts">
+          <div class="hfacts__i">
+            <dt><a class="hfacts__link" id="hero-rate" href="https://maps.app.goo.gl/RYuzzSQdiH32nRLD8" target="_blank" rel="noopener"><span data-bind="hero.rating_value">5,0</span><span class="stars" aria-hidden="true">★★★★★</span></a></dt>
+            <dd><span data-bind="hero.rating_count">100+</span> відгуків у Google</dd>
+          </div>
+          <div class="hfacts__i">
+            <dt data-bind="hero.tag1">від 350 грн/м²</dt>
+            <dd data-bind="hero.tag1_note">полотно з монтажем</dd>
+          </div>
+          <div class="hfacts__i">
+            <dt data-bind="hero.tag2">0 грн</dt>
+            <dd data-bind="hero.tag2_note">замір і консультація</dd>
+          </div>
+        </dl>
       </div>
     </div>
 
@@ -332,7 +337,7 @@
 
     <div class="hint" data-reveal>
       <p data-bind="ceilings.hint">Не знаєте, що обрати? Замірник привезе зразки полотен і профілів – вирішите на місці.</p>
-      <a class="btn btn--line" href="#measure"><span class="btn__tx" data-bind="ceilings.hint_button">Безкоштовний замір</span></a>
+      <a class="tlink" href="#measure"><span data-bind="ceilings.hint_button">Безкоштовний замір</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></a>
     </div>
   </div>
 </section>
@@ -583,9 +588,104 @@
   </div>
 </section>
 
-<!-- Далі блоки 9–13 (у роботі) -->
+<!-- 9. ПРОЦЕС -->
+<section class="proc" id="process" aria-labelledby="proc-title">
+  <div class="wrap">
+    <div class="proc__head">
+      <div>
+        <p class="label" data-reveal><span data-bind="process.label">Як ми працюємо</span></p>
+        <h2 class="h2" id="proc-title" data-reveal><span data-bind="process.title_1">Чотири кроки</span> <b data-bind="process.title_2">до нової стелі</b></h2>
+      </div>
+      <p class="proc__lead" data-reveal data-bind="process.text">Від дзвінка до готової стелі – без сюрпризів у кошторисі.</p>
+    </div>
+
+    <div class="steps" id="steps">
+      <div class="steps__line" aria-hidden="true"><i id="steps-fill"></i></div>
+      <ol class="steps__list" id="steps-list">
+      <li class="step" data-reveal>
+        <span class="step__dot" aria-hidden="true"></span>
+        <span class="step__n">01</span>
+        <h3 class="step__t">Заявка</h3>
+        <p class="step__p">Передзвонимо в робочий час і домовимося про зручний день заміру.</p>
+        <p class="step__x">дзвінок чи месенджер</p>
+      </li>
+      <li class="step" data-reveal>
+        <span class="step__dot" aria-hidden="true"></span>
+        <span class="step__n">02</span>
+        <h3 class="step__t">Замір</h3>
+        <p class="step__p">Приїдемо зі зразками полотен і профілів, поміряємо й назвемо точну ціну на місці.</p>
+        <p class="step__x">0 грн</p>
+      </li>
+      <li class="step" data-reveal>
+        <span class="step__dot" aria-hidden="true"></span>
+        <span class="step__n">03</span>
+        <h3 class="step__t">Виготовлення</h3>
+        <p class="step__p">Ріжемо й зварюємо полотно у власному цеху – під розмір саме вашої кімнати.</p>
+        <p class="step__x">власний цех</p>
+      </li>
+      <li class="step" data-reveal>
+        <span class="step__dot" aria-hidden="true"></span>
+        <span class="step__n">04</span>
+        <h3 class="step__t">Монтаж</h3>
+        <p class="step__p">Бригада ставить профіль і світло, натягує полотно й прибирає за собою.</p>
+        <p class="step__x">чистий монтаж</p>
+      </li>
+      </ol>
+    </div>
+
+    <div class="mount">
+      <figure class="mount__pic" data-reveal="photo">
+        <img id="mount-photo" src="images/process/mount.webp" width="960" height="720" alt="Майстер Eralux встановлює світильник у натяжну стелю" loading="lazy">
+        <figcaption class="tag" data-bind="process.photo_tag">Наша бригада</figcaption>
+      </figure>
+      <div class="mount__body">
+        <h3 class="mount__t" data-reveal data-bind="process.mount_title">Як проходить монтаж</h3>
+        <ol class="mount__list" id="mount-list"><li><span class="mount__ck" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M5 10.5l3.2 3.2L15 7"/></svg></span><span>Накриваємо меблі й підлогу плівкою</span></li><li><span class="mount__ck" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M5 10.5l3.2 3.2L15 7"/></svg></span><span>Ставимо профіль по периметру й закладні під світло</span></li><li><span class="mount__ck" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M5 10.5l3.2 3.2L15 7"/></svg></span><span>Прогріваємо й натягуємо полотно</span></li><li><span class="mount__ck" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M5 10.5l3.2 3.2L15 7"/></svg></span><span>Встановлюємо світильники й перевіряємо світло</span></li><li><span class="mount__ck" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M5 10.5l3.2 3.2L15 7"/></svg></span><span>Прибираємо за собою й здаємо роботу</span></li></ol>
+        <ul class="mount__notes" data-reveal>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13v4h16v-4M6 13V9a2 2 0 012-2h8a2 2 0 012 2v4M3 13h18M7 17v2M17 17v2"/></svg><span data-bind="process.note_1">Меблі не виносимо – відсунемо й накриємо</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v9M8 8l4 4 4-4M5 16c0 2.8 3.1 5 7 5s7-2.2 7-5"/></svg><span data-bind="process.note_2">Чистий монтаж: свердлимо з пилососом</span></li>
+        </ul>
+        <p class="mount__g" data-reveal><span data-bind="process.guarantee">Після монтажу – акт і гарантія:</span> <b data-bind="process.guarantee_b">10 років на полотно, 3 роки на монтаж</b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10. ВІДГУКИ -->
+<section class="revs" id="reviews" aria-labelledby="revs-title">
+  <div class="wrap">
+    <div class="revs__head">
+      <div>
+        <p class="label" data-reveal><span data-bind="reviews.label">Відгуки</span></p>
+        <h2 class="h2" id="revs-title" data-reveal><span data-bind="reviews.title_1">5,0 у Google.</span> <b data-bind="reviews.title_2">Ось чому</b></h2>
+      </div>
+      <div class="revs__nav" data-reveal>
+        <button type="button" class="rbtn rbtn--light" id="revs-prev" aria-label="Попередній відгук"><svg viewBox="0 0 16 16"><path d="M10 3L5 8l5 5"/></svg></button>
+        <button type="button" class="rbtn rbtn--light" id="revs-next" aria-label="Наступний відгук"><svg viewBox="0 0 16 16"><path d="M6 3l5 5-5 5"/></svg></button>
+      </div>
+    </div>
+
+    <div class="revs__grid">
+      <div class="score" data-reveal>
+        <p class="score__n"><span data-bind="reviews.rating">5,0</span></p>
+        <p class="score__stars" aria-label="Оцінка 5 з 5">★★★★★</p>
+        <p class="score__t"><b data-bind="reviews.count">100+</b> <span data-bind="reviews.count_label">відгуків у Google</span></p>
+        <a class="tlink score__link" id="revs-link" href="https://maps.app.goo.gl/RYuzzSQdiH32nRLD8" target="_blank" rel="noopener"><span data-bind="reviews.link_label">Читати всі в Google</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></a>
+      </div>
+      <div class="revs__rail">
+        <ul class="revs__track" id="revs-track">
+          <li class="rev rev--empty"><p class="rev__stars" aria-hidden="true">★★★★★</p><p class="rev__q">Тут буде відгук клієнта з Google. Додайте його в адмінці: імʼя, текст і дату.</p><p class="rev__a"><b>Імʼя клієнта</b><span>Google</span></p></li>
+          <li class="rev rev--empty"><p class="rev__stars" aria-hidden="true">★★★★★</p><p class="rev__q">Тут буде відгук клієнта з Google. Додайте його в адмінці: імʼя, текст і дату.</p><p class="rev__a"><b>Імʼя клієнта</b><span>Google</span></p></li>
+          <li class="rev rev--empty"><p class="rev__stars" aria-hidden="true">★★★★★</p><p class="rev__q">Тут буде відгук клієнта з Google. Додайте його в адмінці: імʼя, текст і дату.</p><p class="rev__a"><b>Імʼя клієнта</b><span>Google</span></p></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Далі блоки 11–13 (у роботі) -->
 <div class="todo" id="measure">
-  <p>Блоки 9–13 – наступні ітерації</p>
+  <p>Блоки 11–13 – наступні ітерації</p>
 </div>
 
 </main>
