@@ -520,16 +520,6 @@
           </div>
           <div class="bars" id="calc-bars" role="slider" tabindex="0" aria-label="Площа стелі" aria-valuemin="5" aria-valuemax="120" aria-valuenow="20" aria-valuetext="20 м²"></div>
           <div class="bars__scale" aria-hidden="true"><span>5</span><span>40</span><span>80</span><span>120 м²</span></div>
-          <div class="cs__row">
-            <div class="cs__cell">
-              <span class="cs__lab" id="lab-per">Периметр <button type="button" class="cs__auto" id="calc-per-auto" hidden>авто</button></span>
-              <div class="stp" data-for="per"><button type="button" class="stp__b" data-d="-1" aria-label="Менший периметр">−</button><input id="calc-per" type="number" inputmode="numeric" min="8" max="200" step="1" value="18" aria-labelledby="lab-per"><span class="stp__u">м</span><button type="button" class="stp__b" data-d="1" aria-label="Більший периметр">+</button></div>
-            </div>
-            <div class="cs__cell">
-              <span class="cs__lab" id="lab-cor">Кути</span>
-              <div class="stp" data-for="cor"><button type="button" class="stp__b" data-d="-1" aria-label="Менше кутів">−</button><input id="calc-cor" type="number" inputmode="numeric" min="3" max="30" step="1" value="4" aria-labelledby="lab-cor"><span class="stp__u">шт</span><button type="button" class="stp__b" data-d="1" aria-label="Більше кутів">+</button></div>
-            </div>
-          </div>
         </fieldset>
 
         <!-- 02 Полотно -->
@@ -552,25 +542,6 @@
           <p class="cs__note" data-bind="calc.light_note">Ціна – монтаж і закладні. Світильники підберемо або встановимо ваші.</p>
         </fieldset>
 
-        <!-- 05 Умови -->
-        <fieldset class="cs" data-reveal>
-          <legend class="cs__t"><span class="cs__n">05</span><span data-bind="calc.step5">Умови</span></legend>
-          <p class="cs__lab">Висота стелі</p>
-          <div class="seg" id="calc-height" role="radiogroup" aria-label="Висота стелі">
-            <button type="button" role="radio" aria-checked="true" data-v="0">до 3 м</button>
-            <button type="button" role="radio" aria-checked="false" data-v="1">3–3,5 м</button>
-            <button type="button" role="radio" aria-checked="false" data-v="2">понад 3,5 м</button>
-          </div>
-          <p class="cs__lab">Місто</p>
-          <div class="opts opts--city" id="calc-city" role="radiogroup" aria-label="Місто">
-            <button type="button" class="opt" role="radio" aria-checked="true" data-v="Львів" data-near="1">Львів</button>
-            <button type="button" class="opt" role="radio" aria-checked="false" data-v="Стрий" data-near="1">Стрий</button>
-            <button type="button" class="opt" role="radio" aria-checked="false" data-v="Дрогобич">Дрогобич</button>
-            <button type="button" class="opt" role="radio" aria-checked="false" data-v="Самбір">Самбір</button>
-            <button type="button" class="opt" role="radio" aria-checked="false" data-v="Долина">Долина</button>
-            <button type="button" class="opt" role="radio" aria-checked="false" data-v="Інше місто">Інше місто</button>
-          </div>
-        </fieldset>
       </div>
 
       <aside class="res" id="calc-res" aria-label="Результат розрахунку">

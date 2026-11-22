@@ -535,9 +535,10 @@
     var P = remoteP && Array.isArray(remoteP.profiles) ? remoteP : null;
     if (!P) { try { P = JSON.parse($('light-default').textContent).prices; } catch (e) { return; } }
     var MIN = 5, MAX = 120, N = window.matchMedia('(max-width: 599px)').matches ? 34 : 56;
-    var st = { area: 20, per: 0, perAuto: true, cor: 4, canvas: (P.canvases[0] || {}).id, profile: (P.profiles[0] || {}).id, light: {}, height: 0, city: 'Львів', near: true };
+    // периметр рахуємо самі від площі, кути – 4 (як у більшості кімнат); точно – на замірі
+    var st = { area: 20, per: 0, cor: 4, canvas: (P.canvases[0] || {}).id, profile: (P.profiles[0] || {}).id, light: {} };
     if (d && Number(d.default_area) >= MIN && Number(d.default_area) <= MAX) st.area = Number(d.default_area);
-    var areaIn = $('calc-area'), bars = $('calc-bars'), perIn = $('calc-per'), corIn = $('calc-cor'), perAuto = $('calc-per-auto');
+    var areaIn = $('calc-area'), bars = $('calc-bars');
     function autoPer(a) { return Math.max(8, Math.round(4 * Math.sqrt(a) * 1.06)); }
     function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
     function r50(v) { return Math.round(v / 50) * 50; }
@@ -554,7 +555,7 @@
       v = clamp(Math.round(v), MIN, MAX); st.area = v;
       if (from !== 'input') areaIn.value = v;
       fitArea();
-      if (st.perAuto) { st.per = autoPer(v); perIn.value = st.per; }
+      st.per = autoPer(v);
       paintBars(); calc();
     }
     var meas = document.createElement('span');
@@ -590,9 +591,6 @@
       inp.addEventListener('change', function () { var v = parseInt(inp.value, 10); set(clamp(isNaN(v) ? min : v, min, max)); sync(); });
       sync(); return sync;
     }
-    var syncPer = stepper(root.querySelector('.stp[data-for="per"]'), function () { return st.per; }, function (v) { st.per = v; st.perAuto = false; perAuto.hidden = false; calc(); }, 8, 200);
-    stepper(root.querySelector('.stp[data-for="cor"]'), function () { return st.cor; }, function (v) { st.cor = v; calc(); }, 3, 30);
-    perAuto.addEventListener('click', function () { st.perAuto = true; perAuto.hidden = true; st.per = autoPer(st.area); syncPer(); calc(); });
 
     // радіо-групи
     function radio(group, onPick) {
@@ -620,8 +618,6 @@
     var pf = $('calc-profile'); pf.setAttribute('role', 'radiogroup'); pf.setAttribute('aria-label', 'Профіль');
     P.profiles.forEach(function (x, k) { pf.appendChild(mkOpt(x.name, x.price > 0 ? '+' + fmt(x.price) + ' грн/м.п.' : 'у ціні', x.id, k === 0, true)); });
     radio(pf, function (b) { st.profile = b.dataset.v; calc(); });
-    radio($('calc-height'), function (b) { st.height = Number(b.dataset.v); calc(); });
-    radio($('calc-city'), function (b) { st.city = b.dataset.v; st.near = b.dataset.near === '1'; calc(); });
 
     // світло
     var lu = $('calc-light'), lightSync = {};
@@ -646,18 +642,14 @@
     function calc() {
       var cvs = find(P.canvases, st.canvas), pr = find(P.profiles, st.profile), rows = [];
       rows.push({ k: 'c', l: 'Полотно «' + cvs.name + '»', s: st.area + ' м² × ' + fmt(cvs.price), v: st.area * cvs.price });
-      rows.push({ k: 'p', l: 'Профіль по периметру', s: st.per + ' м × ' + fmt(P.perimeter_m), v: st.per * P.perimeter_m });
+      rows.push({ k: 'p', l: 'Профіль по периметру', s: '≈ ' + st.per + ' м × ' + fmt(P.perimeter_m), v: st.per * P.perimeter_m });
       if (pr.price > 0) rows.push({ k: 'pr', l: 'Профіль «' + pr.name + '»', s: st.per + ' м.п. × ' + fmt(pr.price), v: st.per * pr.price });
       var corN = pr.premium_corners ? st.cor : Math.max(0, st.cor - P.corners_included), corP = pr.premium_corners ? P.extra_corner_premium : P.extra_corner;
       if (corN > 0) rows.push({ k: 'k', l: pr.premium_corners ? 'Кути на «' + pr.name + '»' : 'Додаткові кути', s: corN + ' × ' + fmt(corP), v: corN * corP });
       var lsum = 0, lnames = [];
       P.light.forEach(function (x) { var q = st.light[x.id] || 0; if (q > 0) { lsum += q * x.price; lnames.push(x.name.toLowerCase() + ' ' + q + ' ' + x.unit); } });
       if (lsum > 0) rows.push({ k: 'l', l: 'Світло', s: lnames.join(', '), v: lsum });
-      var sub = rows.reduce(function (a, r) { return a + r.v; }, 0);
-      var hp = st.height === 1 ? P.height_3 : st.height === 2 ? P.height_35 : 0;
-      if (hp > 0) rows.push({ k: 'h', l: 'Висота стелі +' + hp + '%', s: st.height === 1 ? '3–3,5 м' : 'понад 3,5 м', v: Math.round(sub * hp / 100) });
       var total = r50(rows.reduce(function (a, r) { return a + r.v; }, 0));
-      if (!st.near) rows.push({ k: 'f', l: 'Доїзд – ' + st.city, s: fmt(P.fuel_km) + ' грн/км', v: null });
       var lo = r50(total * .95), hi = r50(total * 1.08);
       // рядки: перебудова лише коли змінився склад
       var keys = rows.map(function (r) { return r.k; }).join(',');
@@ -674,9 +666,8 @@
       }
       rangeEl.textContent = 'від ' + fmt(lo) + ' до ' + fmt(hi) + ' грн';
       tween(total);
-      summary = 'Площа ' + st.area + ' м², периметр ' + st.per + ' м, кутів ' + st.cor + '; полотно: ' + cvs.name + '; профіль: ' + pr.name +
-        (lnames.length ? '; світло: ' + lnames.join(', ') : '') + '; висота: ' + ['до 3 м', '3–3,5 м', 'понад 3,5 м'][st.height] + '; місто: ' + st.city +
-        '; ≈ ' + fmt(total) + ' грн (' + fmt(lo) + '–' + fmt(hi) + ')';
+      summary = 'Площа ' + st.area + ' м² (периметр ≈ ' + st.per + ' м); полотно: ' + cvs.name + '; профіль: ' + pr.name +
+        (lnames.length ? '; світло: ' + lnames.join(', ') : '') + '; ≈ ' + fmt(total) + ' грн (' + fmt(lo) + '–' + fmt(hi) + ')';
     }
     var raf = null;
     function tween(to) {
@@ -690,7 +681,7 @@
     // набір з блоку «Світло»
     document.addEventListener('eralux:light-preset', function (e) {
       var r = e.detail || {};
-      var a = parseFloat(String(r.area || '').replace(',', '.')); if (a >= MIN && a <= MAX) { st.perAuto = true; perAuto.hidden = true; setArea(a); syncPer(); }
+      var a = parseFloat(String(r.area || '').replace(',', '.')); if (a >= MIN && a <= MAX) setArea(a);
       Object.keys(st.light).forEach(function (id) { st.light[id] = 0; });
       (r.items || []).forEach(function (it) { if (it && st.light.hasOwnProperty(it.id) && it.qty > 0) st.light[it.id] = Math.min(200, Math.round(it.qty)); });
       Object.keys(lightSync).forEach(function (id) { lightSync[id](); lu.children[Object.keys(lightSync).indexOf(id)].classList.toggle('is-set', st.light[id] > 0); });
