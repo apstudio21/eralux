@@ -183,6 +183,11 @@
       current = i; setPhotos(i); render(i, true);
     });
     sw.addEventListener('click', function () { setNight(sw.getAttribute('aria-checked') !== 'true'); });
+    var lcta = sec.querySelector('.light__cta');
+    if (lcta) lcta.addEventListener('click', function () {
+      var r = rooms[current];
+      document.dispatchEvent(new CustomEvent('eralux:light-preset', { detail: { area: r.area, items: r.items } }));
+    });
 
     render(0, false);
     // при першій появі блоку світло вмикається само – один раз
@@ -487,6 +492,241 @@
     }
   }
 
+
+  /* ---------- Форми: маска телефону і відправка ---------- */
+  function phoneDigits(v) {
+    var d = String(v || '').replace(/\D/g, '');
+    if (d.indexOf('380') === 0) return d.slice(0, 12);
+    if (d.indexOf('80') === 0) return ('3' + d).slice(0, 12);
+    if (d.charAt(0) === '0') return ('38' + d).slice(0, 12);
+    return d ? ('380' + d).slice(0, 12) : '';
+  }
+  function phoneFormat(d) {
+    if (!d) return '';
+    var r = '+38', n = d.slice(2);            // 0XXXXXXXXX
+    if (n.length) r += ' (' + n.slice(0, 3);
+    if (n.length >= 3) r += ')';
+    if (n.length > 3) r += ' ' + n.slice(3, 6);
+    if (n.length > 6) r += '-' + n.slice(6, 8);
+    if (n.length > 8) r += '-' + n.slice(8, 10);
+    return r;
+  }
+  function maskPhone(input) {
+    input.addEventListener('focus', function () { if (!input.value) input.value = '+38 (0'; });
+    input.addEventListener('blur', function () { if (phoneDigits(input.value).length <= 3) input.value = ''; });
+    input.addEventListener('input', function () {
+      var d = phoneDigits(input.value);
+      input.value = phoneFormat(d);
+      input.removeAttribute('aria-invalid');
+    });
+  }
+  function phoneOk(v) { return /^380\d{9}$/.test(phoneDigits(v)); }
+  var DEMO = /(^|\.)github\.io$|^localhost$|^127\.0\.0\.1$|^$/.test(location.hostname) || location.protocol === 'file:';
+  function sendLead(data) {
+    if (DEMO) return new Promise(function (r) { setTimeout(function () { r(true); }, 700); });
+    return fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+      .then(function (r) { if (!r.ok) throw new Error('send'); return true; });
+  }
+
+  /* ---------- 8. Калькулятор ---------- */
+  function initCalc(d, remoteP) {
+    var root = $('calc'); if (!root) return;
+    if (d) bindText('calc', d);
+    var P = remoteP && Array.isArray(remoteP.profiles) ? remoteP : null;
+    if (!P) { try { P = JSON.parse($('light-default').textContent).prices; } catch (e) { return; } }
+    var MIN = 5, MAX = 120, N = window.matchMedia('(max-width: 599px)').matches ? 34 : 56;
+    var st = { area: 20, per: 0, perAuto: true, cor: 4, canvas: (P.canvases[0] || {}).id, profile: (P.profiles[0] || {}).id, light: {}, height: 0, city: 'Львів', near: true };
+    if (d && Number(d.default_area) >= MIN && Number(d.default_area) <= MAX) st.area = Number(d.default_area);
+    var areaIn = $('calc-area'), bars = $('calc-bars'), perIn = $('calc-per'), corIn = $('calc-cor'), perAuto = $('calc-per-auto');
+    function autoPer(a) { return Math.max(8, Math.round(4 * Math.sqrt(a) * 1.06)); }
+    function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+    function r50(v) { return Math.round(v / 50) * 50; }
+
+    // смуги-повзунок
+    for (var i = 0; i < N; i++) { var b = document.createElement('i'); b.style.setProperty('--h', (28 + 72 * Math.pow(i / (N - 1), .85)).toFixed(1) + '%'); bars.appendChild(b); }
+    var barEls = bars.children;
+    function paintBars() {
+      var k = Math.round((st.area - MIN) / (MAX - MIN) * (N - 1));
+      for (var j = 0; j < N; j++) { barEls[j].className = j < k ? 'on' : (j === k ? 'k' : ''); }
+      bars.setAttribute('aria-valuenow', st.area); bars.setAttribute('aria-valuetext', st.area + ' м²');
+    }
+    function setArea(v, from) {
+      v = clamp(Math.round(v), MIN, MAX); st.area = v;
+      if (from !== 'input') areaIn.value = v;
+      fitArea();
+      if (st.perAuto) { st.per = autoPer(v); perIn.value = st.per; }
+      paintBars(); calc();
+    }
+    var meas = document.createElement('span');
+    meas.setAttribute('aria-hidden', 'true');
+    meas.style.cssText = 'position:absolute;visibility:hidden;white-space:pre;left:-9999px;top:0';
+    document.body.appendChild(meas);
+    function fitArea() {
+      var cs = getComputedStyle(areaIn);
+      meas.style.font = cs.font; meas.style.letterSpacing = cs.letterSpacing;
+      meas.textContent = areaIn.value || '0';
+      areaIn.style.width = Math.ceil(meas.getBoundingClientRect().width + 6) + 'px';
+    }
+    areaIn.addEventListener('input', fitArea);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitArea);
+    function fromX(e) { var r = bars.getBoundingClientRect(); setArea(MIN + clamp((e.clientX - r.left) / r.width, 0, 1) * (MAX - MIN)); }
+    var drag = false;
+    bars.addEventListener('pointerdown', function (e) { drag = true; try { bars.setPointerCapture(e.pointerId); } catch (x) {} fromX(e); });
+    bars.addEventListener('pointermove', function (e) { if (drag) fromX(e); });
+    bars.addEventListener('pointerup', function () { drag = false; });
+    bars.addEventListener('pointercancel', function () { drag = false; });
+    bars.addEventListener('keydown', function (e) {
+      var m = { ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1, PageUp: 10, PageDown: -10 }[e.key];
+      if (m) { setArea(st.area + m); e.preventDefault(); } else if (e.key === 'Home') { setArea(MIN); e.preventDefault(); } else if (e.key === 'End') { setArea(MAX); e.preventDefault(); }
+    });
+    areaIn.addEventListener('input', function () { var v = parseFloat(String(areaIn.value).replace(',', '.')); if (v >= MIN && v <= MAX) setArea(v, 'input'); });
+    areaIn.addEventListener('blur', function () { setArea(parseFloat(String(areaIn.value).replace(',', '.')) || st.area); });
+
+    // степери
+    function stepper(wrap, get, set, min, max) {
+      var inp = wrap.querySelector('input'), bs = wrap.querySelectorAll('.stp__b');
+      function sync() { var v = get(); inp.value = v; bs[0].disabled = v <= min; bs[1].disabled = v >= max; }
+      wrap.addEventListener('click', function (e) { var b = e.target.closest('.stp__b'); if (!b) return; set(clamp(get() + Number(b.dataset.d), min, max)); sync(); });
+      inp.addEventListener('change', function () { var v = parseInt(inp.value, 10); set(clamp(isNaN(v) ? min : v, min, max)); sync(); });
+      sync(); return sync;
+    }
+    var syncPer = stepper(root.querySelector('.stp[data-for="per"]'), function () { return st.per; }, function (v) { st.per = v; st.perAuto = false; perAuto.hidden = false; calc(); }, 8, 200);
+    stepper(root.querySelector('.stp[data-for="cor"]'), function () { return st.cor; }, function (v) { st.cor = v; calc(); }, 3, 30);
+    perAuto.addEventListener('click', function () { st.perAuto = true; perAuto.hidden = true; st.per = autoPer(st.area); syncPer(); calc(); });
+
+    // радіо-групи
+    function radio(group, onPick) {
+      group.addEventListener('click', function (e) {
+        var b = e.target.closest('[role="radio"]'); if (!b) return;
+        group.querySelectorAll('[role="radio"]').forEach(function (x) { x.setAttribute('aria-checked', x === b ? 'true' : 'false'); });
+        onPick(b);
+      });
+      group.addEventListener('keydown', function (e) {
+        if (['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp'].indexOf(e.key) < 0) return;
+        var all = Array.prototype.slice.call(group.querySelectorAll('[role="radio"]')), i = all.indexOf(document.activeElement); if (i < 0) return;
+        var n = all[(i + (e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : all.length - 1)) % all.length]; n.focus(); n.click(); e.preventDefault();
+      });
+    }
+    function mkOpt(label, small, val, on, card) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'opt' + (card ? ' opt--card' : ''); b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', on ? 'true' : 'false'); b.dataset.v = val;
+      if (card) { var n = document.createElement('span'); n.textContent = label; var sm = document.createElement('small'); sm.textContent = small; b.appendChild(n); b.appendChild(sm); } else b.textContent = label;
+      return b;
+    }
+    var cv = $('calc-canvas'); cv.setAttribute('role', 'radiogroup'); cv.setAttribute('aria-label', 'Полотно');
+    P.canvases.forEach(function (c, k) { cv.appendChild(mkOpt(c.name, '', c.id, k === 0, false)); });
+    var same = P.canvases.every(function (c) { return c.price === P.canvases[0].price; });
+    $('calc-canvas-note').textContent = same ? 'Усі фактури – ' + fmt(P.canvases[0].price) + ' грн/м², з монтажем.' : 'Ціна залежить від фактури.';
+    radio(cv, function (b) { st.canvas = b.dataset.v; calc(); });
+    var pf = $('calc-profile'); pf.setAttribute('role', 'radiogroup'); pf.setAttribute('aria-label', 'Профіль');
+    P.profiles.forEach(function (x, k) { pf.appendChild(mkOpt(x.name, x.price > 0 ? '+' + fmt(x.price) + ' грн/м.п.' : 'у ціні', x.id, k === 0, true)); });
+    radio(pf, function (b) { st.profile = b.dataset.v; calc(); });
+    radio($('calc-height'), function (b) { st.height = Number(b.dataset.v); calc(); });
+    radio($('calc-city'), function (b) { st.city = b.dataset.v; st.near = b.dataset.near === '1'; calc(); });
+
+    // світло
+    var lu = $('calc-light'), lightSync = {};
+    P.light.forEach(function (x) {
+      st.light[x.id] = 0;
+      var li = document.createElement('li'), nm = document.createElement('span'), sm = document.createElement('small');
+      nm.className = 'lights__name'; nm.textContent = x.name; sm.textContent = fmt(x.price) + ' грн/' + x.unit; nm.appendChild(sm);
+      var w = document.createElement('div'); w.className = 'stp';
+      var bm = document.createElement('button'); bm.type = 'button'; bm.className = 'stp__b'; bm.dataset.d = '-1'; bm.textContent = '−'; bm.setAttribute('aria-label', x.name + ': менше');
+      var inp = document.createElement('input'); inp.type = 'number'; inp.inputMode = 'numeric'; inp.min = 0; inp.max = 200; inp.value = 0; inp.setAttribute('aria-label', x.name + ', ' + x.unit);
+      var un = document.createElement('span'); un.className = 'stp__u'; un.textContent = x.unit;
+      var bp = document.createElement('button'); bp.type = 'button'; bp.className = 'stp__b'; bp.dataset.d = '1'; bp.textContent = '+'; bp.setAttribute('aria-label', x.name + ': більше');
+      w.appendChild(bm); w.appendChild(inp); w.appendChild(un); w.appendChild(bp);
+      li.appendChild(nm); li.appendChild(w); lu.appendChild(li);
+      lightSync[x.id] = stepper(w, function () { return st.light[x.id]; }, function (v) { st.light[x.id] = v; li.classList.toggle('is-set', v > 0); calc(); }, 0, 200);
+    });
+
+    // розрахунок
+    var totalEl = $('calc-total'), rangeEl = $('calc-range'), rowsEl = $('calc-rows'), cbarT = $('cbar-total');
+    var shown = 0, lastKeys = '', summary = '';
+    function find(list, id) { for (var k = 0; k < list.length; k++) if (list[k].id === id) return list[k]; return list[0]; }
+    function calc() {
+      var cvs = find(P.canvases, st.canvas), pr = find(P.profiles, st.profile), rows = [];
+      rows.push({ k: 'c', l: 'Полотно «' + cvs.name + '»', s: st.area + ' м² × ' + fmt(cvs.price), v: st.area * cvs.price });
+      rows.push({ k: 'p', l: 'Профіль по периметру', s: st.per + ' м × ' + fmt(P.perimeter_m), v: st.per * P.perimeter_m });
+      if (pr.price > 0) rows.push({ k: 'pr', l: 'Профіль «' + pr.name + '»', s: st.per + ' м.п. × ' + fmt(pr.price), v: st.per * pr.price });
+      var corN = pr.premium_corners ? st.cor : Math.max(0, st.cor - P.corners_included), corP = pr.premium_corners ? P.extra_corner_premium : P.extra_corner;
+      if (corN > 0) rows.push({ k: 'k', l: pr.premium_corners ? 'Кути на «' + pr.name + '»' : 'Додаткові кути', s: corN + ' × ' + fmt(corP), v: corN * corP });
+      var lsum = 0, lnames = [];
+      P.light.forEach(function (x) { var q = st.light[x.id] || 0; if (q > 0) { lsum += q * x.price; lnames.push(x.name.toLowerCase() + ' ' + q + ' ' + x.unit); } });
+      if (lsum > 0) rows.push({ k: 'l', l: 'Світло', s: lnames.join(', '), v: lsum });
+      var sub = rows.reduce(function (a, r) { return a + r.v; }, 0);
+      var hp = st.height === 1 ? P.height_3 : st.height === 2 ? P.height_35 : 0;
+      if (hp > 0) rows.push({ k: 'h', l: 'Висота стелі +' + hp + '%', s: st.height === 1 ? '3–3,5 м' : 'понад 3,5 м', v: Math.round(sub * hp / 100) });
+      var total = r50(rows.reduce(function (a, r) { return a + r.v; }, 0));
+      if (!st.near) rows.push({ k: 'f', l: 'Доїзд – ' + st.city, s: fmt(P.fuel_km) + ' грн/км', v: null });
+      var lo = r50(total * .95), hi = r50(total * 1.08);
+      // рядки: перебудова лише коли змінився склад
+      var keys = rows.map(function (r) { return r.k; }).join(',');
+      if (keys !== lastKeys) {
+        rowsEl.textContent = '';
+        rows.forEach(function (r) {
+          var li = document.createElement('li'), a = document.createElement('span'), sm = document.createElement('small'), b = document.createElement('b');
+          a.textContent = r.l; sm.textContent = r.s; a.appendChild(sm); b.textContent = r.v === null ? 'на замірі' : fmt(r.v) + ' грн';
+          li.dataset.k = r.k; li.appendChild(a); li.appendChild(b); rowsEl.appendChild(li);
+        });
+        lastKeys = keys;
+      } else {
+        rows.forEach(function (r, k) { var li = rowsEl.children[k]; li.querySelector('span').firstChild.textContent = r.l; li.querySelector('small').textContent = r.s; li.querySelector('b').textContent = r.v === null ? 'на замірі' : fmt(r.v) + ' грн'; });
+      }
+      rangeEl.textContent = 'від ' + fmt(lo) + ' до ' + fmt(hi) + ' грн';
+      tween(total);
+      summary = 'Площа ' + st.area + ' м², периметр ' + st.per + ' м, кутів ' + st.cor + '; полотно: ' + cvs.name + '; профіль: ' + pr.name +
+        (lnames.length ? '; світло: ' + lnames.join(', ') : '') + '; висота: ' + ['до 3 м', '3–3,5 м', 'понад 3,5 м'][st.height] + '; місто: ' + st.city +
+        '; ≈ ' + fmt(total) + ' грн (' + fmt(lo) + '–' + fmt(hi) + ')';
+    }
+    var raf = null;
+    function tween(to) {
+      cbarT.textContent = fmt(to);
+      if (reduce || !shown) { shown = to; totalEl.textContent = fmt(to); return; }
+      var from = shown, t0 = null; cancelAnimationFrame(raf);
+      function step(t) { if (!t0) t0 = t; var k = Math.min((t - t0) / 450, 1), e = 1 - Math.pow(1 - k, 3); shown = Math.round(from + (to - from) * e); totalEl.textContent = fmt(r50(shown)); if (k < 1) raf = requestAnimationFrame(step); else { shown = to; totalEl.textContent = fmt(to); } }
+      raf = requestAnimationFrame(step);
+    }
+
+    // набір з блоку «Світло»
+    document.addEventListener('eralux:light-preset', function (e) {
+      var r = e.detail || {};
+      var a = parseFloat(String(r.area || '').replace(',', '.')); if (a >= MIN && a <= MAX) { st.perAuto = true; perAuto.hidden = true; setArea(a); syncPer(); }
+      Object.keys(st.light).forEach(function (id) { st.light[id] = 0; });
+      (r.items || []).forEach(function (it) { if (it && st.light.hasOwnProperty(it.id) && it.qty > 0) st.light[it.id] = Math.min(200, Math.round(it.qty)); });
+      Object.keys(lightSync).forEach(function (id) { lightSync[id](); lu.children[Object.keys(lightSync).indexOf(id)].classList.toggle('is-set', st.light[id] > 0); });
+      calc();
+    });
+
+    setArea(st.area);
+
+    // форма
+    var form = $('calc-form'), tel = $('calc-tel'), err = $('calc-err'), via = 'Дзвінок';
+    maskPhone(tel);
+    radio($('calc-via'), function (b) { via = b.dataset.v; });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault(); err.hidden = true;
+      if (form.company.value) return;                       // honeypot
+      if (!phoneOk(tel.value)) { tel.setAttribute('aria-invalid', 'true'); err.textContent = 'Перевірте номер: +38 (0XX) XXX-XX-XX'; err.hidden = false; tel.focus(); return; }
+      var btn = form.querySelector('.res__btn'); btn.disabled = true;
+      sendLead({ form: 'calc', phone: '+' + phoneDigits(tel.value), via: via, details: summary, page: location.pathname })
+        .then(function () {
+          form.hidden = true; var ok = $('calc-ok'); ok.hidden = false; ok.focus({ preventScroll: true });
+          root.querySelector('.res__main').classList.add('is-done');
+        })
+        .catch(function () { err.textContent = 'Не вдалося надіслати. Подзвоніть нам: +38 067 006 37 55'; err.hidden = false; })
+        .then(function () { btn.disabled = false; });
+    });
+
+    // мобільна планка з сумою
+    var cbar = $('cbar'), mbar = $('mbar'), steps = $('calc-steps'), res = $('calc-res');
+    if ('IntersectionObserver' in window) {
+      var inSteps = false, inRes = false;
+      function upd() { var on = inSteps && !inRes; cbar.classList.toggle('is-on', on); if (mbar) mbar.classList.toggle('is-off', on); }
+      new IntersectionObserver(function (en) { inSteps = en[0].isIntersecting; upd(); }, { rootMargin: '-30% 0px -30% 0px' }).observe(steps);
+      new IntersectionObserver(function (en) { inRes = en[0].isIntersecting; upd(); }, { threshold: 0.15 }).observe(res);
+    }
+  }
+
   /* ---------- Хедер: прилипає, ховається при скролі вниз ---------- */
   function initHeader() {
     var hdr = $('hdr'), mbar = $('mbar'), lastY = window.scrollY, ticking = false;
@@ -563,12 +803,13 @@
   initNavPill();
   initMenu();
 
-  Promise.race([Promise.all([load('header'), load('hero'), load('stats'), load('light'), load('prices'), load('ceilings'), load('before_after'), load('projects')]), timeout(1200)]).then(function (res) {
+  Promise.race([Promise.all([load('header'), load('hero'), load('stats'), load('light'), load('prices'), load('ceilings'), load('before_after'), load('projects'), load('calc')]), timeout(1200)]).then(function (res) {
     if (res) { applyHeader(res[0]); applyHero(res[1]); applyStats(res[2]); }
     initLight(res ? res[3] : null, res ? res[4] : null);
     initCeilings(res ? res[5] : null, res ? res[4] : null);
     initBA(res ? res[6] : null);
     initCases(res ? res[7] : null);
+    initCalc(res ? res[8] : null, res ? res[4] : null);
     reveals();
     var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
     Promise.race([fonts, timeout(900)]).then(start);

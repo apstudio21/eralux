@@ -281,3 +281,24 @@ collections:
                 fields:
                   - { label: "Що", name: "label", widget: "string" }
                   - { label: "Сума, грн (0 = «у ціні»)", name: "value", widget: "number", value_type: "int", min: 0 }
+
+      - name: "calc"
+        label: "8. Калькулятор (тексти; ціни – у розділі «Ціни»)"
+        file: "content/calc.json"
+        fields:
+          - { label: "Мітка", name: "label", widget: "string" }
+          - { label: "Заголовок – частина 1", name: "title_1", widget: "string" }
+          - { label: "Заголовок – частина 2 (зелена)", name: "title_2", widget: "string" }
+          - { label: "Текст", name: "text", widget: "text" }
+          - { label: "Крок 1", name: "step1", widget: "string" }
+          - { label: "Крок 2", name: "step2", widget: "string" }
+          - { label: "Крок 3", name: "step3", widget: "string" }
+          - { label: "Крок 4", name: "step4", widget: "string" }
+          - { label: "Крок 5", name: "step5", widget: "string" }
+          - { label: "Примітка під світлом", name: "light_note", widget: "text" }
+          - { label: "Результат – підпис", name: "result_title", widget: "string" }
+          - { label: "Форма – заголовок", name: "form_title", widget: "string" }
+          - { label: "Кнопка", name: "button", widget: "string" }
+          - { label: "Після відправки – заголовок", name: "ok_title", widget: "string" }
+          - { label: "Після відправки – текст", name: "ok_text", widget: "text" }
+          - { label: "Площа за замовчуванням, м²", name: "default_area", widget: "number", value_type: "int", min: 5, max: 120 }
