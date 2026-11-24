@@ -15,3 +15,4 @@
 - Хостинг: Cloudflare Pages (автодеплой з гілки main)
 - Змінні Cloudflare (Production): TELEGRAM_BOT_TOKEN (secret), TELEGRAM_CHAT_ID; опційно TURNSTILE_SECRET
 - Заявки з форм приходять у Telegram-групу «Заявки (EraLux)» через бота @eralux_leads_bot
+- Адмінка: /admin, вхід через GitHub (OAuth App «Eralux CMS» в організації eraluxsteli; змінні GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET)
