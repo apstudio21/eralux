@@ -1,10 +1,12 @@
 # Decap CMS – Eralux
-# Вхід через GitHub. base_url – адреса OAuth-обробника на Cloudflare (додамо перед запуском).
+# Вхід через GitHub. OAuth – functions/api/auth.js і callback.js (Cloudflare Pages).
+# Після переносу домену змінити base_url на https://eralux.com.ua
 backend:
   name: github
-  repo: apstudio21/eralux
+  repo: eraluxsteli/eralux
   branch: main
-  # base_url: https://<oauth-worker>.workers.dev
+  base_url: https://eralux-zv8.pages.dev
+  auth_endpoint: api/auth
 
 locale: uk
 media_folder: images/uploads
