@@ -9,6 +9,7 @@ backend:
   auth_endpoint: api/auth
 
 locale: uk
+logo_url: /images/brand/logo.svg
 media_folder: images/uploads
 public_folder: images/uploads
 
