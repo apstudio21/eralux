@@ -1,0 +1,33 @@
+# Автоматичне стискання фото, завантажених через адмінку.
+# Зменшує до 2400 px по довшій стороні і стискає, назва файлу не змінюється.
+name: Стиснути фото
+on:
+  push:
+    branches: [main]
+    paths: ['images/uploads/**']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: compress-images
+  cancel-in-progress: false
+jobs:
+  compress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --no-save --no-package-lock sharp@0.33
+      - run: node scripts/compress-images.mjs images/uploads
+      - name: Зберегти стиснуті фото
+        run: |
+          if [ -n "$(git status --porcelain images/uploads)" ]; then
+            git config user.name "eralux-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git add images/uploads
+            git commit -m "Стиснуто фото з адмінки"
+            git pull --rebase
+            git push
+          fi
