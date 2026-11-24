@@ -9,3 +9,7 @@
 - `_headers`, `_redirects` — для Cloudflare Pages
 
 Поки сайт у розробці: `noindex`, robots закритий.
+
+## Розміщення
+- Репозиторій: github.com/eraluxsteli/eralux
+- Хостинг: Cloudflare Pages (автодеплой з гілки main)
