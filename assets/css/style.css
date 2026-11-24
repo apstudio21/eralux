@@ -82,7 +82,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 /* ---------- 1. Хедер ---------- */
 .hdr { position: fixed; top: var(--bar); left: 0; right: 0; z-index: 50; padding: 0; transition: top .45s var(--ease), padding .6s var(--ease); }
 .hdr.is-stuck { top: 0; }
-.menu-open .hdr { top: 0; }
+/* меню відкрите вгорі сторінки: хедер лишається під топбаром */
 .hdr__in { height: var(--hdr-h); max-width: 100%; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 var(--pad); border-radius: 999px; transition: max-width .7s var(--ease), height .6s var(--ease), padding .6s var(--ease), background-color .5s var(--ease), box-shadow .5s var(--ease); }
 .hdr__logo img { width: auto; height: 52px; transition: height .6s var(--ease); }
 @media (min-width: 1024px) { .hdr__logo img { height: 72px; } }
@@ -144,7 +144,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 
 /* Мобільне меню */
-.menu { position: fixed; inset: 0; z-index: 40; background: var(--night); color: var(--linen); display: flex; padding: calc(var(--hdr-h) + var(--frame) + 24px) var(--pad) calc(28px + env(safe-area-inset-bottom)); clip-path: inset(0 0 100% 0 round 0 0 var(--r-xl) var(--r-xl)); transition: clip-path .7s var(--ease-in-out); }
+.menu { position: fixed; inset: 0; z-index: 40; background: var(--night); color: var(--linen); display: flex; padding: calc(var(--bar) + var(--hdr-h) + var(--frame) + 28px) var(--pad) calc(28px + env(safe-area-inset-bottom)); clip-path: inset(0 0 100% 0 round 0 0 var(--r-xl) var(--r-xl)); transition: clip-path .7s var(--ease-in-out); }
 .menu[hidden] { display: none; }
 .menu.is-open { clip-path: inset(0 0 0 0 round 0); }
 .menu__in { display: flex; flex-direction: column; justify-content: space-between; width: 100%; }
