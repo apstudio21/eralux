@@ -333,7 +333,7 @@
       function apply() {
         before.src = x.before; after.src = x.after;
         before.alt = x.alt_before || 'До'; after.alt = x.alt_after || 'Після';
-        $('ba-n').textContent = 'Обʼєкт ' + (i < 9 ? '0' : '') + (i + 1);
+        $('ba-n').textContent = 'Обʼєкт ' + (i < 9 ? '0' : '') + (i + 1) + (pairs.length > 1 ? ' / ' + (pairs.length < 10 ? '0' : '') + pairs.length : '');
         $('ba-pair-title').textContent = x.title || '';
         $('ba-pair-text').textContent = x.text || '';
         var ul = $('ba-chips'); ul.textContent = '';
@@ -356,8 +356,20 @@
         });
         list.appendChild(b);
       });
+      var cur = 0, nav = document.createElement('div'); nav.className = 'ba__nav';
+      function mk(dir, lab, d) { var b = document.createElement('button'); b.type = 'button'; b.className = 'rbtn rbtn--light'; b.setAttribute('aria-label', lab); b.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="' + d + '"/></svg>'; b.addEventListener('click', function () { pick(cur + dir); }); return b; }
+      nav.appendChild(mk(-1, 'Попередній обʼєкт', 'M10 3L5 8l5 5'));
+      nav.appendChild(mk(1, 'Наступний обʼєкт', 'M6 3l5 5-5 5'));
+      list.appendChild(nav);
+      function pick(i) {
+        cur = (i + pairs.length) % pairs.length;
+        list.querySelectorAll('button[aria-pressed]').forEach(function (o, k) { o.setAttribute('aria-pressed', k === cur ? 'true' : 'false'); });
+        show(cur, true);
+      }
+      list.querySelectorAll('button[aria-pressed]').forEach(function (b, k) { b.addEventListener('click', function (e) { e.stopImmediatePropagation(); pick(k); }, true); });
     }
   }
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
 
   /* ---------- 7. Проєкти ---------- */
   function caseCard(x, i) {
@@ -419,12 +431,25 @@
       }
     }
     var cards = track.querySelectorAll('.case'), n = cards.length;
+    var AR_L = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg>', AR_R = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>';
+    cards.forEach(function (c) {
+      var ths = c.querySelectorAll('.case__th'); if (ths.length < 2 || c.querySelector('.case__pnav')) return;
+      var nav = document.createElement('div'); nav.className = 'case__pnav';
+      nav.innerHTML = '<button type="button" class="case__pb" data-dir="-1" aria-label="Попереднє фото">' + AR_L + '</button><span class="case__pc">1 / ' + ths.length + '</span><button type="button" class="case__pb" data-dir="1" aria-label="Наступне фото">' + AR_R + '</button>';
+      c.querySelector('.case__pic').appendChild(nav);
+    });
     $('cases-all').textContent = (n < 10 ? '0' : '') + n;
 
     // фото серії: клік або наведення на мініатюру
     track.addEventListener('click', function (e) {
       var th = e.target.closest('.case__th');
       if (th) { swapCase(th); return; }
+      var pb = e.target.closest('.case__pb');
+      if (pb) {
+        var all = pb.closest('.case').querySelectorAll('.case__th'), k = 0;
+        all.forEach(function (o, i) { if (o.classList.contains('is-on')) k = i; });
+        swapCase(all[(k + +pb.dataset.dir + all.length) % all.length]); return;
+      }
       var tg = e.target.closest('.case__toggle');
       if (tg) { var c = tg.closest('.case'), open = !c.classList.contains('is-open'); c.classList.toggle('is-open', open); tg.setAttribute('aria-expanded', open ? 'true' : 'false'); return; }
       var cta = e.target.closest('.case__cta');
@@ -433,7 +458,8 @@
     track.addEventListener('mouseover', function (e) { var th = e.target.closest('.case__th'); if (th && !th.classList.contains('is-on')) swapCase(th); });
     function swapCase(th) {
       var c = th.closest('.case'), img = c.querySelector('.case__img');
-      c.querySelectorAll('.case__th').forEach(function (o) { o.classList.toggle('is-on', o === th); });
+      var tl = c.querySelectorAll('.case__th'), pc = c.querySelector('.case__pc');
+      tl.forEach(function (o, i) { o.classList.toggle('is-on', o === th); if (o === th && pc) pc.textContent = (i + 1) + ' / ' + tl.length; });
       var src = th.dataset.src; if (!RE_IMG.test(src || '')) return;
       if (reduce) { img.removeAttribute('srcset'); img.src = src; return; }
       img.classList.add('is-swap');
@@ -487,7 +513,8 @@
         var r = rail.getBoundingClientRect();
         bubble.style.setProperty('--x', (e.clientX - r.left) + 'px');
         bubble.style.setProperty('--y', (e.clientY - r.top) + 'px');
-        bubble.classList.add('is-on');
+        var ui = e.target.closest('.case__pnav, .case__ths');
+        bubble.classList.toggle('is-on', !ui);
         bubble.classList.toggle('is-small', !!e.target.closest('a, button'));
       });
       rail.addEventListener('pointerleave', function () { bubble.classList.remove('is-on'); });
