@@ -13,3 +13,5 @@
 ## Розміщення
 - Репозиторій: github.com/eraluxsteli/eralux
 - Хостинг: Cloudflare Pages (автодеплой з гілки main)
+- Змінні Cloudflare (Production): TELEGRAM_BOT_TOKEN (secret), TELEGRAM_CHAT_ID; опційно TURNSTILE_SECRET
+- Заявки з форм приходять у Telegram-групу «Заявки (EraLux)» через бота @eralux_leads_bot
