@@ -1,4 +1,5 @@
-# Заголовки безпеки (Cloudflare Pages). CSP фіналізуємо на етапі 5.
+# Заголовки безпеки й кешу (Cloudflare Pages).
+# CSP – базовий (без обмеження скриптів, бо GTM/GA/Pixel і Decap підвантажують сторонній код).
 
 # Тимчасова адреса *.pages.dev не індексується – лише eralux.com.ua
 https://:project.pages.dev/*
@@ -11,8 +12,19 @@ https://:version.:project.pages.dev/*
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
+  Content-Security-Policy: base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests
+
+/assets/*
+  Cache-Control: public, max-age=604800
+
+/images/*
+  Cache-Control: public, max-age=2592000
+
+/content/*
+  Cache-Control: no-cache
 
 /admin/*
   X-Robots-Tag: noindex
