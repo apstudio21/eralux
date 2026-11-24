@@ -1,1 +1,37 @@
-# 301 зі старих адрес eralux.com.ua — заповнимо перед перенесенням домену.
+# 301 зі старих адрес eralux.com.ua (24.11.2026)
+/contacts.html                        /#measure    301
+/contacts                             /#measure    301
+/gallery.html                         /#projects   301
+/gallery                              /#projects   301
+/pro_nas.html                         /#about      301
+/pro_nas                              /#about      301
+/index.html                           /            301
+
+# Типи стель і полотна – на блок «Полотно і профіль»
+/odnourovnevye-natiazhnye-potolki      /#ceilings  301
+/mnogourovnevye-natiazhnye-potolki     /#ceilings  301
+/pariashchie-natiazhnye-potolki        /#ceilings  301
+/natiazhnye-potolki-3d                 /#ceilings  301
+/natiazhnye-potolki-s-fotopechat       /#ceilings  301
+/zvezdnoe-nebo                         /#ceilings  301
+/dopkonstrukcii-obhod-shkafa-i-nishi   /#ceilings  301
+/matovye-natiazhnye-potolki            /#ceilings  301
+/glianzevye-natiazhnye-potolki         /#ceilings  301
+/satinovye-natiazhnye-potolki          /#ceilings  301
+/tkanevye-natiazhnye-potolki           /#ceilings  301
+/oblaka-natiazhnye-potolki             /#ceilings  301
+/natiazhnye-potolki-drugie-materialy   /#ceilings  301
+
+# Сторінки міст Київщини (залишок шаблону) – на головну
+/borispol     /  301
+/boyarka      /  301
+/brovary      /  301
+/bucha        /  301
+/vasilkov     /  301
+/vishnevoe    /  301
+/vorzel       /  301
+/vyshgorod    /  301
+/gostomel     /  301
+/irpen        /  301
+/obuhov       /  301
+/slavutych    /  301

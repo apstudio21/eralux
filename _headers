@@ -1,4 +1,12 @@
 # Заголовки безпеки (Cloudflare Pages). CSP фіналізуємо на етапі 5.
+
+# Тимчасова адреса *.pages.dev не індексується – лише eralux.com.ua
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+https://:version.:project.pages.dev/*
+  X-Robots-Tag: noindex
+
 /*
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY

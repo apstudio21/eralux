@@ -8,6 +8,11 @@
 <link rel="icon" href="/images/brand/favicon.svg" type="image/svg+xml">
 </head>
 <body>
+<script>window.CMS_MANUAL_INIT = true;</script>
 <script src="https://unpkg.com/decap-cms@^3.3.3/dist/decap-cms.js"></script>
+<script>
+  // Вхід працює і на eralux.com.ua, і на тимчасовій адресі *.pages.dev
+  CMS.init({ config: { backend: { name: 'github', repo: 'eraluxsteli/eralux', branch: 'main', base_url: location.origin, auth_endpoint: 'api/auth' } } });
+</script>
 </body>
 </html>

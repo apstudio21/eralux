@@ -554,7 +554,16 @@
   function sendLead(data) {
     if (DEMO) return new Promise(function (r) { setTimeout(function () { r(true); }, 700); });
     return fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
-      .then(function (r) { if (!r.ok) throw new Error('send'); return true; });
+      .then(function (r) {
+        if (!r.ok) throw new Error('send');
+        // подія для аналітики (GTM / GA4 / Meta Pixel)
+        try {
+          (window.dataLayer = window.dataLayer || []).push({ event: 'generate_lead', form_kind: data && (data.form || data.kind) || '' });
+          if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form_kind: data && (data.form || data.kind) || '' });
+          if (typeof window.fbq === 'function') window.fbq('track', 'Lead');
+        } catch (e) {}
+        return true;
+      });
   }
 
   /* ---------- 8. Калькулятор ---------- */
