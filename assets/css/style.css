@@ -993,7 +993,7 @@ html:not(.js) .qa[open] .qa__a { grid-template-rows: 1fr; }
 .vids__ig { margin-top: 22px; display: inline-flex; align-items: center; gap: 10px; height: var(--btn-h); padding: 0 22px 0 18px; border-radius: 999px; background: var(--glow); color: var(--night); font: 500 15px/1 var(--text); text-decoration: none; transition: background-color .4s var(--ease), transform .4s var(--ease); }
 .vids__ig:hover { background: var(--linen); transform: translateY(-2px); }
 .vids__ig svg { width: 20px; height: 20px; }
-.vids__list { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 12px) / 2); gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.vids__list { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 12px) / 2); gap: 12px; overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; touch-action: pan-x pan-y; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; scrollbar-width: none; }
 .vids__list::-webkit-scrollbar { display: none; }
 .vids__list.is-many { grid-auto-columns: 62%; margin-right: calc(var(--pad) * -1); padding-right: var(--pad); }
 @media (min-width: 768px) { .vids__list, .vids__list.is-many { grid-auto-columns: calc((100% - 40px) / 3); gap: 20px; } }
@@ -1039,3 +1039,6 @@ html:not(.js) .qa[open] .qa__a { grid-template-rows: 1fr; }
   .menu__in { gap: 32px; }
   .menu__foot { gap: 16px; }
 }
+
+/* Горизонтальні стрічки: лише горизонтальна прокрутка, вертикальний свайп іде на сторінку */
+.strip, .profs, .cases__track, .revs__track, .vids__list { overflow-y: hidden; touch-action: pan-x pan-y; overscroll-behavior-x: contain; }
