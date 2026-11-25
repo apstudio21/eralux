@@ -31,6 +31,13 @@ collections:
           - { label: "Телефон (для дзвінка, +380...)", name: "phone_tel", widget: "string", pattern: ['^\+380\d{9}$', "Формат: +380XXXXXXXXX"] }
           - { label: "Графік роботи", name: "schedule", widget: "string" }
           - { label: "Текст кнопки", name: "cta", widget: "string" }
+          - label: "Соцмережі (порожнє поле – іконка не показується)"
+            name: "socials"
+            widget: "object"
+            fields:
+              - { label: "Instagram", name: "instagram", widget: "string", required: false, pattern: ['^(https://(www\.)?instagram\.com/.*)?$', "Посилання виду https://www.instagram.com/..."] }
+              - { label: "Facebook", name: "facebook", widget: "string", required: false, pattern: ['^(https://(www\.|m\.)?facebook\.com/.*)?$', "Посилання виду https://www.facebook.com/..."] }
+              - { label: "TikTok", name: "tiktok", widget: "string", required: false, pattern: ['^(https://(www\.)?tiktok\.com/.*)?$', "Посилання виду https://www.tiktok.com/@..."] }
 
       - name: "hero"
         label: "2. Перший екран"
@@ -408,7 +415,6 @@ collections:
           - { label: "Чому з нами", name: "why", widget: "list", summary: "{{fields.value}} – {{fields.label}}", fields: [{ label: "Велике значення", name: "value", widget: "string" }, { label: "Підпис", name: "label", widget: "string" }] }
           - { label: "Як почати", name: "steps", widget: "list", summary: "{{fields.title}}", fields: [{ label: "Крок", name: "title", widget: "string" }, { label: "Текст", name: "text", widget: "text" }] }
           - { label: "Умови (примітка)", name: "terms", widget: "text" }
-          - { label: "Варіанти обсягу у формі", name: "volumes", widget: "list", field: { label: "Варіант", name: "v", widget: "string" } }
 
       - name: "vacancies"
         label: "Вакансії"

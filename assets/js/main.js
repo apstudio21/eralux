@@ -29,9 +29,20 @@
     });
   }
 
+  var RE_SOC = { instagram: /^https:\/\/(www\.)?instagram\.com\//, facebook: /^https:\/\/(www\.|m\.)?facebook\.com\//, tiktok: /^https:\/\/(www\.)?tiktok\.com\// };
+  function applySocials(s) {
+    if (!s || typeof s !== 'object') return;
+    Object.keys(RE_SOC).forEach(function (k) {
+      var url = typeof s[k] === 'string' ? s[k].trim() : '', ok = RE_SOC[k].test(url);
+      document.querySelectorAll('[data-social="' + k + '"]').forEach(function (li) {
+        li.hidden = !ok; if (ok) li.querySelector('a').href = url;
+      });
+    });
+  }
   function applyHeader(h) {
     if (!h) return;
     bindText('header', h);
+    applySocials(h.socials);
     if (Array.isArray(h.nav) && h.nav.length) {
       ['nav-list', 'menu-list'].forEach(function (id) {
         var ul = $(id); if (!ul) return;
@@ -912,7 +923,6 @@
         fillList(document.querySelector('.cards'), d.offer, function (x, i) { var li = el('li', 'card'); li.appendChild(el('span', 'card__n', '0' + (i + 1))); li.appendChild(el('h3', 'card__t', x.title || '')); li.appendChild(el('p', 'card__p', x.text || '')); return li; });
         fillList(document.querySelector('.bigs'), d.why, function (x) { var li = el('li', 'big'); li.appendChild(el('p', 'big__v', x.value || '')); li.appendChild(el('p', 'big__l', x.label || '')); return li; });
         fillList(document.querySelector('.nsteps'), d.steps, function (x, i) { var li = el('li', 'nstep'); li.appendChild(el('span', 'nstep__n', '0' + (i + 1))); li.appendChild(el('h3', 'nstep__t', x.title || '')); li.appendChild(el('p', 'nstep__p', x.text || '')); return li; });
-        if (Array.isArray(d.volumes) && d.volumes.length) { var s = $('d-vol'); s.textContent = ''; d.volumes.forEach(function (v) { s.appendChild(el('option', '', v)); }); }
       });
     }
     var jl = $('job-lead');

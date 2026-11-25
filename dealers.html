@@ -80,6 +80,7 @@
       <li><a href="vacancies.html">Вакансії</a></li>
     </ul>
     <div class="menu__foot">
+      <ul class="soc soc--menu" aria-label="Соцмережі"><li data-social="instagram" hidden><a href="#" target="_blank" rel="noopener" aria-label="Eralux у Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.2" cy="6.8" r="1.15" fill="currentColor"/></svg></a></li><li data-social="facebook"><a href="https://www.facebook.com/eraluxstryi/" target="_blank" rel="noopener" aria-label="Eralux у Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.2h2.4l.4-2.8h-2.8V9.2c0-.8.2-1.4 1.4-1.4h1.5V5.3c-.3 0-1.1-.1-2.1-.1-2.1 0-3.6 1.3-3.6 3.7v2.1H8.3v2.8h2.4V21z"/></svg></a></li><li data-social="tiktok" hidden><a href="#" target="_blank" rel="noopener" aria-label="Eralux у TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.6 3c.3 2.2 1.6 3.6 3.9 3.8v2.6c-1.4.1-2.7-.3-3.9-1.1v6.1c0 3.6-2.9 5.6-5.7 5.6-3 0-5.4-2.3-5.4-5.4 0-3.4 2.9-5.8 6.4-5.3v2.8c-1.6-.4-3.5.4-3.5 2.4 0 1.5 1.1 2.6 2.5 2.6 1.5 0 2.7-1 2.7-2.9V3z"/></svg></a></li></ul>
       <a class="menu__phone" id="menu-phone" href="tel:+380670063755" data-bind="header.phone_label">+38 067 006 37 55</a>
       <a class="btn btn--glow" href="index.html#measure">
         <span class="btn__tx">Безкоштовний замір</span>
@@ -150,16 +151,13 @@
     <div class="cta__main">
       <p class="label" data-reveal><span>Заявка</span></p>
       <h2 class="h2" id="df-title" data-reveal><span>Обговорімо</span> <b>співпрацю</b></h2>
-      <p class="cta__lead" data-reveal>Розкажіть про обсяги – передзвонимо й запропонуємо умови.</p>
+      <p class="cta__lead" data-reveal>Залиште контакти – передзвонимо й запропонуємо умови.</p>
       <form class="lead" id="dealer-lead" novalidate data-reveal>
         <div class="lead__row">
           <div class="fld fld--dark"><label for="d-name">Імʼя</label><input id="d-name" name="name" type="text" autocomplete="name" maxlength="80" placeholder="Як до вас звертатися"></div>
           <div class="fld fld--dark"><label for="d-tel">Телефон</label><input id="d-tel" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+38 (0__) ___-__-__" required></div>
         </div>
-        <div class="lead__row">
-          <div class="fld fld--dark"><label for="d-org">Компанія і місто</label><input id="d-org" name="org" type="text" maxlength="120" placeholder="Напр. «Стелі Плюс», Тернопіль"></div>
-          <div class="fld fld--dark"><label for="d-vol">Обсяг на місяць</label><select id="d-vol" name="volume"><option>До 100 м² на місяць</option><option>100–300 м² на місяць</option><option>Понад 300 м² на місяць</option><option>Поки не знаю</option></select></div>
-        </div>
+        <div class="fld fld--dark"><label for="d-org">Компанія і місто</label><input id="d-org" name="org" type="text" maxlength="120" placeholder="Напр. «Стелі Плюс», Тернопіль"></div>
         <div class="fld fld--dark"><label for="d-comment">Коментар <span>необовʼязково</span></label><textarea id="d-comment" name="comment" rows="3" maxlength="900" placeholder="Які полотна цікавлять, як забираєте"></textarea></div>
         <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="lead__foot">
@@ -186,6 +184,10 @@
         <a class="cbl__addr" href="https://www.google.com/maps/search/?api=1&amp;query=%D0%9B%D1%8C%D0%B2%D1%96%D0%B2%2C+%D0%B2%D1%83%D0%BB.+%D0%9F%D1%83%D0%BB%D1%8E%D1%8F+40" target="_blank" rel="noopener"><span><b>Львів</b> вул. Пулюя, 40</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></a>
         <a class="cbl__addr" href="https://maps.app.goo.gl/RYuzzSQdiH32nRLD8" target="_blank" rel="noopener"><span><b>Стрий</b> вул. Січових Стрільців, 5</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></a>
       </div>
+      <div class="cbl">
+        <p class="cbl__t">Ми в соцмережах</p>
+        <ul class="soc" aria-label="Соцмережі"><li data-social="instagram" hidden><a href="#" target="_blank" rel="noopener" aria-label="Eralux у Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.2" cy="6.8" r="1.15" fill="currentColor"/></svg></a></li><li data-social="facebook"><a href="https://www.facebook.com/eraluxstryi/" target="_blank" rel="noopener" aria-label="Eralux у Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.2h2.4l.4-2.8h-2.8V9.2c0-.8.2-1.4 1.4-1.4h1.5V5.3c-.3 0-1.1-.1-2.1-.1-2.1 0-3.6 1.3-3.6 3.7v2.1H8.3v2.8h2.4V21z"/></svg></a></li><li data-social="tiktok" hidden><a href="#" target="_blank" rel="noopener" aria-label="Eralux у TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.6 3c.3 2.2 1.6 3.6 3.9 3.8v2.6c-1.4.1-2.7-.3-3.9-1.1v6.1c0 3.6-2.9 5.6-5.7 5.6-3 0-5.4-2.3-5.4-5.4 0-3.4 2.9-5.8 6.4-5.3v2.8c-1.6-.4-3.5.4-3.5 2.4 0 1.5 1.1 2.6 2.5 2.6 1.5 0 2.7-1 2.7-2.9V3z"/></svg></a></li></ul>
+      </div>
     </aside>
   </div>
 </section>
@@ -202,7 +204,7 @@
     <div class="ftr__cols">
       <nav aria-label="Розділи сайту"><p class="ftr__t">Сайт</p><ul><li><a href="index.html#light">Світло</a></li><li><a href="index.html#ceilings">Полотно і профіль</a></li><li><a href="index.html#projects">Проєкти</a></li><li><a href="index.html#calc">Калькулятор</a></li><li><a href="index.html#faq">Питання</a></li></ul></nav>
       <nav aria-label="Співпраця"><p class="ftr__t">Співпраця</p><ul><li><a href="dealers.html">Дилерам</a></li><li><a href="vacancies.html">Вакансії</a></li></ul></nav>
-      <div><p class="ftr__t">Контакти</p><ul><li><a href="tel:+380670063755">+38 067 006 37 55</a></li><li><a href="tel:+380634054755">+38 063 405 47 55</a></li><li>Львів, вул. Пулюя, 40</li><li>Стрий, вул. Січових Стрільців, 5</li></ul></div>
+      <div><p class="ftr__t">Контакти</p><ul><li><a href="tel:+380670063755">+38 067 006 37 55</a></li><li><a href="tel:+380634054755">+38 063 405 47 55</a></li><li>Львів, вул. Пулюя, 40</li><li>Стрий, вул. Січових Стрільців, 5</li></ul><ul class="soc" aria-label="Соцмережі"><li data-social="instagram" hidden><a href="#" target="_blank" rel="noopener" aria-label="Eralux у Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.2" cy="6.8" r="1.15" fill="currentColor"/></svg></a></li><li data-social="facebook"><a href="https://www.facebook.com/eraluxstryi/" target="_blank" rel="noopener" aria-label="Eralux у Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.2h2.4l.4-2.8h-2.8V9.2c0-.8.2-1.4 1.4-1.4h1.5V5.3c-.3 0-1.1-.1-2.1-.1-2.1 0-3.6 1.3-3.6 3.7v2.1H8.3v2.8h2.4V21z"/></svg></a></li><li data-social="tiktok" hidden><a href="#" target="_blank" rel="noopener" aria-label="Eralux у TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.6 3c.3 2.2 1.6 3.6 3.9 3.8v2.6c-1.4.1-2.7-.3-3.9-1.1v6.1c0 3.6-2.9 5.6-5.7 5.6-3 0-5.4-2.3-5.4-5.4 0-3.4 2.9-5.8 6.4-5.3v2.8c-1.6-.4-3.5.4-3.5 2.4 0 1.5 1.1 2.6 2.5 2.6 1.5 0 2.7-1 2.7-2.9V3z"/></svg></a></li></ul></div>
     </div>
     <div class="ftr__bot">
       <p>© 2010–<span data-year>2026</span> Eralux. Натяжні стелі від виробника.</p>

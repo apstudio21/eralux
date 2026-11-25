@@ -971,3 +971,13 @@ html:not(.js) .qa[open] .qa__a { grid-template-rows: 1fr; }
 
 .menu-open .mbar, .menu-open .cbar { transform: translateY(140%); }
 .score__link span { white-space: nowrap; }
+
+/* ---------- Соцмережі ---------- */
+.soc { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.cbl .soc { margin-top: 0; }
+.soc li { margin: 0 !important; }
+.soc a { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; color: var(--linen); box-shadow: inset 0 0 0 1px var(--night-line); transition: background-color .4s var(--ease), color .4s var(--ease), transform .4s var(--ease), box-shadow .4s var(--ease); }
+.soc a:hover { background: var(--glow); color: var(--night); box-shadow: none; transform: translateY(-2px); }
+.soc a:focus-visible { outline: 2px solid var(--glow); outline-offset: 3px; }
+.soc svg { width: 20px; height: 20px; }
+.soc--menu { margin: 0 0 6px; }
