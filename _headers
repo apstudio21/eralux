@@ -16,8 +16,14 @@ https://:version.:project.pages.dev/*
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   Content-Security-Policy: base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests
 
-/assets/*
-  Cache-Control: public, max-age=604800
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/css/*
+  Cache-Control: no-cache
+
+/assets/js/*
+  Cache-Control: no-cache
 
 /images/*
   Cache-Control: public, max-age=2592000

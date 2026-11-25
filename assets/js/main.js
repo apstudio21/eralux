@@ -35,7 +35,7 @@
     Object.keys(RE_SOC).forEach(function (k) {
       var url = typeof s[k] === 'string' ? s[k].trim() : '', ok = RE_SOC[k].test(url);
       document.querySelectorAll('[data-social="' + k + '"]').forEach(function (li) {
-        li.hidden = !ok; if (ok) li.querySelector('a').href = url;
+        li.hidden = !ok; var a = li.tagName === 'A' ? li : li.querySelector('a'); if (ok && a) a.href = url;
       });
     });
   }
