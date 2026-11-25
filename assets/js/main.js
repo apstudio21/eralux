@@ -973,8 +973,11 @@
           li.style.setProperty('--d', (i * 0.1) + 's');
           b.dataset.video = x.video; b.dataset.ig = RE_IG.test(x.instagram || '') ? x.instagram : ''; b.dataset.title = x.title || '';
           b.setAttribute('aria-label', 'Дивитися відео: ' + (x.title || ''));
-          if (RE_IMG.test(x.poster || '')) img.src = x.poster; else img.removeAttribute('src');
-          if (RE_VID.test(x.preview || '')) pv.dataset.src = x.preview; else pv.remove();
+          var hasPoster = RE_IMG.test(x.poster || '');
+          if (hasPoster) img.src = x.poster; else img.remove();
+          if (RE_VID.test(x.preview || '')) pv.dataset.src = x.preview;
+          else if (!hasPoster) { pv.preload = 'metadata'; pv.src = x.video + '#t=0.5'; li.classList.add('is-playing'); }
+          else pv.remove();
           li.querySelector('.reel__src').textContent = [x.source, x.duration].filter(Boolean).join(' · ');
           li.querySelector('.reel__t').textContent = x.title || '';
           list.appendChild(li);

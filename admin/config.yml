@@ -416,7 +416,7 @@ collections:
               - { label: "Мітка (напр. Instagram)", name: "source", widget: "string", default: "Instagram" }
               - { label: "Тривалість (напр. 0:41)", name: "duration", widget: "string", required: false }
               - { label: "Відео (MP4, до 20 МБ)", name: "video", widget: "file", media_folder: "/images/videos", public_folder: "images/videos", hint: "Вертикальне відео з Instagram. Скачайте його й завантажте сюди." }
-              - { label: "Обкладинка (кадр з відео)", name: "poster", widget: "image", media_folder: "/images/videos", public_folder: "images/videos" }
+              - { label: "Обкладинка (кадр з відео)", name: "poster", widget: "image", required: false, hint: "Необовʼязково: без обкладинки покажемо перший кадр відео.", media_folder: "/images/videos", public_folder: "images/videos" }
               - { label: "Коротке прев'ю без звуку (необовʼязково)", name: "preview", widget: "file", required: false, media_folder: "/images/videos", public_folder: "images/videos", hint: "Якщо не додати – на картці буде обкладинка." }
               - { label: "Посилання на це відео в Instagram", name: "instagram", widget: "string", required: false, pattern: ['^(https://(www\.)?instagram\.com/(reel|p)/.*)?$', "Напр. https://www.instagram.com/reel/..."] }
   - name: "pages"
