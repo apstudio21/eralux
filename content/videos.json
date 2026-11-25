@@ -1,0 +1,27 @@
+{
+  "label": "Instagram",
+  "title_1": "Стелі в русі –",
+  "title_2": "у нашому Instagram",
+  "text": "Короткі відео з обʼєктів і цеху: як монтуємо, як виглядає світло, на що зважати при виборі. Більше – в Instagram.",
+  "items": [
+    {
+      "title": "Власний цех: як виготовляємо полотно",
+      "source": "Instagram",
+      "duration": "0:41",
+      "video": "images/videos/cex.mp4",
+      "preview": "images/videos/cex-preview.mp4",
+      "poster": "images/videos/cex.webp",
+      "instagram": "https://www.instagram.com/reel/DeW2vv0tB3Y/"
+    },
+    {
+      "title": "Як вибрати колір стелі",
+      "source": "Instagram",
+      "duration": "1:07",
+      "video": "images/videos/kolir.mp4",
+      "preview": "images/videos/kolir-preview.mp4",
+      "poster": "images/videos/kolir.webp",
+      "instagram": "https://www.instagram.com/reel/DctsnO4xIhX/"
+    }
+  ],
+  "button": "Дивитися Instagram"
+}

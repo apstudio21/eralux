@@ -396,6 +396,29 @@ collections:
           - { label: "Після відправки – заголовок", name: "ok_title", widget: "string" }
           - { label: "Після відправки – текст", name: "ok_text", widget: "text" }
 
+
+      - name: "videos"
+        label: "Відео з Instagram"
+        file: "content/videos.json"
+        fields:
+          - { label: "Мітка", name: "label", widget: "string" }
+          - { label: "Заголовок – частина 1", name: "title_1", widget: "string" }
+          - { label: "Заголовок – частина 2 (кольорова)", name: "title_2", widget: "string" }
+          - { label: "Текст", name: "text", widget: "text" }
+          - { label: "Кнопка на Instagram (посилання береться з «Шапка → Соцмережі»)", name: "button", widget: "string" }
+          - label: "Відео (3–4 штуки, вертикальні 9:16)"
+            name: "items"
+            widget: "list"
+            max: 8
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Підпис", name: "title", widget: "string" }
+              - { label: "Мітка (напр. Instagram)", name: "source", widget: "string", default: "Instagram" }
+              - { label: "Тривалість (напр. 0:41)", name: "duration", widget: "string", required: false }
+              - { label: "Відео (MP4, до 20 МБ)", name: "video", widget: "file", media_folder: "/images/videos", public_folder: "images/videos", hint: "Вертикальне відео з Instagram. Скачайте його й завантажте сюди." }
+              - { label: "Обкладинка (кадр з відео)", name: "poster", widget: "image", media_folder: "/images/videos", public_folder: "images/videos" }
+              - { label: "Коротке прев'ю без звуку (необовʼязково)", name: "preview", widget: "file", required: false, media_folder: "/images/videos", public_folder: "images/videos", hint: "Якщо не додати – на картці буде обкладинка." }
+              - { label: "Посилання на це відео в Instagram", name: "instagram", widget: "string", required: false, pattern: ['^(https://(www\.)?instagram\.com/(reel|p)/.*)?$', "Напр. https://www.instagram.com/reel/..."] }
   - name: "pages"
     label: "Сторінки"
     files:

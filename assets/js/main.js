@@ -957,6 +957,65 @@
     }
   }
 
+
+  /* ---------- Відео ---------- */
+  var RE_VID = /^(images\/(videos|uploads)\/[\w\-./]+\.(mp4|webm))$/i, RE_IG = /^https:\/\/(www\.)?instagram\.com\/(reel|p)\//;
+  function initVideos(d) {
+    var list = $('vids-list'), box = $('vbox'); if (!list || !box) return;
+    if (d) {
+      bindText('videos', d);
+      var items = Array.isArray(d.items) ? d.items.filter(function (x) { return x && RE_VID.test(x.video || ''); }) : null;
+      if (items) {
+        if (!items.length) { $('videos').hidden = true; return; }
+        var tpl = list.querySelector('.reel'); list.textContent = '';
+        items.forEach(function (x, i) {
+          var li = tpl.cloneNode(true), b = li.querySelector('.reel__btn'), img = li.querySelector('.reel__poster'), pv = li.querySelector('.reel__prev');
+          li.style.setProperty('--d', (i * 0.1) + 's');
+          b.dataset.video = x.video; b.dataset.ig = RE_IG.test(x.instagram || '') ? x.instagram : ''; b.dataset.title = x.title || '';
+          b.setAttribute('aria-label', 'Дивитися відео: ' + (x.title || ''));
+          if (RE_IMG.test(x.poster || '')) img.src = x.poster; else img.removeAttribute('src');
+          if (RE_VID.test(x.preview || '')) pv.dataset.src = x.preview; else pv.remove();
+          li.querySelector('.reel__src').textContent = [x.source, x.duration].filter(Boolean).join(' · ');
+          li.querySelector('.reel__t').textContent = x.title || '';
+          list.appendChild(li);
+        });
+      }
+    }
+    list.classList.toggle('is-many', list.children.length > 2);
+    // прев'ю без звуку – лише коли картка на екрані
+    var saveData = navigator.connection && navigator.connection.saveData;
+    if (!reduce && !saveData && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (en) {
+        en.forEach(function (e) {
+          var v = e.target.querySelector('.reel__prev'); if (!v) return;
+          if (e.isIntersecting) {
+            if (!v.src && v.dataset.src) v.src = v.dataset.src;
+            var p = v.play(); if (p && p.then) p.then(function () { e.target.classList.add('is-playing'); }).catch(function () {});
+          } else { v.pause(); }
+        });
+      }, { threshold: 0.5 });
+      list.querySelectorAll('.reel').forEach(function (li) { io.observe(li); });
+    }
+    var vv = $('vbox-v'), ig = $('vbox-ig'), last = null;
+    list.addEventListener('click', function (e) {
+      var b = e.target.closest('.reel__btn'); if (!b) return;
+      last = b;
+      vv.src = b.dataset.video; $('vbox-t').textContent = b.dataset.title || '';
+      ig.hidden = !b.dataset.ig; if (b.dataset.ig) ig.href = b.dataset.ig;
+      if (typeof box.showModal === 'function') box.showModal(); else box.setAttribute('open', '');
+      document.documentElement.classList.add('vbox-open');
+      var p = vv.play(); if (p && p.catch) p.catch(function () {});
+    });
+    function close() { if (box.open && box.close) box.close(); else box.removeAttribute('open'); }
+    $('vbox-x').addEventListener('click', close);
+    box.addEventListener('click', function (e) { if (e.target === box) close(); });
+    box.addEventListener('close', function () {
+      vv.pause(); vv.removeAttribute('src'); vv.load();
+      document.documentElement.classList.remove('vbox-open');
+      if (last) last.focus();
+    });
+  }
+
   /* ---------- Хедер: прилипає, ховається при скролі вниз ---------- */
   function initHeader() {
     var hdr = $('hdr'), mbar = $('mbar'), lastY = window.scrollY, ticking = false;
@@ -1043,7 +1102,7 @@
   initNavPill();
   initMenu();
 
-  Promise.race([Promise.all([load('header'), load('hero'), load('stats'), load('light'), load('prices'), load('ceilings'), load('before_after'), load('projects'), load('calc'), load('process'), load('reviews'), load('faq'), load('cta')]), timeout(1200)]).then(function (res) {
+  Promise.race([Promise.all([load('header'), load('hero'), load('stats'), load('light'), load('prices'), load('ceilings'), load('before_after'), load('projects'), load('calc'), load('process'), load('reviews'), load('faq'), load('cta'), load('videos')]), timeout(1200)]).then(function (res) {
     if (res) { applyHeader(res[0]); applyHero(res[1]); applyStats(res[2]); }
     initLight(res ? res[3] : null, res ? res[4] : null);
     initCeilings(res ? res[5] : null, res ? res[4] : null);
@@ -1053,6 +1112,7 @@
     initProcess(res ? res[9] : null);
     initReviews(res ? res[10] : null);
     initFaq(res ? res[11] : null);
+    initVideos(res ? res[13] : null);
     if (res && res[12]) bindText('cta', res[12]);
     initLeadForm($('lead-form'), $('lead-ok'), 'measure');
     initCaseLink();
