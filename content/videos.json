@@ -21,6 +21,15 @@
       "preview": "images/videos/kolir-preview.mp4",
       "poster": "images/videos/kolir.webp",
       "instagram": "https://www.instagram.com/reel/DctsnO4xIhX/"
+    },
+    {
+      "title": "Стеля над сходами: монтаж на висоті",
+      "source": "Instagram",
+      "duration": "0:24",
+      "video": "images/videos/skhody.mp4",
+      "preview": "images/videos/skhody-preview.mp4",
+      "poster": "images/videos/skhody.webp",
+      "instagram": "https://www.instagram.com/p/DctuvESRLGj/"
     }
   ],
   "button": "Дивитися Instagram"
