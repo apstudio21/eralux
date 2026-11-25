@@ -1,7 +1,7 @@
 {
   "label": "Instagram",
-  "title_1": "Стелі в русі –",
-  "title_2": "у нашому Instagram",
+  "title_1": "Наша робота",
+  "title_2": "на відео",
   "text": "Короткі відео з обʼєктів і цеху: як монтуємо, як виглядає світло, на що зважати при виборі. Більше – в Instagram.",
   "items": [
     {
@@ -14,7 +14,7 @@
       "instagram": "https://www.instagram.com/reel/DeW2vv0tB3Y/"
     },
     {
-      "title": "Як вибрати колір стелі",
+      "title": "Колір, карниз і підсвітка: що обрати",
       "source": "Instagram",
       "duration": "1:07",
       "video": "images/videos/kolir.mp4",
