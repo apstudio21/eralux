@@ -480,7 +480,9 @@
 
     // навігація, лічильник, смуга прогресу
     var prev = $('cases-prev'), next = $('cases-next'), cur = $('cases-cur'), bar = $('cases-bar');
+    function maxL() { return track.scrollWidth - track.clientWidth; }
     function idx() {
+      if (track.scrollLeft >= maxL() - 4) return n - 1; // упор у кінець = останній обʼєкт
       var best = 0, min = Infinity, pad = parseFloat(getComputedStyle(track).paddingLeft) || 0;
       cards.forEach(function (c, i) { var d = Math.abs(c.offsetLeft - pad - track.scrollLeft); if (d < min) { min = d; best = i; } });
       return best;
@@ -495,7 +497,8 @@
     function go(i) {
       i = Math.max(0, Math.min(n - 1, i));
       var pad = parseFloat(getComputedStyle(track).paddingLeft) || 0;
-      track.scrollTo({ left: cards[i].offsetLeft - pad, behavior: reduce ? 'auto' : 'smooth' });
+      var left = i >= n - 1 ? maxL() : Math.min(cards[i].offsetLeft - pad, maxL());
+      track.scrollTo({ left: left, behavior: reduce ? 'auto' : 'smooth' });
     }
     prev.addEventListener('click', function () { go(idx() - 1); });
     next.addEventListener('click', function () { go(idx() + 1); });
@@ -516,7 +519,18 @@
     });
     window.addEventListener('pointerup', function () {
       if (!down) return; down = false; track.classList.remove('is-drag');
-      if (moved > 4) go(idx());
+      if (moved > 4) {
+        // доводимо до найближчого обʼєкта в напрямку руху; біля кінця – до самого кінця
+        var i = idx(), dir = track.scrollLeft - sl, w = cards[0] ? cards[0].offsetWidth : 300;
+        if (maxL() - track.scrollLeft < w * 0.6) i = n - 1;
+        else if (Math.abs(dir) > 40) {
+          var pad = parseFloat(getComputedStyle(track).paddingLeft) || 0, pos = track.scrollLeft;
+          var fwd = Array.prototype.findIndex.call(cards, function (c) { return c.offsetLeft - pad > pos + 1; });
+          if (dir > 0 && fwd > -1) i = fwd;
+          if (dir < 0) { for (var k = n - 1; k >= 0; k--) { if (cards[k].offsetLeft - pad < pos - 1) { i = k; break; } } }
+        }
+        go(i);
+      }
     });
     track.addEventListener('click', function (e) { if (moved > 6) { e.preventDefault(); e.stopPropagation(); moved = 0; } }, true);
     if (fine && !reduce) {
