@@ -62,6 +62,11 @@
       "name": "Сепаратор",
       "price": 550,
       "premium_corners": false
+    },
+    {
+      "id": "Eurocrab",
+      "name": "Євро краб",
+      "price": 550
     }
   ],
   "light": [
