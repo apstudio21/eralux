@@ -169,7 +169,7 @@ collections:
             name: "profiles"
             widget: "list"
             summary: "{{fields.name}} – +{{fields.price}} грн/м.п."
-            hint: "Новий профіль додавайте тут. Він одразу зʼявиться на сайті й у калькуляторі, а опис і фото – у розділі «5. Полотно і профіль»."
+            hint: "Профілі для калькулятора. Картки на сайті – окремо, у розділі «5. Полотно і профіль»."
             fields:
               - { label: "ID (латиницею, без пробілів; після створення не змінювати)", name: "id", widget: "string", pattern: ["^[a-z0-9_]+$", "Лише малі латинські літери, цифри й _ – напр. eurocrab"] }
               - { label: "Назва", name: "name", widget: "string" }
@@ -215,21 +215,15 @@ collections:
               - { label: "Опис", name: "text", widget: "text" }
               - { label: "Фото", name: "image", widget: "image", hint: "Від 1000 px, WebP або JPG до 300 КБ" }
               - { label: "Опис фото (alt)", name: "alt", widget: "string" }
-          - label: "Профілі – описи (назви й ціни – у розділі «Ціни»)"
+          - label: "Профілі (картки на сайті)"
             name: "profiles"
             widget: "list"
-            hint: "Список профілів і порядок на сайті – з розділу «Ціни». Тут лише опис і фото: оберіть профіль зі списку."
-            summary: "{{fields.id}}"
+            hint: "Картки в блоці – окремо від калькулятора. Профіль для розрахунку додається в «Ціни (для світла, полотен і калькулятора)»."
+            summary: "{{fields.name}}"
             fields:
-              - label: "Профіль"
-                name: "id"
-                widget: "relation"
-                collection: "site"
-                file: "prices"
-                search_fields: ["profiles.*.name"]
-                display_fields: ["profiles.*.name"]
-                value_field: "profiles.*.id"
-              - { label: "Опис", name: "text", widget: "text" }
+              - { label: "Назва", name: "name", widget: "string" }
+              - { label: "Доплата, грн/м.п.", name: "price", widget: "number", value_type: "int", min: 0, required: false, hint: "0 – «у ціні». Порожньо – без ціни на картці." }
+              - { label: "Опис", name: "text", widget: "text", required: false }
               - { label: "Фото (макро стику стелі й стіни)", name: "image", widget: "image", required: false, hint: "4:3, від 800 px, до 250 КБ" }
               - { label: "Опис фото (alt)", name: "alt", widget: "string", required: false }
           - { label: "Смуга виробництва – мітка", name: "factory_label", widget: "string" }

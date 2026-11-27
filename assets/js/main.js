@@ -256,44 +256,33 @@
       pic.classList.add('is-swap'); setTimeout(apply, 300);
     });
 
-    // профілі: ціни з prices.json, тексти з адмінки
-    var profMap = {};
-    if (P && Array.isArray(P.profiles)) P.profiles.forEach(function (x) { if (x && x.id) profMap[x.id] = x; });
-    var profText = {}, profImg = {};
-    if (d && Array.isArray(d.profiles)) d.profiles.forEach(function (x) {
-      if (!x || !x.id) return;
-      if (typeof x.text === 'string') profText[x.id] = x;
-      if (RE_IMG.test(x.image || '')) profImg[x.id] = x;
-    });
-    // картки будуємо зі списку «Ціни» – новий профіль зʼявляється на сайті сам
+    // профілі: окремий список із розділу «5. Полотно і профіль», не повʼязаний з калькулятором
     var ul = $('profs'), tplCard = ul && ul.querySelector('.prof');
-    if (ul && tplCard && P && Array.isArray(P.profiles) && P.profiles.length) {
-      var defText = {};
-      ul.querySelectorAll('.prof').forEach(function (c) { defText[c.dataset.profile] = c.querySelector('.prof__text').textContent; });
+    var byId = {};
+    if (P && Array.isArray(P.profiles)) P.profiles.forEach(function (x) { if (x && x.id) byId[x.id] = x; });
+    var profs = (d && Array.isArray(d.profiles)) ? d.profiles.map(function (x) {
+      if (!x) return null;
+      var old = x.id && byId[x.id] || {};   // сумісність зі старими записами (лише id)
+      var name = String(x.name || old.name || '').trim();
+      var price = x.price != null && x.price !== '' ? Number(x.price) : (old.price != null ? Number(old.price) : null);
+      return name ? { name: name, price: isNaN(price) ? null : price, text: String(x.text || '').trim(), image: RE_IMG.test(x.image || '') ? x.image : '', alt: x.alt || '' } : null;
+    }).filter(Boolean) : [];
+    if (ul && tplCard && profs.length) {
       ul.textContent = '';
-      P.profiles.forEach(function (x, i) {
-        if (!x || !x.id || !x.name) return;
+      profs.forEach(function (x, i) {
         var card = tplCard.cloneNode(true);
-        card.dataset.profile = x.id;
+        card.removeAttribute('data-profile');
         card.querySelector('.prof__n').textContent = (i < 9 ? '0' : '') + (i + 1);
-        card.querySelector('.prof__ph').textContent = '';
-        card.querySelector('.prof__text').textContent = defText[x.id] || '';
+        card.querySelector('.prof__name').textContent = x.name;
+        var pr = card.querySelector('.prof__price');
+        pr.textContent = x.price > 0 ? '+' + fmt(x.price) + ' грн/м.п.' : (x.price === 0 ? 'у ціні' : '');
+        pr.hidden = x.price == null;
+        var tx = card.querySelector('.prof__text'); tx.textContent = x.text; tx.hidden = !x.text;
+        var ph = card.querySelector('.prof__ph'); ph.textContent = '';
+        if (x.image) { var im = document.createElement('img'); im.src = x.image; im.alt = x.alt; im.loading = 'lazy'; im.width = 800; im.height = 600; ph.appendChild(im); }
         ul.appendChild(card);
       });
     }
-    document.querySelectorAll('#profs .prof').forEach(function (card) {
-      var id = card.dataset.profile, x = profMap[id];
-      if (x) {
-        card.querySelector('.prof__name').textContent = x.name;
-        card.querySelector('.prof__price').textContent = x.price > 0 ? '+' + fmt(x.price) + ' грн/м.п.' : 'у ціні';
-      }
-      if (profText[id] && profText[id].text.trim()) card.querySelector('.prof__text').textContent = profText[id].text.trim();
-      var tx = card.querySelector('.prof__text'); tx.hidden = !tx.textContent.trim();
-      var ph = card.querySelector('.prof__ph');
-      if (ph && profImg[id] && !ph.querySelector('img')) {
-        var im = document.createElement('img'); im.src = profImg[id].image; im.alt = profImg[id].alt || ''; im.loading = 'lazy'; im.width = 800; im.height = 600; ph.appendChild(im);
-      }
-    });
   }
 
 
