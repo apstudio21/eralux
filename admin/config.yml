@@ -154,8 +154,6 @@ collections:
         label: "Ціни (для світла, полотен і калькулятора)"
         file: "content/prices.json"
         fields:
-          - { label: "Полотно, грн/м² (база)", name: "canvas_m2", widget: "number", value_type: "int", min: 0 }
-          - { label: "Профіль по периметру + вставка, грн/м.п.", name: "perimeter_m", widget: "number", value_type: "int", min: 0 }
           - { label: "Кутів у ціні", name: "corners_included", widget: "number", value_type: "int", min: 0 }
           - { label: "Додатковий кут, грн", name: "extra_corner", widget: "number", value_type: "int", min: 0 }
           - { label: "Кут на парящому / єврокрабі, грн", name: "extra_corner_premium", widget: "number", value_type: "int", min: 0 }
@@ -164,15 +162,16 @@ collections:
             widget: "list"
             summary: "{{fields.name}} – {{fields.price}} грн/м²"
             fields:
-              - { label: "ID (не змінювати)", name: "id", widget: "string" }
+              - { label: "ID (латиницею, без пробілів; після створення не змінювати)", name: "id", widget: "string", pattern: ["^[a-z0-9_]+$", "Лише малі латинські літери, цифри й _ – напр. velvet"] }
               - { label: "Назва", name: "name", widget: "string" }
               - { label: "Ціна, грн/м²", name: "price", widget: "number", value_type: "int", min: 0 }
           - label: "Профілі (доплата)"
             name: "profiles"
             widget: "list"
             summary: "{{fields.name}} – +{{fields.price}} грн/м.п."
+            hint: "Новий профіль додавайте тут. Він одразу зʼявиться на сайті й у калькуляторі, а опис і фото – у розділі «5. Полотно і профіль»."
             fields:
-              - { label: "ID (не змінювати)", name: "id", widget: "string" }
+              - { label: "ID (латиницею, без пробілів; після створення не змінювати)", name: "id", widget: "string", pattern: ["^[a-z0-9_]+$", "Лише малі латинські літери, цифри й _ – напр. eurocrab"] }
               - { label: "Назва", name: "name", widget: "string" }
               - { label: "Доплата, грн/м.п.", name: "price", widget: "number", value_type: "int", min: 0 }
               - { label: "Кути за ціною парящого", name: "premium_corners", widget: "boolean", required: false }
@@ -207,30 +206,29 @@ collections:
             fields:
               - label: "Полотно"
                 name: "id"
-                widget: "select"
-                options:
-                  - { label: "Матове", value: "matte" }
-                  - { label: "Сатин", value: "satin" }
-                  - { label: "Глянець", value: "gloss" }
-                  - { label: "Тканинне", value: "fabric" }
+                widget: "relation"
+                collection: "site"
+                file: "prices"
+                search_fields: ["canvases.*.name"]
+                display_fields: ["canvases.*.name"]
+                value_field: "canvases.*.id"
               - { label: "Опис", name: "text", widget: "text" }
               - { label: "Фото", name: "image", widget: "image", hint: "Від 1000 px, WebP або JPG до 300 КБ" }
               - { label: "Опис фото (alt)", name: "alt", widget: "string" }
           - label: "Профілі – описи (назви й ціни – у розділі «Ціни»)"
             name: "profiles"
             widget: "list"
+            hint: "Список профілів і порядок на сайті – з розділу «Ціни». Тут лише опис і фото: оберіть профіль зі списку."
             summary: "{{fields.id}}"
             fields:
               - label: "Профіль"
                 name: "id"
-                widget: "select"
-                options:
-                  - { label: "ПВХ зі вставкою", value: "pvc" }
-                  - { label: "Тіньовий", value: "shadow" }
-                  - { label: "Тіньовий Max", value: "shadow_max" }
-                  - { label: "Парящий", value: "floating" }
-                  - { label: "Брус", value: "beam" }
-                  - { label: "Сепаратор", value: "separator" }
+                widget: "relation"
+                collection: "site"
+                file: "prices"
+                search_fields: ["profiles.*.name"]
+                display_fields: ["profiles.*.name"]
+                value_field: "profiles.*.id"
               - { label: "Опис", name: "text", widget: "text" }
               - { label: "Фото (макро стику стелі й стіни)", name: "image", widget: "image", required: false, hint: "4:3, від 800 px, до 250 КБ" }
               - { label: "Опис фото (alt)", name: "alt", widget: "string", required: false }

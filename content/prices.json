@@ -1,6 +1,4 @@
 {
-  "canvas_m2": 350,
-  "perimeter_m": 200,
   "corners_included": 4,
   "extra_corner": 100,
   "extra_corner_premium": 500,
@@ -64,9 +62,10 @@
       "premium_corners": false
     },
     {
-      "id": "Eurocrab",
-      "name": "Євро краб",
-      "price": 550
+      "id": "eurocrab",
+      "name": "Єврокраб",
+      "price": 550,
+      "premium_corners": true
     }
   ],
   "light": [

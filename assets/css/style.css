@@ -410,9 +410,9 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .profs { display: flex; gap: 12px; margin: 0 calc(0px - var(--pad)) clamp(48px, 5vw, 80px); padding: 0 var(--pad); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
 .profs::-webkit-scrollbar { display: none; }
 .profs .prof { flex: 0 0 80%; scroll-snap-align: center; }
-@media (min-width: 600px) { .profs { display: grid; margin-left: 0; margin-right: 0; padding: 0; overflow: visible; } .profs .prof { flex: none; } }
-@media (min-width: 600px) { .profs { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 1024px) { .profs { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
+/* неповний останній ряд – по центру (напр. 7 профілів: 3 + 3 + 1) */
+@media (min-width: 600px) { .profs { flex-wrap: wrap; justify-content: center; margin-left: 0; margin-right: 0; padding: 0; overflow: visible; } .profs .prof { flex: 0 0 calc((100% - 12px) / 2); } }
+@media (min-width: 1024px) { .profs { gap: 16px; } .profs .prof { flex-basis: calc((100% - 32px) / 3); } }
 .prof { background: var(--chalk); border-radius: 22px; padding: 22px 22px 26px; display: flex; flex-direction: column; transition: background-color .5s var(--ease), transform .6s var(--ease); }
 .prof:hover { background: #FFFDF9; transform: translateY(-4px); }
 .prof__top { display: flex; justify-content: space-between; align-items: center; }

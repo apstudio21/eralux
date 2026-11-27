@@ -265,6 +265,22 @@
       if (typeof x.text === 'string') profText[x.id] = x;
       if (RE_IMG.test(x.image || '')) profImg[x.id] = x;
     });
+    // картки будуємо зі списку «Ціни» – новий профіль зʼявляється на сайті сам
+    var ul = $('profs'), tplCard = ul && ul.querySelector('.prof');
+    if (ul && tplCard && P && Array.isArray(P.profiles) && P.profiles.length) {
+      var defText = {};
+      ul.querySelectorAll('.prof').forEach(function (c) { defText[c.dataset.profile] = c.querySelector('.prof__text').textContent; });
+      ul.textContent = '';
+      P.profiles.forEach(function (x, i) {
+        if (!x || !x.id || !x.name) return;
+        var card = tplCard.cloneNode(true);
+        card.dataset.profile = x.id;
+        card.querySelector('.prof__n').textContent = (i < 9 ? '0' : '') + (i + 1);
+        card.querySelector('.prof__ph').textContent = '';
+        card.querySelector('.prof__text').textContent = defText[x.id] || '';
+        ul.appendChild(card);
+      });
+    }
     document.querySelectorAll('#profs .prof').forEach(function (card) {
       var id = card.dataset.profile, x = profMap[id];
       if (x) {
@@ -272,6 +288,7 @@
         card.querySelector('.prof__price').textContent = x.price > 0 ? '+' + fmt(x.price) + ' грн/м.п.' : 'у ціні';
       }
       if (profText[id] && profText[id].text.trim()) card.querySelector('.prof__text').textContent = profText[id].text.trim();
+      var tx = card.querySelector('.prof__text'); tx.hidden = !tx.textContent.trim();
       var ph = card.querySelector('.prof__ph');
       if (ph && profImg[id] && !ph.querySelector('img')) {
         var im = document.createElement('img'); im.src = profImg[id].image; im.alt = profImg[id].alt || ''; im.loading = 'lazy'; im.width = 800; im.height = 600; ph.appendChild(im);
@@ -705,8 +722,7 @@
     function calc() {
       var cvs = find(P.canvases, st.canvas), pr = find(P.profiles, st.profile), rows = [];
       rows.push({ k: 'c', l: 'Полотно «' + cvs.name + '»', s: st.area + ' м² × ' + fmt(cvs.price), v: st.area * cvs.price });
-      rows.push({ k: 'p', l: 'Профіль по периметру', s: '≈ ' + st.per + ' м × ' + fmt(P.perimeter_m), v: st.per * P.perimeter_m });
-      if (pr.price > 0) rows.push({ k: 'pr', l: 'Профіль «' + pr.name + '»', s: st.per + ' м.п. × ' + fmt(pr.price), v: st.per * pr.price });
+      if (pr.price > 0) rows.push({ k: 'pr', l: 'Профіль «' + pr.name + '»', s: '≈ ' + st.per + ' м.п. × ' + fmt(pr.price), v: st.per * pr.price });
       var corN = pr.premium_corners ? st.cor : Math.max(0, st.cor - P.corners_included), corP = pr.premium_corners ? P.extra_corner_premium : P.extra_corner;
       if (corN > 0) rows.push({ k: 'k', l: pr.premium_corners ? 'Кути на «' + pr.name + '»' : 'Додаткові кути', s: corN + ' × ' + fmt(corP), v: corN * corP });
       var lsum = 0, lnames = [];
