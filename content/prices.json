@@ -5,26 +5,102 @@
   "extra_corner": 100,
   "extra_corner_premium": 500,
   "canvases": [
-    { "id": "matte", "name": "Матове", "price": 350 },
-    { "id": "satin", "name": "Сатин", "price": 350 },
-    { "id": "gloss", "name": "Глянець", "price": 350 },
-    { "id": "fabric", "name": "Тканинне", "price": 350 }
+    {
+      "id": "matte",
+      "name": "Матове",
+      "price": 350
+    },
+    {
+      "id": "satin",
+      "name": "Сатин",
+      "price": 350
+    },
+    {
+      "id": "gloss",
+      "name": "Глянець",
+      "price": 350
+    },
+    {
+      "id": "fabric",
+      "name": "Тканинне",
+      "price": 350
+    }
   ],
   "profiles": [
-    { "id": "pvc", "name": "ПВХ зі вставкою", "price": 0, "premium_corners": false },
-    { "id": "shadow", "name": "Тіньовий", "price": 250, "premium_corners": false },
-    { "id": "shadow_max", "name": "Тіньовий Max", "price": 350, "premium_corners": false },
-    { "id": "floating", "name": "Парящий", "price": 550, "premium_corners": true },
-    { "id": "beam", "name": "Брус", "price": 550, "premium_corners": false },
-    { "id": "separator", "name": "Сепаратор", "price": 550, "premium_corners": false }
+    {
+      "id": "pvc",
+      "name": "ПВХ зі вставкою",
+      "price": 150,
+      "premium_corners": false
+    },
+    {
+      "id": "shadow",
+      "name": "Тіньовий",
+      "price": 250,
+      "premium_corners": false
+    },
+    {
+      "id": "shadow_max",
+      "name": "Тіньовий Max",
+      "price": 350,
+      "premium_corners": false
+    },
+    {
+      "id": "floating",
+      "name": "Парящий",
+      "price": 550,
+      "premium_corners": true
+    },
+    {
+      "id": "beam",
+      "name": "Брус",
+      "price": 550,
+      "premium_corners": false
+    },
+    {
+      "id": "separator",
+      "name": "Сепаратор",
+      "price": 550,
+      "premium_corners": false
+    }
   ],
   "light": [
-    { "id": "spot", "name": "Точкові світильники", "unit": "шт", "price": 300 },
-    { "id": "chandelier", "name": "Люстра чи підвіс", "unit": "шт", "price": 650 },
-    { "id": "led", "name": "LED-підсвітка", "unit": "м.п.", "price": 200 },
-    { "id": "lines", "name": "Світлові лінії", "unit": "м.п.", "price": 1700 },
-    { "id": "track_built", "name": "Вбудований трек", "unit": "м.п.", "price": 2000 },
-    { "id": "track_bus", "name": "Трек з шиною", "unit": "м.п.", "price": 3000 }
+    {
+      "id": "spot",
+      "name": "Точкові світильники",
+      "unit": "шт",
+      "price": 300
+    },
+    {
+      "id": "chandelier",
+      "name": "Люстра чи підвіс",
+      "unit": "шт",
+      "price": 650
+    },
+    {
+      "id": "led",
+      "name": "LED-підсвітка",
+      "unit": "м.п.",
+      "price": 200
+    },
+    {
+      "id": "lines",
+      "name": "Світлові лінії",
+      "unit": "м.п.",
+      "price": 1700
+    },
+    {
+      "id": "track_built",
+      "name": "Вбудований трек",
+      "unit": "м.п.",
+      "price": 2000
+    },
+    {
+      "id": "track_bus",
+      "name": "Трек з шиною",
+      "unit": "м.п.",
+      "price": 3000
+    }
   ],
   "height_3": 10,
   "height_35": 15,
