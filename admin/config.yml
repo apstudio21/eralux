@@ -154,6 +154,7 @@ collections:
         label: "Ціни (для світла, полотен і калькулятора)"
         file: "content/prices.json"
         fields:
+          - { label: "Метри погонні більші за площу на, %", name: "perimeter_pct", widget: "number", value_type: "int", min: 0, max: 50, hint: "Калькулятор рахує профіль як площа + цей відсоток. Напр. 5 → 20 м² = 21 м.п." }
           - { label: "Кутів у ціні", name: "corners_included", widget: "number", value_type: "int", min: 0 }
           - { label: "Додатковий кут, грн", name: "extra_corner", widget: "number", value_type: "int", min: 0 }
           - { label: "Кут на парящому / єврокрабі, грн", name: "extra_corner_premium", widget: "number", value_type: "int", min: 0 }

@@ -2,6 +2,7 @@
   "corners_included": 4,
   "extra_corner": 100,
   "extra_corner_premium": 500,
+  "perimeter_pct": 5,
   "canvases": [
     {
       "id": "matte",

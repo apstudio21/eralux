@@ -608,7 +608,10 @@
     var st = { area: 20, per: 0, cor: 4, canvas: (P.canvases[0] || {}).id, profile: (P.profiles[0] || {}).id, light: {} };
     if (d && Number(d.default_area) >= MIN && Number(d.default_area) <= MAX) st.area = Number(d.default_area);
     var areaIn = $('calc-area'), bars = $('calc-bars');
-    function autoPer(a) { return Math.max(8, Math.round(4 * Math.sqrt(a) * 1.06)); }
+    // м.п. = площа + N % (як просить клієнт: у квартирі периметр трохи більший за площу);
+    // для малих кімнат (санвузол, коридор) – не менше реального периметра квадрата
+    var PCT = Number(P.perimeter_pct); if (isNaN(PCT) || PCT < 0) PCT = 5;
+    function autoPer(a) { return Math.max(8, Math.round(4 * Math.sqrt(a) * 1.06), Math.round(a * (1 + PCT / 100))); }
     function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
     function r50(v) { return Math.round(v / 50) * 50; }
 
